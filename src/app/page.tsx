@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
-import LandingPage from "../containers/LandingPage";
-import MainPage from "../containers/MainPage";
+import LandingPage from "../templates/landing";
+import MainPage from "../templates/main";
 
 const HomePage = async () => {
   const session = await getServerSession();

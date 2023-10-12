@@ -1,7 +1,8 @@
-import "./globals.css";
+import "@/styles/globals.css";
 import type { Metadata } from "next";
 import AuthSession from "@/components/SessionProvider";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "조각보",
@@ -13,13 +14,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <AuthSession>
-          <header className="w-full">
-            <Navbar />
-          </header>
-          <main>{children}</main>
-          <footer className="border-t-2 border-black-500 pt-3 mt-80">
-            &copy;조각보
-          </footer>
+          <Header />
+          <main className="w-3/4 mx-auto">{children}</main>
+          <Footer />
         </AuthSession>
       </body>
     </html>
