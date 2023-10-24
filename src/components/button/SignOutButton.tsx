@@ -1,8 +1,21 @@
 "use client";
+
 import { signOut } from "next-auth/react";
+import { signOutBE } from "@/lib/auth/sign";
 
 const SignOutButton = () => {
-  return <button onClick={() => signOut()}>로그아웃</button>;
+  const onClickSignOut = async () => {
+    const res = await signOutBE();
+    if (res.ok) {
+      signOut();
+    }
+  };
+
+  return (
+    <>
+      <button onClick={onClickSignOut}>로그아웃</button>
+    </>
+  );
 };
 
 export default SignOutButton;

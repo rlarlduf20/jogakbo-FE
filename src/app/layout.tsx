@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import AuthSession from "@/components/SessionProvider";
+import AuthSession from "@/components/provider/SessionProvider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 

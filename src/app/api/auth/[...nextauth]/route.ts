@@ -2,7 +2,11 @@ import NextAuth from "next-auth/next";
 import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
 
-import { encrypt } from "@/lib/authEncryption";
+import { generateToken } from "@/lib/auth/encryption";
+import { sendUserData } from "@/lib/auth/sign";
+
+let jogakAccessToken: string;
+let jogakRefreshToken: string;
 
 export const authOptions = {
   providers: [
@@ -16,15 +20,40 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn(props: any) {
+    async signIn({ user, account }: any) {
       let userData = {
-        id: props.user.id,
-        name: props.user.name,
-        provider: props.account.provider,
+        socialId: user.id,
+        name: user.name,
+        provider: account.provider,
       };
-      const encryption = encrypt(JSON.stringify(userData));
+      const identifyToken = generateToken(userData);
+      const res: any = await sendUserData(identifyToken);
+
+      if (!res.ok) {
+        console.error(res);
+        return false;
+      }
+
+      const access = res.headers.get("authorization");
+      const refresh = res.headers.get("authorization-refresh");
+      jogakAccessToken = access;
+      jogakRefreshToken = refresh;
 
       return true;
+    },
+    async jwt({ token, account }: any) {
+      if (account) {
+        token.accessToken = jogakAccessToken;
+        token.refreshToken = jogakRefreshToken;
+      }
+
+      return token;
+    },
+    async session({ session, token }: any) {
+      session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+
+      return session;
     },
   },
 };
