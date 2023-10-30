@@ -11,5 +11,6 @@ export const sendUserData = async (token: string) => {
 
 export const signOutBE = async () => {
   const res = await fetch("api/logout");
+
   return res;
 };

@@ -2,11 +2,9 @@ import NextAuth from "next-auth/next";
 import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
 
-import { generateToken } from "@/lib/auth/encryption";
+import { decodingJWTforExpiresAt, generateToken } from "@/lib/auth/encryption";
 import { sendUserData } from "@/lib/auth/sign";
-
-let jogakAccessToken: string;
-let jogakRefreshToken: string;
+import { refreshToken } from "@/lib/auth/refresh";
 
 export const authOptions = {
   providers: [
@@ -34,24 +32,30 @@ export const authOptions = {
         return false;
       }
 
-      const access = res.headers.get("authorization");
-      const refresh = res.headers.get("authorization-refresh");
-      jogakAccessToken = access;
-      jogakRefreshToken = refresh;
+      let access = res.headers.get("authorization");
+      let refresh = res.headers.get("authorization-refresh");
+      let expiresIn = decodingJWTforExpiresAt(access);
+      let jogakTokens = {
+        accessToken: access,
+        refreshToken: refresh,
+        expiresIn: expiresIn,
+      };
+      user.jogakTokens = jogakTokens;
 
       return true;
     },
-    async jwt({ token, account }: any) {
-      if (account) {
-        token.accessToken = jogakAccessToken;
-        token.refreshToken = jogakRefreshToken;
+    async jwt({ token, user }: any) {
+      if (user) {
+        return { ...token, ...user };
       }
 
-      return token;
+      if (new Date().getTime() / 1000 < token.jogakTokens.expiresIn) {
+        return token;
+      }
+      return await refreshToken(token);
     },
     async session({ session, token }: any) {
-      session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
+      session.jogakTokens = token.jogakTokens;
 
       return session;
     },
