@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import AuthSession from "@/components/provider/SessionProvider";
+import AuthSessionProvider from "@/components/provider/SessionProvider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -13,11 +13,11 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <AuthSession>
+        <AuthSessionProvider>
           <Header />
           <main className="w-3/4 mx-auto">{children}</main>
           <Footer />
-        </AuthSession>
+        </AuthSessionProvider>
       </body>
     </html>
   );

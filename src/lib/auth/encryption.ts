@@ -1,4 +1,4 @@
-import "server-only";
+// import "server-only";
 import jwt from "jsonwebtoken";
 
 const secret: any = process.env.SECRET_KEY;
@@ -18,4 +18,10 @@ export const generateToken = (userData: any) => {
   );
 
   return token;
+};
+
+export const decodingJWTforExpiresAt = (accessToken: string) => {
+  const res: any = jwt.decode(accessToken);
+
+  return res?.exp;
 };

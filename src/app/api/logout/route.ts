@@ -1,16 +1,17 @@
 import { getServerSession } from "next-auth";
+import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 
-export async function GET(request: Request) {
-  const { accessToken } = await getServerSession(authOptions);
+export async function GET() {
+  const { jogakTokens } = await getServerSession(authOptions);
 
   const res = await fetch(`${process.env.SERVER_URL}/logout`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${jogakTokens.accessToken}`,
     },
   });
-  console.log("route handler:", res);
-  return Response.json(res);
+
+  return NextResponse.json(res);
 }

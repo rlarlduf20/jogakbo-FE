@@ -1,9 +1,7 @@
-"use client";
-
-import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const SignButton = () => {
-  return <button onClick={() => signIn()}>로그인/가입</button>;
+  return <Link href={"/api/auth/signin"}>로그인/가입</Link>;
 };
 
 export default SignButton;
