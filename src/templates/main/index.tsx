@@ -1,12 +1,10 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import UserProfile from "./components/UserProfile";
 
 const MainPage = async () => {
-  const session = await getServerSession(authOptions);
   return (
-    <>
-      <div className="text-xl font-bold">{session?.user?.name}</div>
-    </>
+    <section className="pt-[80px]">
+      <UserProfile />
+    </section>
   );
 };
 
