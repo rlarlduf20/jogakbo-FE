@@ -15,7 +15,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body>
         <AuthSessionProvider>
           <Header />
-          <main className="w-3/4 mx-auto">{children}</main>
+          <main className="w-inner mx-auto">{children}</main>
           <Footer />
         </AuthSessionProvider>
       </body>
