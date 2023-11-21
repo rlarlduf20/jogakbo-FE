@@ -3,7 +3,7 @@ import SignOutButton from "../button/SignOutButton";
 
 const MainNav = () => {
   return (
-    <nav className="flex h-20 w-3/4 items-center">
+    <nav className="flex h-[80px] w-inner items-center">
       <Link href="/" className="flex-grow">
         조각보
       </Link>

@@ -1,12 +1,14 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import Link from 'next/link';
+import UserProfile from './components/UserProfile';
 
 const MainPage = async () => {
-  const session = await getServerSession(authOptions);
   return (
-    <>
-      <div className="text-xl font-bold">{session?.user?.name}</div>
-    </>
+    <section className="flex pt-[70px]">
+      <UserProfile />
+      <Link href="/album" className="ml-24">
+        앨범 생성
+      </Link>
+    </section>
   );
 };
 
