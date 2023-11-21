@@ -1,5 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth';
 
 const UserProfile = async () => {
   const session = await getServerSession(authOptions);
@@ -18,7 +18,6 @@ const UserProfile = async () => {
             <p>{200}</p>
           </div>
         </div>
-        <div>회원가입 수정</div>
       </div>
     </div>
   );
