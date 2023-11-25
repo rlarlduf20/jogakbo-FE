@@ -7,9 +7,6 @@ const MainNav = () => {
       <Link href="/" className="flex-grow">
         조각보
       </Link>
-      <Link href="/protected" className="pr-10">
-        둘러보기
-      </Link>
       <SignOutButton />
     </nav>
   );
