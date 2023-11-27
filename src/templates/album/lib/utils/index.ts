@@ -6,7 +6,7 @@ export const renderCanvas = (
   const canvas = canvasRef.current;
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  console.log(currentPage);
+
   const currentPageData = dataList.find(
     (data: any) => data.page === currentPage
   );

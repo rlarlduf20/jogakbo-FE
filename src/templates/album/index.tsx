@@ -1,37 +1,35 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { albumInfo, albumMockDataList } from "./assets/mockData";
 import { renderCanvas } from "./lib/utils";
 
 const AlbumSection = () => {
-  const canvasLeftRef = useRef<any>();
-  const canvasRightRef = useRef<any>();
+  const albumRef = useRef<any>();
+
   const [page, setPage] = useState(1);
   const [isDrag, setIsDrag] = useState(false);
 
-  const handleDrop = useCallback((event: any) => {
+  const handleDrop = (event: any) => {
     event.preventDefault();
     setIsDrag(false);
     const files = event.dataTransfer.files;
     console.log(files);
-  }, []);
-  const handleDragOver = useCallback((event: any) => {
+  };
+  const handleDragOver = (event: any) => {
     event.preventDefault();
     setIsDrag(true);
-  }, []);
-
-  useEffect(() => {
-    renderCanvas(albumMockDataList, canvasLeftRef, page);
-    renderCanvas(albumMockDataList, canvasRightRef, page + 1);
-  }, [page]);
-
+  };
   const onClickPrev = () => {
     setPage((prev) => prev - 1);
   };
   const onClickNext = () => {
     setPage((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    renderCanvas(albumMockDataList, albumRef, page);
+  }, [page]);
 
   return (
     <section>
@@ -57,26 +55,15 @@ const AlbumSection = () => {
         )}
       </div>
 
-      <div className="flex gap-[40px]">
-        <canvas
-          ref={canvasLeftRef}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={() => {
-            setIsDrag(false);
-          }}
-          className={`${isDrag ? "border-4" : "border-2"} w-[580px] h-[600px]`}
-        ></canvas>
-        <canvas
-          ref={canvasRightRef}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={() => {
-            setIsDrag(false);
-          }}
-          className={`${isDrag ? "border-4" : "border-2"} w-[580px] h-[600px]`}
-        ></canvas>
-      </div>
+      <canvas
+        ref={albumRef}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onDragLeave={() => {
+          setIsDrag(false);
+        }}
+        className={`${isDrag ? "border-4" : "border-2"} w-[1200px] h-[600px]`}
+      ></canvas>
     </section>
   );
 };
