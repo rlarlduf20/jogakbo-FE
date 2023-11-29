@@ -1,26 +1,32 @@
 "use client";
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { albumMockDataList } from "./assets/mockData";
+import { Canvas } from "fabric";
 
 const AlbumSection = () => {
   const [page, setPage] = useState(1);
   const [images, setImages] = useState(albumMockDataList);
-  const { imgList }: any = images.find((data: any) => data.page === page);
-  console.log(imgList);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = new Canvas(canvasRef.current, {
+      width: 1200,
+      height: 700,
+    });
+
+    return () => {
+      console.log(canvas);
+      canvas.dispose();
+    };
+  }, []);
+
   const onClickPrev = () => {
     setPage((prev) => prev - 1);
   };
   const onClickNext = () => {
     setPage((prev) => prev + 1);
-  };
-
-  const locationStyle: any = (index: any) => {
-    return {
-      position: "absolute",
-      left: imgList[index].location.xPos,
-      top: imgList[index].location.yPos,
-    };
   };
 
   return (
@@ -46,18 +52,8 @@ const AlbumSection = () => {
           </button>
         )}
       </div>
-      <div className="relative border-4 w-[1200px] h-[700px]">
-        {imgList.map((item: any, index: any) => (
-          <Image
-            src={item.src}
-            alt="img"
-            width={item.size.width}
-            height={item.size.height}
-            style={locationStyle(index)}
-            key={index}
-          />
-        ))}
-      </div>
+
+      <canvas ref={canvasRef} className="bg-slate-200 w-[1200px] h-[700px]" />
     </section>
   );
 };
