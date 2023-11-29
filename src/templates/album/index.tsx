@@ -1,25 +1,13 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
-import { albumInfo, albumMockDataList } from "./assets/mockData";
-import { renderCanvas } from "./lib/utils";
+import Image from "next/image";
+import { useState } from "react";
+import { albumMockDataList } from "./assets/mockData";
 
 const AlbumSection = () => {
-  const albumRef = useRef<any>();
-
   const [page, setPage] = useState(1);
-  const [isDrag, setIsDrag] = useState(false);
-
-  const handleDrop = (event: any) => {
-    event.preventDefault();
-    setIsDrag(false);
-    const files = event.dataTransfer.files;
-    console.log(files);
-  };
-  const handleDragOver = (event: any) => {
-    event.preventDefault();
-    setIsDrag(true);
-  };
+  const [images, setImages] = useState(albumMockDataList);
+  const { imgList }: any = images.find((data: any) => data.page === page);
+  console.log(imgList);
   const onClickPrev = () => {
     setPage((prev) => prev - 1);
   };
@@ -27,18 +15,22 @@ const AlbumSection = () => {
     setPage((prev) => prev + 1);
   };
 
-  useEffect(() => {
-    renderCanvas(albumMockDataList, albumRef, page);
-  }, [page]);
+  const locationStyle: any = (index: any) => {
+    return {
+      position: "absolute",
+      left: imgList[index].location.xPos,
+      top: imgList[index].location.yPos,
+    };
+  };
 
   return (
     <section>
       <div className="w-[1200px] flex">
         <button
-          className={`${page !== 1 && "hover:cursor-pointer"} ${
-            page === 1 && "text-slate-300"
+          className={`${page > 1 && "hover:cursor-pointer"} ${
+            page <= 1 && "text-slate-300"
           }`}
-          disabled={page === 1}
+          disabled={page <= 1}
           onClick={onClickPrev}
         >
           이전
@@ -54,16 +46,18 @@ const AlbumSection = () => {
           </button>
         )}
       </div>
-
-      <canvas
-        ref={albumRef}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={() => {
-          setIsDrag(false);
-        }}
-        className={`${isDrag ? "border-4" : "border-2"} w-[1200px] h-[600px]`}
-      ></canvas>
+      <div className="relative border-4 w-[1200px] h-[700px]">
+        {imgList.map((item: any, index: any) => (
+          <Image
+            src={item.src}
+            alt="img"
+            width={item.size.width}
+            height={item.size.height}
+            style={locationStyle(index)}
+            key={index}
+          />
+        ))}
+      </div>
     </section>
   );
 };
