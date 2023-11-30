@@ -1,26 +1,28 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { albumMockDataList } from "./assets/mockData";
-import { Canvas } from "fabric";
+import { Layer, Stage, Image } from "react-konva";
+import useImage from "use-image";
+
+const AlbumImageByPage = ({ imageInfo }: { imageInfo: any }) => {
+  const [image] = useImage(imageInfo.src);
+
+  return (
+    <Image
+      image={image}
+      x={imageInfo.location.xPos}
+      y={imageInfo.location.yPos}
+      alt="img"
+      onDragEnd={(e) => console.log(e)}
+      draggable
+    />
+  );
+};
 
 const AlbumSection = () => {
   const [page, setPage] = useState(1);
   const [images, setImages] = useState(albumMockDataList);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const canvas = new Canvas(canvasRef.current, {
-      width: 1200,
-      height: 700,
-    });
-
-    return () => {
-      console.log(canvas);
-      canvas.dispose();
-    };
-  }, []);
+  const imageList = images.find((data: any) => data.page === page);
 
   const onClickPrev = () => {
     setPage((prev) => prev - 1);
@@ -28,7 +30,20 @@ const AlbumSection = () => {
   const onClickNext = () => {
     setPage((prev) => prev + 1);
   };
-
+  const stageRef = useRef<any>(null);
+  useEffect(() => {
+    const stage = stageRef.current.getStage();
+    stage.container().addEventListener("dragover", (e: any) => {
+      e.preventDefault();
+      // console.log("over", e);
+    });
+    stage.container().addEventListener("drop", (e: any) => {
+      const file = e.dataTransfer.files[0];
+      console.log(file);
+      e.stopPropagation();
+      e.preventDefault();
+    });
+  }, []);
   return (
     <section>
       <div className="w-[1200px] flex">
@@ -52,8 +67,13 @@ const AlbumSection = () => {
           </button>
         )}
       </div>
-
-      <canvas ref={canvasRef} className="bg-slate-200 w-[1200px] h-[700px]" />
+      <Stage width={1200} height={800} className="border-2" ref={stageRef}>
+        <Layer>
+          {imageList?.imgList.map((item, index) => (
+            <AlbumImageByPage imageInfo={item} key={index} />
+          ))}
+        </Layer>
+      </Stage>
     </section>
   );
 };

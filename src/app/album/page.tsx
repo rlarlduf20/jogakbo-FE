@@ -1,15 +1,19 @@
 import AlbumSection from "@/templates/album";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 
 const AlbumPage = async () => {
+  const AlbumComponent = dynamic(() => import("@/templates/album"), {
+    ssr: false,
+  });
   const session = await getServerSession();
 
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
 
-  return <AlbumSection />;
+  return <AlbumComponent />;
 };
 
 export default AlbumPage;

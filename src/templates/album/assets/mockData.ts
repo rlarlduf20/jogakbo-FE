@@ -57,7 +57,7 @@ export const albumMockDataList = [
     imgList: [
       {
         src: "/images/smileBall.png",
-        location: { xPos: 100, yPos: 100 },
+        location: { xPos: 100, yPos: 10 },
         size: { width: 300, height: 300 },
       },
     ],
