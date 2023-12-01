@@ -1,23 +1,21 @@
-import AlbumSection from "@/templates/album";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
 
 const AlbumPage = async () => {
-  const AlbumComponent = dynamic(() => import("@/templates/album"), {
-    ssr: false,
-  });
   const session = await getServerSession();
-
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
-
+  const AlbumComponent = dynamic(() => import("@/templates/album"), {
+    ssr: false,
+  });
   return <AlbumComponent />;
 };
 
 export default AlbumPage;
 
+// "use client";
 // import { useState, useEffect, useRef } from "react";
 // import SockJS from "sockjs-client";
 // import { Client } from "@stomp/stompjs";
@@ -37,7 +35,9 @@ export default AlbumPage;
 //     onConnect: () => {
 //       console.log("연결 성공");
 //       client.current.subscribe("/topic/sub", (body: any) => {
-//         const json_body = JSON.parse(body.body);
+//         console.log("받아오기 성공");
+//         const json_body = body.body;
+//         console.log(json_body);
 //         setMsgList((_msg_list): any => [..._msg_list, json_body]);
 //       });
 //     },
@@ -50,7 +50,7 @@ export default AlbumPage;
 // }, [session]);
 // const publish = (msg: string) => {
 //   if (!client.current.connected) return;
-
+//   console.log(msg);
 //   client.current.publish({
 //     destination: "/app/img",
 //     body: msg,
