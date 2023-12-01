@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth";
-import LandingPage from "../templates/landing";
-import MainPage from "../templates/main";
+import LandingSection from "../templates/landing";
+import MainSection from "../templates/main";
 
 const HomePage = async () => {
   const session = await getServerSession();
-  return <>{session ? <MainPage /> : <LandingPage />}</>;
+  return <>{session ? <MainSection /> : <LandingSection />}</>;
 };
 
 export default HomePage;

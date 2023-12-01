@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import UserProfile from './components/UserProfile';
+import Link from "next/link";
+import UserProfile from "./components/UserProfile";
 
-const MainPage = async () => {
+const MainSection = async () => {
   return (
     <section className="flex pt-[70px]">
       <UserProfile />
@@ -12,4 +12,4 @@ const MainPage = async () => {
   );
 };
 
-export default MainPage;
+export default MainSection;
