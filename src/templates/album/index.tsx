@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { albumMockDataList } from "./assets/mockData";
 import Konva from "konva";
 import { Layer, Stage } from "react-konva";
@@ -14,6 +14,16 @@ const AlbumSection = () => {
   const stageRef = useRef<Konva.Stage>(null);
   const isDragging = useDragExternalFiles(stageRef);
 
+  const [selectImage, setSelectImage] = useState<any>(null);
+  const imageFocus = (e: any) => {
+    const clickedOnEmpty = e.target === e.target.getStage();
+    if (clickedOnEmpty) {
+      setSelectImage(null);
+    }
+  };
+  useEffect(() => {
+    console.log(images);
+  }, [images]);
   const movePrevPage = () => {
     setPage((prev) => prev - 1);
   };
@@ -33,10 +43,27 @@ const AlbumSection = () => {
         height={800}
         className={`${isDragging ? "border-4" : "border-2"}`}
         ref={stageRef}
+        onMouseDown={(e) => imageFocus}
+        onTouchStart={(e) => imageFocus}
       >
         <Layer>
           {imageList?.imgList.map((item, index) => (
-            <ImagesByPage imageInfo={item} key={index} />
+            <ImagesByPage
+              imageInfo={item}
+              key={index}
+              isSelected={item.id === selectImage}
+              onSelect={() => {
+                setSelectImage(item.id);
+              }}
+              onChange={(newAttrs: any) => {
+                setImages((prevData) => {
+                  console.log(newAttrs);
+                  const newData = [...prevData];
+                  newData[page - 1].imgList[index] = newAttrs;
+                  return newData;
+                });
+              }}
+            />
           ))}
         </Layer>
       </Stage>
