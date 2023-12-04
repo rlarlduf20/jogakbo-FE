@@ -43,8 +43,8 @@ const AlbumSection = () => {
         height={800}
         className={`${isDragging ? "border-4" : "border-2"}`}
         ref={stageRef}
-        onMouseDown={(e) => imageFocus}
-        onTouchStart={(e) => imageFocus}
+        onMouseDown={(e) => imageFocus(e)}
+        onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
           {imageList?.imgList.map((item, index) => (

@@ -13,6 +13,7 @@ interface ImagePropType {
       width: number;
       height: number;
     };
+    rotation: number;
   };
   isSelected: boolean;
   onSelect: () => void;
@@ -45,6 +46,7 @@ const ImagesByPage = ({
         y={imageInfo.location.yPos}
         width={imageInfo.size.width}
         height={imageInfo.size.height}
+        rotation={imageInfo.rotation}
         alt="img"
         draggable
         onClick={onSelect}
@@ -67,7 +69,7 @@ const ImagesByPage = ({
           const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
+          console.log("node", node);
           // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
@@ -77,6 +79,7 @@ const ImagesByPage = ({
               xPos: node.x(),
               yPos: node.y(),
             },
+            rotation: node.rotation(),
             size: {
               width: Math.max(5, node.width() * scaleX),
               height: Math.max(node.height() * scaleY),
