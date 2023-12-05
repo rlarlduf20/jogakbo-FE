@@ -3,6 +3,7 @@ import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 
 interface ImagePropType {
+  bodyData: any;
   imageInfo: {
     src: string;
     location: {
@@ -21,6 +22,7 @@ interface ImagePropType {
 }
 
 const ImagesByPage = ({
+  bodyData,
   imageInfo,
   isSelected,
   onSelect,
@@ -65,6 +67,8 @@ const ImagesByPage = ({
               height: node.height(),
             },
           });
+          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+          console.log(bodyData);
         }}
         onTransformEnd={(e) => {
           const node = imageRef.current;
@@ -85,6 +89,8 @@ const ImagesByPage = ({
               height: Math.max(node.height() * scaleY),
             },
           });
+          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+          console.log(bodyData);
         }}
       />
       {isSelected && (

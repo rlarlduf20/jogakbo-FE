@@ -52,6 +52,7 @@ const AlbumSection = () => {
         <Layer>
           {albumBodyDataByPage?.imgList.map((item, index) => (
             <ImagesByPage
+              bodyData={albumBodyData}
               imageInfo={item}
               key={index}
               isSelected={item.id === selectedImageId}
