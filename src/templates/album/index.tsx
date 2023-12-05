@@ -10,7 +10,7 @@ import { useDragExternalFiles } from "./hooks/useDragExternalFiles";
 const AlbumSection = () => {
   const [page, setPage] = useState(1);
   const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
-  const [selectImage, setSelectImage] = useState<any>(null);
+  const [selectedImageId, setSelectedImageId] = useState<any>(null);
   const stageRef = useRef<Konva.Stage>(null);
 
   const isDragging = useDragExternalFiles(stageRef);
@@ -21,16 +21,16 @@ const AlbumSection = () => {
   const imageFocus = (e: any) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
-      setSelectImage(null);
+      setSelectedImageId(null);
     }
   };
 
   const movePrevPage = () => {
-    setSelectImage(null);
+    setSelectedImageId(null);
     setPage((prev) => prev - 1);
   };
   const moveNextPage = () => {
-    setSelectImage(null);
+    setSelectedImageId(null);
     setPage((prev) => prev + 1);
   };
 
@@ -54,15 +54,15 @@ const AlbumSection = () => {
             <ImagesByPage
               imageInfo={item}
               key={index}
-              isSelected={item.id === selectImage}
+              isSelected={item.id === selectedImageId}
               onSelect={() => {
-                setSelectImage(item.id);
+                setSelectedImageId(item.id);
               }}
               onChange={(newAttrs: any) => {
                 setAlbumBodyData((prevData) => {
-                  console.log(newAttrs);
                   const newData = [...prevData];
                   newData[page - 1].imgList[index] = newAttrs;
+
                   return newData;
                 });
               }}
