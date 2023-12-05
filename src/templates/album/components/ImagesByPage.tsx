@@ -29,6 +29,7 @@ const ImagesByPage = ({
   const [image] = useImage(imageInfo.src);
   const imageRef = useRef<any>(null);
   const trRef = useRef<any>(null);
+
   useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
@@ -36,7 +37,7 @@ const ImagesByPage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-  console.log(isSelected);
+
   return (
     <>
       <Image
@@ -69,8 +70,7 @@ const ImagesByPage = ({
           const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-          console.log("node", node);
-          // we will reset it back
+
           node.scaleX(1);
           node.scaleY(1);
           onChange({
