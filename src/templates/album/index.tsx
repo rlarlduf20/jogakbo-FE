@@ -9,15 +9,28 @@ import { useDragExternalFiles } from "./hooks/useDragExternalFiles";
 
 const AlbumSection = () => {
   const [page, setPage] = useState(1);
-  const [images, setImages] = useState(albumMockDataList);
-  const imageList = images.find((data: any) => data.page === page);
+  const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
+  const [selectedImageId, setSelectedImageId] = useState<any>(null);
   const stageRef = useRef<Konva.Stage>(null);
+
   const isDragging = useDragExternalFiles(stageRef);
+  const albumBodyDataByPage = albumBodyData.find(
+    (data: any) => data.page === page
+  );
+
+  const imageFocus = (e: any) => {
+    const clickedOnEmpty = e.target === e.target.getStage();
+    if (clickedOnEmpty) {
+      setSelectedImageId(null);
+    }
+  };
 
   const movePrevPage = () => {
+    setSelectedImageId(null);
     setPage((prev) => prev - 1);
   };
   const moveNextPage = () => {
+    setSelectedImageId(null);
     setPage((prev) => prev + 1);
   };
 
@@ -33,10 +46,28 @@ const AlbumSection = () => {
         height={800}
         className={`${isDragging ? "border-4" : "border-2"}`}
         ref={stageRef}
+        onMouseDown={(e) => imageFocus(e)}
+        onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
-          {imageList?.imgList.map((item, index) => (
-            <ImagesByPage imageInfo={item} key={index} />
+          {albumBodyDataByPage?.imgList.map((item, index) => (
+            <ImagesByPage
+              bodyData={albumBodyData}
+              imageInfo={item}
+              key={index}
+              isSelected={item.id === selectedImageId}
+              onSelect={() => {
+                setSelectedImageId(item.id);
+              }}
+              onChange={(newAttrs: any) => {
+                setAlbumBodyData((prevData) => {
+                  const newData = [...prevData];
+                  newData[page - 1].imgList[index] = newAttrs;
+
+                  return newData;
+                });
+              }}
+            />
           ))}
         </Layer>
       </Stage>
