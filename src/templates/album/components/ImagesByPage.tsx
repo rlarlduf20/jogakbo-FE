@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
+import { Portal } from "react-konva-utils";
 import useImage from "use-image";
 
 interface ImagePropType {
@@ -28,6 +29,7 @@ const ImagesByPage = ({
   onSelect,
   onChange,
 }: ImagePropType) => {
+  const [isDragging, setIsDragging] = useState(false);
   const [image] = useImage(imageInfo.src);
   const imageRef = useRef<any>(null);
   const trRef = useRef<any>(null);
@@ -39,60 +41,69 @@ const ImagesByPage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-
+  useEffect(() => {
+    console.log(isDragging);
+  }, [isDragging]);
   return (
     <>
-      <Image
-        ref={imageRef}
-        image={image}
-        x={imageInfo.location.xPos}
-        y={imageInfo.location.yPos}
-        width={imageInfo.size.width}
-        height={imageInfo.size.height}
-        rotation={imageInfo.rotation}
-        alt="img"
-        draggable
-        onClick={onSelect}
-        onTap={onSelect}
-        onDragEnd={(e) => {
-          const node = imageRef.current;
-          onChange({
-            ...imageInfo,
-            location: {
-              xPos: e.target.x(),
-              yPos: e.target.y(),
-            },
-            size: {
-              width: node.width(),
-              height: node.height(),
-            },
-          });
-          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          console.log(bodyData);
-        }}
-        onTransformEnd={(e) => {
-          const node = imageRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
+      <Portal selector=".top-layer" enabled={isDragging}>
+        <Image
+          ref={imageRef}
+          image={image}
+          x={imageInfo.location.xPos}
+          y={imageInfo.location.yPos}
+          width={imageInfo.size.width}
+          height={imageInfo.size.height}
+          rotation={imageInfo.rotation}
+          alt="img"
+          draggable
+          onClick={onSelect}
+          onTap={onSelect}
+          onDragStart={() => {
+            setIsDragging(true);
+            console.log(isDragging);
+          }}
+          onDragEnd={(e) => {
+            setIsDragging(false);
+            const node = imageRef.current;
+            onChange({
+              ...imageInfo,
+              location: {
+                xPos: e.target.x(),
+                yPos: e.target.y(),
+              },
+              size: {
+                width: node.width(),
+                height: node.height(),
+              },
+            });
+            // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+            console.log(bodyData);
+          }}
+          onTransformEnd={(e) => {
+            const node = imageRef.current;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
 
-          node.scaleX(1);
-          node.scaleY(1);
-          onChange({
-            ...imageInfo,
-            location: {
-              xPos: node.x(),
-              yPos: node.y(),
-            },
-            rotation: node.rotation(),
-            size: {
-              width: Math.max(5, node.width() * scaleX),
-              height: Math.max(node.height() * scaleY),
-            },
-          });
-          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          console.log(bodyData);
-        }}
-      />
+            node.scaleX(1);
+            node.scaleY(1);
+            onChange({
+              ...imageInfo,
+              location: {
+                xPos: node.x(),
+                yPos: node.y(),
+              },
+              rotation: node.rotation(),
+              size: {
+                width: Math.max(5, node.width() * scaleX),
+                height: Math.max(node.height() * scaleY),
+              },
+            });
+            // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+            console.log(bodyData);
+          }}
+        />
+      </Portal>
       {isSelected && (
         <Transformer
           ref={trRef}
