@@ -43,7 +43,7 @@ const getCorner = (
 const getImage = (rotatedImg: any) => {
   const { x, y, width, height } = rotatedImg;
   const rad = rotatedImg.rotation;
-
+  console.log(rad);
   const p1 = getCorner(x, y, 0, 0, rad);
   const p2 = getCorner(x, y, width, 0, rad);
   const p3 = getCorner(x, y, width, height, rad);
@@ -74,6 +74,8 @@ const ImagesByPage = ({
   const imageRef = useRef<any>(null);
   const trRef = useRef<any>(null);
 
+  const [newBox, setNewBox] = useState<any>();
+
   useEffect(() => {
     if (isSelected) {
       trRef.current.nodes([imageRef.current]);
@@ -101,6 +103,26 @@ const ImagesByPage = ({
             console.log(isDragging);
           }}
           onDragMove={(e) => {
+            const image = getImage({
+              ...e.target.attrs,
+              rotation: newBox?.rotation,
+            });
+            if (newBox) {
+              if (image.y < 0) {
+                e.target.y(e.target.y() - image.y);
+              }
+              if (image.x < 0) {
+                e.target.x(e.target.x() - image.x);
+              }
+              if (image.y + image.height > 800) {
+                e.target.y(e.target.y() - (image.y + image.height - 800));
+              }
+              if (image.x + image.width > 1200) {
+                e.target.x(e.target.x() - (image.x + image.width - 1200));
+              }
+              return;
+            }
+
             e.target.y(Math.max(e.target.y(), 0));
             e.target.x(Math.max(e.target.x(), 0));
             e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
@@ -127,7 +149,6 @@ const ImagesByPage = ({
             const node = imageRef.current;
             const scaleX = node.scaleX();
             const scaleY = node.scaleY();
-
             node.scaleX(1);
             node.scaleY(1);
             onChange({
@@ -151,12 +172,6 @@ const ImagesByPage = ({
         <Transformer
           ref={trRef}
           flipEnabled={false}
-          // boundBoxFunc={(oldBox, newBox) => {
-          //   if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-          //     return oldBox;
-          //   }
-          //   return newBox;
-          // }}
           boundBoxFunc={(oldBox, newBox) => {
             const box = getImage(newBox);
             const isOut =
@@ -164,12 +179,10 @@ const ImagesByPage = ({
               box.y < 0 ||
               box.x + box.width > 1200 ||
               box.y + box.height > 800;
-
-            // if new bounding box is out of visible viewport, let's just skip transforming
-            // this logic can be improved by still allow some transforming if we have small available space
             if (isOut) {
               return oldBox;
             }
+            setNewBox(newBox);
             return newBox;
           }}
         />
