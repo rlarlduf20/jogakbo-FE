@@ -12,7 +12,7 @@ const AlbumSection = () => {
   const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
   const [selectedImageId, setSelectedImageId] = useState<any>(null);
   const stageRef = useRef<Konva.Stage>(null);
-  console.log(stageRef);
+
   const isDragging = useDragExternalFiles(stageRef);
   const albumBodyDataByPage = albumBodyData.find(
     (data: any) => data.page === page

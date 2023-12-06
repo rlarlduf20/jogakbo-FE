@@ -36,14 +36,11 @@ const ImagesByPage = ({
 
   useEffect(() => {
     if (isSelected) {
-      // we need to attach transformer manually
       trRef.current.nodes([imageRef.current]);
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-  useEffect(() => {
-    console.log(isDragging);
-  }, [isDragging]);
+
   return (
     <>
       <Portal selector=".top-layer" enabled={isDragging}>
@@ -62,6 +59,12 @@ const ImagesByPage = ({
           onDragStart={() => {
             setIsDragging(true);
             console.log(isDragging);
+          }}
+          onDragMove={(e) => {
+            e.target.y(Math.max(e.target.y(), 0));
+            e.target.x(Math.max(e.target.x(), 0));
+            e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
+            e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
           }}
           onDragEnd={(e) => {
             setIsDragging(false);
