@@ -34,7 +34,7 @@ export const albumMockDataList = [
         id: 1,
         src: "/images/lion.png",
         location: { xPos: 0, yPos: 0 },
-        size: { width: 400, height: 600 },
+        size: { width: 224, height: 225 },
         rotation: 0,
       },
       {

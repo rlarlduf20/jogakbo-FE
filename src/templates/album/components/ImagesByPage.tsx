@@ -82,7 +82,6 @@ const ImagesByPage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
-
   return (
     <>
       <Portal selector=".top-layer" enabled={isDragging}>
@@ -100,7 +99,6 @@ const ImagesByPage = ({
           onTap={onSelect}
           onDragStart={() => {
             setIsDragging(true);
-            console.log(isDragging);
           }}
           onDragMove={(e) => {
             const image = getImage({
@@ -143,7 +141,7 @@ const ImagesByPage = ({
               },
             });
             // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-            console.log(bodyData);
+            // console.log(bodyData);
           }}
           onTransformEnd={(e) => {
             const node = imageRef.current;
@@ -164,13 +162,20 @@ const ImagesByPage = ({
               },
             });
             // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-            console.log(bodyData);
+            // console.log(bodyData);
           }}
         />
       </Portal>
       {isSelected && (
         <Transformer
           ref={trRef}
+          enabledAnchors={[
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+          ]}
+          // keepRatio={false}
           flipEnabled={false}
           boundBoxFunc={(oldBox, newBox) => {
             const box = getImage(newBox);
