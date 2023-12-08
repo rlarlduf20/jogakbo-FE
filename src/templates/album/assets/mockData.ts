@@ -27,47 +27,83 @@ export const albumInfo = [
 ];
 
 export const albumMockDataList = [
-  {
-    page: 1,
-    imgList: [
-      {
-        id: 1,
-        src: "/images/lion.png",
-        location: { xPos: 0, yPos: 0 },
-        size: { width: 224, height: 225 },
-        rotation: 0,
-      },
-      {
-        id: 2,
-        src: "/images/kakao_login_btn.png",
-        location: { xPos: 800, yPos: 80 },
-        size: { width: 300, height: 100 },
-        rotation: 0,
-      },
-    ],
-  },
-  {
-    page: 2,
-    imgList: [
-      {
-        id: 1,
-        src: "/images/rabbit.png",
-        location: { xPos: 100, yPos: 70 },
-        size: { width: 200, height: 400 },
-        rotation: 0,
-      },
-    ],
-  },
-  {
-    page: 3,
-    imgList: [
-      {
-        id: 1,
-        src: "/images/smileBall.png",
-        location: { xPos: 100, yPos: 10 },
-        size: { width: 300, height: 300 },
-        rotation: 0,
-      },
-    ],
-  },
+  [
+    {
+      id: 0,
+      src: "/images/lion.png",
+      location: { xPos: 0, yPos: 0 },
+      size: { width: 224, height: 225 },
+      rotation: 0,
+    },
+    {
+      id: 1,
+      src: "/images/kakao_login_btn.png",
+      location: { xPos: 800, yPos: 80 },
+      size: { width: 300, height: 100 },
+      rotation: 0,
+    },
+  ],
+  [
+    {
+      id: 0,
+      src: "/images/rabbit.png",
+      location: { xPos: 100, yPos: 70 },
+      size: { width: 200, height: 400 },
+      rotation: 0,
+    },
+  ],
+  [
+    {
+      id: 0,
+      src: "/images/smileBall.png",
+      location: { xPos: 100, yPos: 10 },
+      size: { width: 300, height: 300 },
+      rotation: 0,
+    },
+  ],
 ];
+// export const albumMockDataList = [
+//   {
+//     page: 1,
+//     imgList: [
+//       {
+//         id: 1,
+//         src: "/images/lion.png",
+//         location: { xPos: 0, yPos: 0 },
+//         size: { width: 224, height: 225 },
+//         rotation: 0,
+//       },
+//       {
+//         id: 2,
+//         src: "/images/kakao_login_btn.png",
+//         location: { xPos: 800, yPos: 80 },
+//         size: { width: 300, height: 100 },
+//         rotation: 0,
+//       },
+//     ],
+//   },
+//   {
+//     page: 2,
+//     imgList: [
+//       {
+//         id: 1,
+//         src: "/images/rabbit.png",
+//         location: { xPos: 100, yPos: 70 },
+//         size: { width: 200, height: 400 },
+//         rotation: 0,
+//       },
+//     ],
+//   },
+//   {
+//     page: 3,
+//     imgList: [
+//       {
+//         id: 1,
+//         src: "/images/smileBall.png",
+//         location: { xPos: 100, yPos: 10 },
+//         size: { width: 300, height: 300 },
+//         rotation: 0,
+//       },
+//     ],
+//   },
+// ];

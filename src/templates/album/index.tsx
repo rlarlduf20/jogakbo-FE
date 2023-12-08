@@ -8,15 +8,12 @@ import AlbumInfo from "./components/AlbumInfo";
 import { useDragExternalFiles } from "./hooks/useDragExternalFiles";
 
 const AlbumSection = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
   const [selectedImageId, setSelectedImageId] = useState<any>(null);
   const stageRef = useRef<Konva.Stage>(null);
 
   const isDragging = useDragExternalFiles(stageRef);
-  const albumBodyDataByPage = albumBodyData.find(
-    (data: any) => data.page === page
-  );
 
   const imageFocus = (e: any) => {
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -33,7 +30,7 @@ const AlbumSection = () => {
     setSelectedImageId(null);
     setPage((prev) => prev + 1);
   };
-
+  console.log(albumBodyData);
   return (
     <section>
       <AlbumInfo
@@ -50,11 +47,12 @@ const AlbumSection = () => {
         onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
-          {albumBodyDataByPage?.imgList.map((item, index) => (
+          {albumBodyData[page].map((item, index) => (
             <ImagesByPage
-              bodyData={albumBodyData}
+              bodyData={albumBodyData[page]}
               imageInfo={item}
-              key={index}
+              index={index}
+              key={item.id}
               isSelected={item.id === selectedImageId}
               onSelect={() => {
                 setSelectedImageId(item.id);
@@ -62,7 +60,15 @@ const AlbumSection = () => {
               onChange={(newAttrs: any) => {
                 setAlbumBodyData((prevData) => {
                   const newData = [...prevData];
-                  newData[page - 1].imgList[index] = newAttrs;
+                  newData[page][index] = newAttrs;
+
+                  return newData;
+                });
+              }}
+              sortArr={(data: any) => {
+                setAlbumBodyData((prevData) => {
+                  const newData = [...prevData];
+                  newData[page] = data;
 
                   return newData;
                 });
@@ -70,7 +76,6 @@ const AlbumSection = () => {
             />
           ))}
         </Layer>
-        <Layer name="top-layer" />
       </Stage>
     </section>
   );

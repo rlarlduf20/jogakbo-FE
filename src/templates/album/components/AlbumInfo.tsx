@@ -8,10 +8,10 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
   return (
     <div className="w-[1200px] flex">
       <button
-        className={`${page > 1 && "hover:cursor-pointer"} ${
-          page <= 1 && "text-slate-300"
+        className={`${page > 0 && "hover:cursor-pointer"} ${
+          page <= 0 && "text-slate-300"
         }`}
-        disabled={page <= 1}
+        disabled={page <= 0}
         onClick={movePrevPage}
       >
         이전

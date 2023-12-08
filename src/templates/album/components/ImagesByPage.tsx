@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
-import { Portal } from "react-konva-utils";
 import useImage from "use-image";
 
 interface ImagePropType {
   bodyData: any;
+  sortArr: (data: any) => void;
   imageInfo: {
+    id: number;
     src: string;
     location: {
       xPos: number;
@@ -17,6 +18,7 @@ interface ImagePropType {
     };
     rotation: number;
   };
+  index: number;
   isSelected: boolean;
   onSelect: () => void;
   onChange: (e: any) => void;
@@ -43,7 +45,7 @@ const getCorner = (
 const getImage = (rotatedImg: any) => {
   const { x, y, width, height } = rotatedImg;
   const rad = rotatedImg.rotation;
-  console.log(rad);
+
   const p1 = getCorner(x, y, 0, 0, rad);
   const p2 = getCorner(x, y, width, 0, rad);
   const p3 = getCorner(x, y, width, height, rad);
@@ -66,10 +68,11 @@ const ImagesByPage = ({
   bodyData,
   imageInfo,
   isSelected,
+  index,
+  sortArr,
   onSelect,
   onChange,
 }: ImagePropType) => {
-  const [isDragging, setIsDragging] = useState(false);
   const [image] = useImage(imageInfo.src);
   const imageRef = useRef<any>(null);
   const trRef = useRef<any>(null);
@@ -84,88 +87,88 @@ const ImagesByPage = ({
   }, [isSelected]);
   return (
     <>
-      <Portal selector=".top-layer" enabled={isDragging}>
-        <Image
-          ref={imageRef}
-          image={image}
-          x={imageInfo.location.xPos}
-          y={imageInfo.location.yPos}
-          width={imageInfo.size.width}
-          height={imageInfo.size.height}
-          rotation={imageInfo.rotation}
-          alt="img"
-          draggable
-          onClick={onSelect}
-          onTap={onSelect}
-          onDragStart={() => {
-            setIsDragging(true);
-          }}
-          onDragMove={(e) => {
-            const image = getImage({
-              ...e.target.attrs,
-              rotation: newBox?.rotation,
-            });
-            if (newBox) {
-              if (image.y < 0) {
-                e.target.y(e.target.y() - image.y);
-              }
-              if (image.x < 0) {
-                e.target.x(e.target.x() - image.x);
-              }
-              if (image.y + image.height > 800) {
-                e.target.y(e.target.y() - (image.y + image.height - 800));
-              }
-              if (image.x + image.width > 1200) {
-                e.target.x(e.target.x() - (image.x + image.width - 1200));
-              }
-              return;
+      <Image
+        ref={imageRef}
+        image={image}
+        x={imageInfo.location.xPos}
+        y={imageInfo.location.yPos}
+        width={imageInfo.size.width}
+        height={imageInfo.size.height}
+        rotation={imageInfo.rotation}
+        alt="img"
+        draggable
+        onClick={onSelect}
+        onTap={onSelect}
+        onDragStart={() => {
+          const data = [...bodyData];
+          data.splice(index, 1);
+          data.push(imageInfo);
+          sortArr(data);
+        }}
+        onDragMove={(e) => {
+          const image = getImage({
+            ...e.target.attrs,
+            rotation: newBox?.rotation,
+          });
+          if (newBox) {
+            if (image.y < 0) {
+              e.target.y(e.target.y() - image.y);
             }
+            if (image.x < 0) {
+              e.target.x(e.target.x() - image.x);
+            }
+            if (image.y + image.height > 800) {
+              e.target.y(e.target.y() - (image.y + image.height - 800));
+            }
+            if (image.x + image.width > 1200) {
+              e.target.x(e.target.x() - (image.x + image.width - 1200));
+            }
+            return;
+          }
 
-            e.target.y(Math.max(e.target.y(), 0));
-            e.target.x(Math.max(e.target.x(), 0));
-            e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
-            e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
-          }}
-          onDragEnd={(e) => {
-            setIsDragging(false);
-            const node = imageRef.current;
-            onChange({
-              ...imageInfo,
-              location: {
-                xPos: e.target.x(),
-                yPos: e.target.y(),
-              },
-              size: {
-                width: node.width(),
-                height: node.height(),
-              },
-            });
-            // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-            // console.log(bodyData);
-          }}
-          onTransformEnd={(e) => {
-            const node = imageRef.current;
-            const scaleX = node.scaleX();
-            const scaleY = node.scaleY();
-            node.scaleX(1);
-            node.scaleY(1);
-            onChange({
-              ...imageInfo,
-              location: {
-                xPos: node.x(),
-                yPos: node.y(),
-              },
-              rotation: node.rotation(),
-              size: {
-                width: Math.max(5, node.width() * scaleX),
-                height: Math.max(node.height() * scaleY),
-              },
-            });
-            // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-            // console.log(bodyData);
-          }}
-        />
-      </Portal>
+          e.target.y(Math.max(e.target.y(), 0));
+          e.target.x(Math.max(e.target.x(), 0));
+          e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
+          e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
+        }}
+        onDragEnd={(e) => {
+          const node = imageRef.current;
+          onChange({
+            ...imageInfo,
+            location: {
+              xPos: e.target.x(),
+              yPos: e.target.y(),
+            },
+            size: {
+              width: node.width(),
+              height: node.height(),
+            },
+          });
+          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+          // console.log(bodyData);
+        }}
+        onTransformEnd={(e) => {
+          const node = imageRef.current;
+          const scaleX = node.scaleX();
+          const scaleY = node.scaleY();
+          node.scaleX(1);
+          node.scaleY(1);
+          onChange({
+            ...imageInfo,
+            location: {
+              xPos: node.x(),
+              yPos: node.y(),
+            },
+            rotation: node.rotation(),
+            size: {
+              width: Math.max(5, node.width() * scaleX),
+              height: Math.max(node.height() * scaleY),
+            },
+          });
+          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+          // console.log(bodyData);
+        }}
+      />
       {isSelected && (
         <Transformer
           ref={trRef}
