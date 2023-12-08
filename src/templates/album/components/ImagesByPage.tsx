@@ -1,69 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
-
-interface ImagePropType {
-  bodyData: any;
-  sortArr: (data: any) => void;
-  imageInfo: {
-    id: number;
-    src: string;
-    location: {
-      xPos: number;
-      yPos: number;
-    };
-    size: {
-      width: number;
-      height: number;
-    };
-    rotation: number;
-  };
-  index: number;
-  selectedImageId: number;
-  isSelected: boolean;
-  onSelect: () => void;
-  onChange: (e: any) => void;
-}
-
-const getCorner = (
-  pivotX: number,
-  pivotY: number,
-  diffX: number,
-  diffY: number,
-  angle: number
-) => {
-  const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-
-  /// find angle from pivot to corner
-  angle += Math.atan2(diffY, diffX);
-
-  /// get new x and y and round it off to integer
-  const x = pivotX + distance * Math.cos(angle);
-  const y = pivotY + distance * Math.sin(angle);
-
-  return { x: x, y: y };
-};
-const getImage = (rotatedImg: any) => {
-  const { x, y, width, height } = rotatedImg;
-  const rad = rotatedImg.rotation;
-
-  const p1 = getCorner(x, y, 0, 0, rad);
-  const p2 = getCorner(x, y, width, 0, rad);
-  const p3 = getCorner(x, y, width, height, rad);
-  const p4 = getCorner(x, y, 0, height, rad);
-
-  const minX = Math.min(p1.x, p2.x, p3.x, p4.x);
-  const minY = Math.min(p1.y, p2.y, p3.y, p4.y);
-  const maxX = Math.max(p1.x, p2.x, p3.x, p4.x);
-  const maxY = Math.max(p1.y, p2.y, p3.y, p4.y);
-
-  return {
-    x: minX,
-    y: minY,
-    width: maxX - minX,
-    height: maxY - minY,
-  };
-};
+import Konva from "konva";
+import type { ImagePropsType, TransformedBoxType } from "../types";
+import { getImageMinMaxValue } from "../lib/utils";
 
 const ImagesByPage = ({
   bodyData,
@@ -71,29 +11,27 @@ const ImagesByPage = ({
   isSelected,
   selectedImageId,
   index,
-  sortArr,
+  reLocArr,
   onSelect,
-  onChange,
-}: ImagePropType) => {
+  onChangeAttrs,
+}: ImagePropsType) => {
   const [image] = useImage(imageInfo.src);
   const imageRef = useRef<any>(null);
-  const trRef = useRef<any>(null);
-
-  const [newBox, setNewBox] = useState<any>();
+  const trRef = useRef<Konva.Transformer>(null);
+  const [transformedBox, setTransformedBox] = useState<TransformedBoxType>();
 
   useEffect(() => {
     if (isSelected) {
-      trRef.current.nodes([imageRef.current]);
-      trRef.current.getLayer().batchDraw();
+      trRef.current?.nodes([imageRef?.current]);
+      trRef.current?.getLayer()?.batchDraw();
     }
   }, [isSelected]);
   useEffect(() => {
     const handleKeyDown = (e: any) => {
-      console.log("keydown");
       if (e.key === "Backspace" && isSelected) {
         const data = [...bodyData];
         const newData = data.filter((item) => item.id !== selectedImageId);
-        sortArr(newData);
+        reLocArr(newData);
         // setSelectedImage(null);
       }
     };
@@ -101,7 +39,7 @@ const ImagesByPage = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isSelected, selectedImageId, bodyData, sortArr]);
+  }, [isSelected, selectedImageId, bodyData, reLocArr]);
   return (
     <>
       <Image
@@ -120,14 +58,14 @@ const ImagesByPage = ({
           const data = [...bodyData];
           data.splice(index, 1);
           data.push(imageInfo);
-          sortArr(data);
+          reLocArr(data);
         }}
         onDragMove={(e) => {
-          const image = getImage({
+          const image = getImageMinMaxValue({
             ...e.target.attrs,
-            rotation: newBox?.rotation,
+            rotation: transformedBox?.rotation,
           });
-          if (newBox) {
+          if (transformedBox) {
             if (image.y < 0) {
               e.target.y(e.target.y() - image.y);
             }
@@ -150,7 +88,7 @@ const ImagesByPage = ({
         }}
         onDragEnd={(e) => {
           const node = imageRef.current;
-          onChange({
+          onChangeAttrs({
             ...imageInfo,
             location: {
               xPos: e.target.x(),
@@ -170,7 +108,7 @@ const ImagesByPage = ({
           const scaleY = node.scaleY();
           node.scaleX(1);
           node.scaleY(1);
-          onChange({
+          onChangeAttrs({
             ...imageInfo,
             location: {
               xPos: node.x(),
@@ -198,7 +136,7 @@ const ImagesByPage = ({
           // keepRatio={false}
           flipEnabled={false}
           boundBoxFunc={(oldBox, newBox) => {
-            const box = getImage(newBox);
+            const box = getImageMinMaxValue(newBox);
             const isOut =
               box.x < 0 ||
               box.y < 0 ||
@@ -207,7 +145,7 @@ const ImagesByPage = ({
             if (isOut) {
               return oldBox;
             }
-            setNewBox(newBox);
+            setTransformedBox(newBox);
             return newBox;
           }}
         />

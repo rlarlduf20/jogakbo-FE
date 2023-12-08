@@ -5,17 +5,21 @@ import Konva from "konva";
 import { Layer, Stage } from "react-konva";
 import ImagesByPage from "./components/ImagesByPage";
 import AlbumInfo from "./components/AlbumInfo";
-import { useDragExternalFiles } from "./hooks/useDragExternalFiles";
+import { useDragExternalFiles } from "./lib/hooks";
+import type { ImageType } from "./types";
 
 const AlbumSection = () => {
-  const [page, setPage] = useState(0);
-  const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
-  const [selectedImageId, setSelectedImageId] = useState<any>(null);
+  const [page, setPage] = useState<number>(0);
+  const [albumBodyData, setAlbumBodyData] =
+    useState<ImageType[][]>(albumMockDataList);
+  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
   const stageRef = useRef<Konva.Stage>(null);
 
   const isDragging = useDragExternalFiles(stageRef);
 
-  const imageFocus = (e: any) => {
+  const imageFocus = (
+    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
+  ) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       setSelectedImageId(null);
@@ -30,7 +34,7 @@ const AlbumSection = () => {
     setSelectedImageId(null);
     setPage((prev) => prev + 1);
   };
-  console.log(albumBodyData);
+
   return (
     <section>
       <AlbumInfo
@@ -58,7 +62,7 @@ const AlbumSection = () => {
               onSelect={() => {
                 setSelectedImageId(item.id);
               }}
-              onChange={(newAttrs: any) => {
+              onChangeAttrs={(newAttrs: ImageType) => {
                 setAlbumBodyData((prevData) => {
                   const newData = [...prevData];
                   newData[page][index] = newAttrs;
@@ -66,10 +70,10 @@ const AlbumSection = () => {
                   return newData;
                 });
               }}
-              sortArr={(data: any) => {
+              reLocArr={(newImageArr: ImageType[]) => {
                 setAlbumBodyData((prevData) => {
                   const newData = [...prevData];
-                  newData[page] = data;
+                  newData[page] = newImageArr;
 
                   return newData;
                 });
