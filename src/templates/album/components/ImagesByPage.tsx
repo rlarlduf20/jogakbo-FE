@@ -1,45 +1,45 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
-
-interface ImagePropType {
-  bodyData: any;
-  imageInfo: {
-    src: string;
-    location: {
-      xPos: number;
-      yPos: number;
-    };
-    size: {
-      width: number;
-      height: number;
-    };
-    rotation: number;
-  };
-  isSelected: boolean;
-  onSelect: () => void;
-  onChange: (e: any) => void;
-}
+import Konva from "konva";
+import type { ImagePropsType, TransformedBoxType } from "../types";
+import { getImageMinMaxValue } from "../lib/utils";
 
 const ImagesByPage = ({
   bodyData,
   imageInfo,
   isSelected,
+  selectedImageId,
+  index,
+  reLocArr,
   onSelect,
-  onChange,
-}: ImagePropType) => {
+  onChangeAttrs,
+}: ImagePropsType) => {
   const [image] = useImage(imageInfo.src);
   const imageRef = useRef<any>(null);
-  const trRef = useRef<any>(null);
+  const trRef = useRef<Konva.Transformer>(null);
+  const [transformedBox, setTransformedBox] = useState<TransformedBoxType>();
 
   useEffect(() => {
     if (isSelected) {
-      // we need to attach transformer manually
-      trRef.current.nodes([imageRef.current]);
-      trRef.current.getLayer().batchDraw();
+      trRef.current?.nodes([imageRef?.current]);
+      trRef.current?.getLayer()?.batchDraw();
     }
   }, [isSelected]);
-
+  useEffect(() => {
+    const handleKeyDown = (e: any) => {
+      if (e.key === "Backspace" && isSelected) {
+        const data = [...bodyData];
+        const newData = data.filter((item) => item.id !== selectedImageId);
+        reLocArr(newData);
+        // setSelectedImage(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isSelected, selectedImageId, bodyData, reLocArr]);
   return (
     <>
       <Image
@@ -54,9 +54,41 @@ const ImagesByPage = ({
         draggable
         onClick={onSelect}
         onTap={onSelect}
+        onDragStart={() => {
+          const data = [...bodyData];
+          data.splice(index, 1);
+          data.push(imageInfo);
+          reLocArr(data);
+        }}
+        onDragMove={(e) => {
+          const image = getImageMinMaxValue({
+            ...e.target.attrs,
+            rotation: transformedBox?.rotation,
+          });
+          if (transformedBox) {
+            if (image.y < 0) {
+              e.target.y(e.target.y() - image.y);
+            }
+            if (image.x < 0) {
+              e.target.x(e.target.x() - image.x);
+            }
+            if (image.y + image.height > 800) {
+              e.target.y(e.target.y() - (image.y + image.height - 800));
+            }
+            if (image.x + image.width > 1200) {
+              e.target.x(e.target.x() - (image.x + image.width - 1200));
+            }
+            return;
+          }
+
+          e.target.y(Math.max(e.target.y(), 0));
+          e.target.x(Math.max(e.target.x(), 0));
+          e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
+          e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
+        }}
         onDragEnd={(e) => {
           const node = imageRef.current;
-          onChange({
+          onChangeAttrs({
             ...imageInfo,
             location: {
               xPos: e.target.x(),
@@ -68,16 +100,15 @@ const ImagesByPage = ({
             },
           });
           // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          console.log(bodyData);
+          // console.log(bodyData);
         }}
         onTransformEnd={(e) => {
           const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
           node.scaleX(1);
           node.scaleY(1);
-          onChange({
+          onChangeAttrs({
             ...imageInfo,
             location: {
               xPos: node.x(),
@@ -90,17 +121,31 @@ const ImagesByPage = ({
             },
           });
           // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          console.log(bodyData);
+          // console.log(bodyData);
         }}
       />
       {isSelected && (
         <Transformer
           ref={trRef}
+          enabledAnchors={[
+            "top-left",
+            "top-right",
+            "bottom-left",
+            "bottom-right",
+          ]}
+          // keepRatio={false}
           flipEnabled={false}
           boundBoxFunc={(oldBox, newBox) => {
-            if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
+            const box = getImageMinMaxValue(newBox);
+            const isOut =
+              box.x < 0 ||
+              box.y < 0 ||
+              box.x + box.width > 1200 ||
+              box.y + box.height > 800;
+            if (isOut) {
               return oldBox;
             }
+            setTransformedBox(newBox);
             return newBox;
           }}
         />

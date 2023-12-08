@@ -5,20 +5,21 @@ import Konva from "konva";
 import { Layer, Stage } from "react-konva";
 import ImagesByPage from "./components/ImagesByPage";
 import AlbumInfo from "./components/AlbumInfo";
-import { useDragExternalFiles } from "./hooks/useDragExternalFiles";
+import { useDragExternalFiles } from "./lib/hooks";
+import type { ImageType } from "./types";
 
 const AlbumSection = () => {
-  const [page, setPage] = useState(1);
-  const [albumBodyData, setAlbumBodyData] = useState(albumMockDataList);
-  const [selectedImageId, setSelectedImageId] = useState<any>(null);
+  const [page, setPage] = useState<number>(0);
+  const [albumBodyData, setAlbumBodyData] =
+    useState<ImageType[][]>(albumMockDataList);
+  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
   const stageRef = useRef<Konva.Stage>(null);
 
   const isDragging = useDragExternalFiles(stageRef);
-  const albumBodyDataByPage = albumBodyData.find(
-    (data: any) => data.page === page
-  );
 
-  const imageFocus = (e: any) => {
+  const imageFocus = (
+    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
+  ) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
       setSelectedImageId(null);
@@ -50,19 +51,29 @@ const AlbumSection = () => {
         onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
-          {albumBodyDataByPage?.imgList.map((item, index) => (
+          {albumBodyData[page].map((item, index) => (
             <ImagesByPage
-              bodyData={albumBodyData}
+              bodyData={albumBodyData[page]}
               imageInfo={item}
-              key={index}
+              index={index}
+              key={item.id}
+              selectedImageId={selectedImageId}
               isSelected={item.id === selectedImageId}
               onSelect={() => {
                 setSelectedImageId(item.id);
               }}
-              onChange={(newAttrs: any) => {
+              onChangeAttrs={(newAttrs: ImageType) => {
                 setAlbumBodyData((prevData) => {
                   const newData = [...prevData];
-                  newData[page - 1].imgList[index] = newAttrs;
+                  newData[page][index] = newAttrs;
+
+                  return newData;
+                });
+              }}
+              reLocArr={(newImageArr: ImageType[]) => {
+                setAlbumBodyData((prevData) => {
+                  const newData = [...prevData];
+                  newData[page] = newImageArr;
 
                   return newData;
                 });

@@ -6,6 +6,7 @@ export const useDragExternalFiles = (
   stageRef: React.RefObject<Konva.Stage>
 ) => {
   const [isDragging, setIsDragging] = useState(false);
+
   useEffect(() => {
     const stage = stageRef.current?.getStage();
 
@@ -18,11 +19,23 @@ export const useDragExternalFiles = (
       setIsDragging(false);
       e.stopPropagation();
       e.preventDefault();
+      // 이미지 사이즈
+      // const reader = new FileReader();
+      // reader.readAsArrayBuffer(files);
+
+      // reader.onload = () => {
+      //   const image: any = new Image();
+      //   image.src = reader.result;
+      //   image.onload = () => {
+      //     console.log("넓이", image.width, image.height);
+      //   };
+      // };
 
       if (files) {
         const isImageFile = Array.from(files).every((file: any) =>
           file.type.includes("image")
         );
+        console.log(isImageFile);
         if (!isImageFile) {
           alert("이미지 파일만 업로드 가능합니다.");
           e.stopPropagation();
