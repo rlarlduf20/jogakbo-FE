@@ -53,6 +53,7 @@ const AlbumSection = () => {
               imageInfo={item}
               index={index}
               key={item.id}
+              selectedImageId={selectedImageId}
               isSelected={item.id === selectedImageId}
               onSelect={() => {
                 setSelectedImageId(item.id);

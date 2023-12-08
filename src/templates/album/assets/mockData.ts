@@ -42,6 +42,20 @@ export const albumMockDataList = [
       size: { width: 300, height: 100 },
       rotation: 0,
     },
+    {
+      id: 2,
+      src: "/images/rabbit.png",
+      location: { xPos: 100, yPos: 70 },
+      size: { width: 200, height: 400 },
+      rotation: 0,
+    },
+    {
+      id: 3,
+      src: "/images/smileBall.png",
+      location: { xPos: 100, yPos: 10 },
+      size: { width: 300, height: 300 },
+      rotation: 30,
+    },
   ],
   [
     {

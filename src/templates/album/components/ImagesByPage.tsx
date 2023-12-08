@@ -19,6 +19,7 @@ interface ImagePropType {
     rotation: number;
   };
   index: number;
+  selectedImageId: number;
   isSelected: boolean;
   onSelect: () => void;
   onChange: (e: any) => void;
@@ -68,6 +69,7 @@ const ImagesByPage = ({
   bodyData,
   imageInfo,
   isSelected,
+  selectedImageId,
   index,
   sortArr,
   onSelect,
@@ -85,6 +87,21 @@ const ImagesByPage = ({
       trRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
+  useEffect(() => {
+    const handleKeyDown = (e: any) => {
+      console.log("keydown");
+      if (e.key === "Backspace" && isSelected) {
+        const data = [...bodyData];
+        const newData = data.filter((item) => item.id !== selectedImageId);
+        sortArr(newData);
+        // setSelectedImage(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isSelected, selectedImageId, bodyData, sortArr]);
   return (
     <>
       <Image
