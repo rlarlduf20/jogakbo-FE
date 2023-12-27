@@ -1,9 +1,8 @@
 export interface ImageType {
-  id: number;
-  src: string;
+  imageUUID: string;
   location: {
-    xPos: number;
-    yPos: number;
+    x: number;
+    y: number;
   };
   size: {
     width: number;
@@ -17,7 +16,7 @@ export interface ImagePropsType {
   bodyData: ImageType[];
   reLocArr: (data: ImageType[]) => void;
   index: number;
-  selectedImageId: number | null;
+  selectedImageId: string | null;
   isSelected: boolean;
   onSelect: () => void;
   onChangeAttrs: (data: ImageType) => void;

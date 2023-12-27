@@ -7,10 +7,8 @@ const getCorner = (
 ) => {
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
 
-  /// find angle from pivot to corner
   angle += Math.atan2(diffY, diffX);
 
-  /// get new x and y and round it off to integer
   const x = pivotX + distance * Math.cos(angle);
   const y = pivotY + distance * Math.sin(angle);
 
@@ -36,4 +34,58 @@ export const getImageMinMaxValue = (rotatedImg: any) => {
     width: maxX - minX,
     height: maxY - minY,
   };
+};
+
+export const parsingImagesSize = (files: any, position: any): any => {
+  const promises = Array.from(files).map((file: any, index: number) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        const image: any = new Image();
+        image.src = reader.result as string;
+
+        image.onload = () => {
+          let resultObject = {};
+          let x, y;
+          let tmpWidth = image.width;
+          let tmpHeight = image.height;
+          if (image.width > 1200) {
+            image.width = image.width / Math.ceil(tmpWidth / 1200);
+            image.height = image.height / Math.ceil(tmpWidth / 1200);
+          }
+          if (image.height > 800) {
+            image.width = image.width / Math.ceil(tmpHeight / 800);
+            image.height = image.height / Math.ceil(tmpHeight / 800);
+          }
+          if (position.x + image.width > 1200) {
+            x = 1200 - image.width;
+          } else {
+            x = position.x;
+          }
+          if (position.y + image.height > 800) {
+            y = 800 - image.height;
+          } else {
+            y = position.y;
+          }
+
+          resultObject = {
+            imageUUID: image.src,
+            size: { width: image.width, height: image.height },
+            location: { x, y },
+            rotation: 0,
+          };
+
+          resolve(resultObject);
+        };
+      };
+
+      reader.onerror = () => {
+        reject(new Error(`파일 읽기 오류: ${file.name}`));
+      };
+    });
+  });
+
+  return Promise.all(promises);
 };
