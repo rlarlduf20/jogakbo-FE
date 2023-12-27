@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { albumMockDataList } from "./assets/mockData";
+import { Client } from "@stomp/stompjs";
+import { useSession } from "next-auth/react";
 import Konva from "konva";
 import { Layer, Stage } from "react-konva";
 import ImagesByPage from "./components/ImagesByPage";
@@ -10,25 +11,64 @@ import { parsingImagesSize } from "./lib/utils";
 
 const AlbumSection = () => {
   const [page, setPage] = useState<number>(0);
-  const [albumBodyData, setAlbumBodyData] =
-    useState<ImageType[][]>(albumMockDataList);
-  const [selectedImageId, setSelectedImageId] = useState<number | null>(null);
+  const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
+  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const stageRef = useRef<Konva.Stage>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const client = useRef<any>({});
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    let accessToken = session?.jogakTokens.accessToken;
+    client.current = new Client({
+      brokerURL: `ws://${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/album-ws`,
+      connectHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      onConnect: () => {
+        console.log("연결 성공");
+        client.current.subscribe("/topic/sub", (body: any) => {
+          console.log("받아오기 성공");
+          const json_body = body.body;
+          console.log("socket data", json_body);
+          setAlbumBodyData(JSON.parse(json_body));
+        });
+      },
+    });
+    client.current.activate();
+    return () => {
+      console.log("연결 해제");
+      client.current.deactivate();
+    };
+  }, [session]);
 
   useEffect(() => {
     const stage = stageRef.current?.getStage();
-    const pushData = (data: any) => {
-      setAlbumBodyData((prevData: any) => {
-        const newData = [...prevData];
-        newData[page] = newData[page].concat(data);
+    const pushData = async (data: any, formData: any) => {
+      // setAlbumBodyData((prevData: any) => {
+      //   const newData = [...prevData];
+      //   newData[page] = newData[page].concat(data);
 
-        return newData;
+      //   return newData;
+      // });
+      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/album/img/1`, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
+        },
       });
+
+      // const resJson = await res.json();
+      // setAlbumBodyData(resJson);
     };
+
     const handleDragOver = (e: any) => {
       setIsDragging(true);
-
+      e.preventDefault();
+    };
+    const handleDragLeave = (e: any) => {
+      setIsDragging(false);
       e.preventDefault();
     };
     const handleDrop = async (e: any) => {
@@ -50,17 +90,27 @@ const AlbumSection = () => {
           return;
         }
         // 드랍한 외부 이미지 파일 정보 서버로 보내기
-        const res = await parsingImagesSize(
+        const dropImgInfo = await parsingImagesSize(
           files,
-          stageRef.current?.getPointerPosition(),
-          albumBodyData[page].length - 1
+          stageRef.current?.getPointerPosition()
         );
-        pushData(res);
+        const formData = new FormData();
+        let fileInfo: any = [];
+
+        for (let i = 0; i < files.length; i++) {
+          let obj = {
+            page: page,
+            size: dropImgInfo[i].size,
+            location: dropImgInfo[i].location,
+            rotation: 0,
+          };
+          formData.append(`multipartFiles`, files[i]);
+
+          fileInfo.push(obj);
+        }
+        formData.append("fileInfos", JSON.stringify(fileInfo));
+        pushData(dropImgInfo, formData);
       }
-    };
-    const handleDragLeave = (e: any) => {
-      setIsDragging(false);
-      e.preventDefault();
     };
 
     stage?.container().addEventListener("dragover", handleDragOver);
@@ -72,7 +122,7 @@ const AlbumSection = () => {
       stage?.container().removeEventListener("drop", handleDrop);
       stage?.container().removeEventListener("dragleave", handleDragLeave);
     };
-  }, [page, albumBodyData]);
+  }, [page, albumBodyData, session?.jogakTokens.accessToken]);
 
   const imageFocus = (
     e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
@@ -82,22 +132,26 @@ const AlbumSection = () => {
       setSelectedImageId(null);
     }
   };
+  const publish = (msg: string) => {
+    if (!client.current.connected) return;
 
-  const movePrevPage = () => {
-    setSelectedImageId(null);
-    setPage((prev) => prev - 1);
+    client.current.publish({
+      destination: "/app/img",
+      body: msg,
+    });
   };
-  const moveNextPage = () => {
-    setSelectedImageId(null);
-    setPage((prev) => prev + 1);
-  };
-
   return (
     <section>
       <AlbumInfo
         page={page}
-        movePrevPage={movePrevPage}
-        moveNextPage={moveNextPage}
+        movePrevPage={() => {
+          setSelectedImageId(null);
+          setPage((prev) => prev - 1);
+        }}
+        moveNextPage={() => {
+          setSelectedImageId(null);
+          setPage((prev) => prev + 1);
+        }}
       />
       <Stage
         width={1200}
@@ -108,23 +162,41 @@ const AlbumSection = () => {
         onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
-          {albumBodyData[page].map((item, index) => (
+          {albumBodyData[page]?.map((item, index) => (
             <ImagesByPage
               bodyData={albumBodyData[page]}
               imageInfo={item}
               index={index}
-              key={item.id}
+              key={item.imageUUID}
               selectedImageId={selectedImageId}
-              isSelected={item.id === selectedImageId}
+              isSelected={item.imageUUID === selectedImageId}
               onSelect={() => {
-                setSelectedImageId(item.id);
+                setSelectedImageId(item.imageUUID);
               }}
               onChangeAttrs={(newAttrs: ImageType) => {
-                setAlbumBodyData((prevData) => {
-                  const newData = [...prevData];
-                  newData[page][index] = newAttrs;
-                  return newData;
-                });
+                let arr = [];
+                let obj = {
+                  imageUUID: newAttrs.imageUUID,
+                  imageInfo: {
+                    page,
+                    location: {
+                      x: newAttrs.location.x,
+                      y: newAttrs.location.y,
+                    },
+                    size: {
+                      width: newAttrs.size.width,
+                      height: newAttrs.size.height,
+                    },
+                    rotation: newAttrs.rotation,
+                  },
+                };
+                arr.push(obj);
+                publish(JSON.stringify(arr));
+                // setAlbumBodyData((prevData) => {
+                //   const newData = [...prevData];
+                //   newData[page][index] = newAttrs;
+                //   return newData;
+                // });
               }}
               reLocArr={(newImageArr: ImageType[]) => {
                 setAlbumBodyData((prevData) => {

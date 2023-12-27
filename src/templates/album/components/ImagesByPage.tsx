@@ -15,7 +15,9 @@ const ImagesByPage = ({
   onSelect,
   onChangeAttrs,
 }: ImagePropsType) => {
-  const [image] = useImage(imageInfo.src);
+  const [image] = useImage(
+    `${process.env.NEXT_PUBLIC_S3_URL}${imageInfo.imageUUID}`
+  );
   const imageRef = useRef<any>(null);
   const trRef = useRef<Konva.Transformer>(null);
   const [transformedBox, setTransformedBox] = useState<TransformedBoxType>();
@@ -30,7 +32,9 @@ const ImagesByPage = ({
     const handleKeyDown = (e: any) => {
       if (e.key === "Backspace" && isSelected) {
         const data = [...bodyData];
-        const newData = data.filter((item) => item.id !== selectedImageId);
+        const newData = data.filter(
+          (item) => item.imageUUID !== selectedImageId
+        );
         reLocArr(newData);
         // setSelectedImage(null);
       }
@@ -40,13 +44,14 @@ const ImagesByPage = ({
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isSelected, selectedImageId, bodyData, reLocArr]);
+
   return (
     <>
       <Image
         ref={imageRef}
         image={image}
-        x={imageInfo.location.xPos}
-        y={imageInfo.location.yPos}
+        x={imageInfo.location.x}
+        y={imageInfo.location.y}
         width={imageInfo.size.width}
         height={imageInfo.size.height}
         rotation={imageInfo.rotation}
@@ -85,20 +90,34 @@ const ImagesByPage = ({
           e.target.x(Math.max(e.target.x(), 0));
           e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
           e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
+
+          onChangeAttrs({
+            ...imageInfo,
+
+            location: {
+              x: e.target.x(),
+              y: e.target.y(),
+            },
+            // size: {
+            //   width: node.width(),
+            //   height: node.height(),
+            // },
+          });
         }}
         onDragEnd={(e) => {
           const node = imageRef.current;
-          onChangeAttrs({
-            ...imageInfo,
-            location: {
-              xPos: e.target.x(),
-              yPos: e.target.y(),
-            },
-            size: {
-              width: node.width(),
-              height: node.height(),
-            },
-          });
+          // onChangeAttrs({
+          //   ...imageInfo,
+
+          //   location: {
+          //     x: e.target.x(),
+          //     y: e.target.y(),
+          //   },
+          //   size: {
+          //     width: node.width(),
+          //     height: node.height(),
+          //   },
+          // });
           // 서버에 바뀐 정보를 포함한 전체 이미지 전송
           // console.log(bodyData);
         }}
@@ -111,8 +130,8 @@ const ImagesByPage = ({
           onChangeAttrs({
             ...imageInfo,
             location: {
-              xPos: node.x(),
-              yPos: node.y(),
+              x: node.x(),
+              y: node.y(),
             },
             rotation: node.rotation(),
             size: {
@@ -133,7 +152,6 @@ const ImagesByPage = ({
             "bottom-left",
             "bottom-right",
           ]}
-          // keepRatio={false}
           flipEnabled={false}
           boundBoxFunc={(oldBox, newBox) => {
             const box = getImageMinMaxValue(newBox);

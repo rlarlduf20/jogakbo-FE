@@ -7,10 +7,8 @@ const getCorner = (
 ) => {
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
 
-  /// find angle from pivot to corner
   angle += Math.atan2(diffY, diffX);
 
-  /// get new x and y and round it off to integer
   const x = pivotX + distance * Math.cos(angle);
   const y = pivotY + distance * Math.sin(angle);
 
@@ -38,11 +36,7 @@ export const getImageMinMaxValue = (rotatedImg: any) => {
   };
 };
 
-export const parsingImagesSize = (
-  files: any,
-  position: any,
-  id: number
-): Promise<any[]> => {
+export const parsingImagesSize = (files: any, position: any): any => {
   const promises = Array.from(files).map((file: any, index: number) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -75,15 +69,11 @@ export const parsingImagesSize = (
           } else {
             y = position.y;
           }
-          console.log("x,y", image.width, image.height);
+
           resultObject = {
-            id: id + index + 1,
-            src: image.src,
+            imageUUID: image.src,
             size: { width: image.width, height: image.height },
-            location: {
-              xPos: x,
-              yPos: y,
-            },
+            location: { x, y },
             rotation: 0,
           };
 
