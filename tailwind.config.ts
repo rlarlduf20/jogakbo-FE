@@ -8,8 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        main_black: "#151515",
+        test_green: "#56AD65",
+      },
       width: {
         inner: "1200px",
+      },
+      fontFamily: {
+        sans: ["var(--font-SUIT)", "sans-serif"],
       },
     },
   },
