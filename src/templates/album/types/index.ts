@@ -14,7 +14,7 @@ export interface ImageType {
 export interface ImagePropsType {
   imageInfo: ImageType;
   bodyData: ImageType[];
-  reLocArr: (data: ImageType[]) => void;
+  // reLocArr: (data: ImageType[]) => void;
   index: number;
   selectedImageId: string | null;
   isSelected: boolean;
