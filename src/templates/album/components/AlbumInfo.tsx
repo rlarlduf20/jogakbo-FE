@@ -18,7 +18,7 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
       </button>
       <input className="border-2 block m-auto" />
       <button className="hover:cursor-pointer" onClick={moveNextPage}>
-        생성
+        다음
       </button>
     </div>
   );

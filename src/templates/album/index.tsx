@@ -28,9 +28,8 @@ const AlbumSection = () => {
       onConnect: () => {
         console.log("연결 성공");
         client.current.subscribe("/topic/sub", (body: any) => {
-          console.log("받아오기 성공");
           const json_body = body.body;
-          console.log("socket data", json_body);
+          console.log("socket data", JSON.parse(json_body));
           setAlbumBodyData(JSON.parse(json_body));
         });
       },
@@ -122,7 +121,7 @@ const AlbumSection = () => {
       stage?.container().removeEventListener("drop", handleDrop);
       stage?.container().removeEventListener("dragleave", handleDragLeave);
     };
-  }, [page, albumBodyData, session?.jogakTokens.accessToken]);
+  }, [page, session?.jogakTokens.accessToken]);
 
   const imageFocus = (
     e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
@@ -134,11 +133,33 @@ const AlbumSection = () => {
   };
   const publish = (msg: string) => {
     if (!client.current.connected) return;
-
+    console.log("msg", msg);
     client.current.publish({
       destination: "/app/img",
       body: msg,
     });
+  };
+  const handleNextBtnClick = async () => {
+    if (!albumBodyData[page] || albumBodyData[page].length === 0) {
+      alert("페이지 추가를 위해서는 적어도 한장의 사진이 필요합니다.");
+      return;
+    }
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/album/page`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      alert("에러가 발생했습니다. 다시 시도해주세요.");
+      console.error(res);
+      return;
+    }
+    setSelectedImageId(null);
+    setPage((prev) => prev + 1);
   };
   return (
     <section>
@@ -148,10 +169,7 @@ const AlbumSection = () => {
           setSelectedImageId(null);
           setPage((prev) => prev - 1);
         }}
-        moveNextPage={() => {
-          setSelectedImageId(null);
-          setPage((prev) => prev + 1);
-        }}
+        moveNextPage={handleNextBtnClick}
       />
       <Stage
         width={1200}
@@ -174,6 +192,11 @@ const AlbumSection = () => {
                 setSelectedImageId(item.imageUUID);
               }}
               onChangeAttrs={(newAttrs: ImageType) => {
+                // setAlbumBodyData((prevData) => {
+                //   const newData = [...prevData];
+                //   newData[page][index] = newAttrs;
+                //   return newData;
+                // });
                 let arr = [];
                 let obj = {
                   imageUUID: newAttrs.imageUUID,
@@ -192,20 +215,15 @@ const AlbumSection = () => {
                 };
                 arr.push(obj);
                 publish(JSON.stringify(arr));
-                // setAlbumBodyData((prevData) => {
-                //   const newData = [...prevData];
-                //   newData[page][index] = newAttrs;
-                //   return newData;
-                // });
               }}
-              reLocArr={(newImageArr: ImageType[]) => {
-                setAlbumBodyData((prevData) => {
-                  const newData = [...prevData];
-                  newData[page] = newImageArr;
+              // reLocArr={(newImageArr: ImageType[]) => {
+              //   setAlbumBodyData((prevData) => {
+              //     const newData = [...prevData];
+              //     newData[page] = newImageArr;
 
-                  return newData;
-                });
-              }}
+              //     return newData;
+              //   });
+              // }}
             />
           ))}
         </Layer>

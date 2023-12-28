@@ -11,7 +11,7 @@ const ImagesByPage = ({
   isSelected,
   selectedImageId,
   index,
-  reLocArr,
+  // reLocArr,
   onSelect,
   onChangeAttrs,
 }: ImagePropsType) => {
@@ -35,7 +35,7 @@ const ImagesByPage = ({
         const newData = data.filter(
           (item) => item.imageUUID !== selectedImageId
         );
-        reLocArr(newData);
+        // reLocArr(newData);
         // setSelectedImage(null);
       }
     };
@@ -43,7 +43,7 @@ const ImagesByPage = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isSelected, selectedImageId, bodyData, reLocArr]);
+  }, [isSelected, selectedImageId, bodyData]);
 
   return (
     <>
@@ -59,12 +59,12 @@ const ImagesByPage = ({
         draggable
         onClick={onSelect}
         onTap={onSelect}
-        onDragStart={() => {
-          const data = [...bodyData];
-          data.splice(index, 1);
-          data.push(imageInfo);
-          reLocArr(data);
-        }}
+        // onDragStart={() => {
+        //   const data = [...bodyData];
+        //   data.splice(index, 1);
+        //   data.push(imageInfo);
+        //   reLocArr(data);
+        // }}
         onDragMove={(e) => {
           const image = getImageMinMaxValue({
             ...e.target.attrs,
@@ -104,24 +104,24 @@ const ImagesByPage = ({
             // },
           });
         }}
-        onDragEnd={(e) => {
-          const node = imageRef.current;
-          // onChangeAttrs({
-          //   ...imageInfo,
+        // onDragEnd={(e) => {
+        //   const node = imageRef.current;
+        // onChangeAttrs({
+        //   ...imageInfo,
 
-          //   location: {
-          //     x: e.target.x(),
-          //     y: e.target.y(),
-          //   },
-          //   size: {
-          //     width: node.width(),
-          //     height: node.height(),
-          //   },
-          // });
-          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          // console.log(bodyData);
-        }}
-        onTransformEnd={(e) => {
+        //   location: {
+        //     x: e.target.x(),
+        //     y: e.target.y(),
+        //   },
+        //   size: {
+        //     width: node.width(),
+        //     height: node.height(),
+        //   },
+        // });
+        // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+        // console.log(bodyData);
+        // }}
+        onTransform={(e) => {
           const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
@@ -139,9 +139,28 @@ const ImagesByPage = ({
               height: Math.max(node.height() * scaleY),
             },
           });
-          // 서버에 바뀐 정보를 포함한 전체 이미지 전송
-          // console.log(bodyData);
         }}
+        // onTransformEnd={(e) => {
+        //   const node = imageRef.current;
+        //   const scaleX = node.scaleX();
+        //   const scaleY = node.scaleY();
+        //   node.scaleX(1);
+        //   node.scaleY(1);
+        //   onChangeAttrs({
+        //     ...imageInfo,
+        //     location: {
+        //       x: node.x(),
+        //       y: node.y(),
+        //     },
+        //     rotation: node.rotation(),
+        //     size: {
+        //       width: Math.max(5, node.width() * scaleX),
+        //       height: Math.max(node.height() * scaleY),
+        //     },
+        //   });
+        //   // 서버에 바뀐 정보를 포함한 전체 이미지 전송
+        //   // console.log(bodyData);
+        // }}
       />
       {isSelected && (
         <Transformer
