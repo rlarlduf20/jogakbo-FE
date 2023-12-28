@@ -11,6 +11,9 @@ const config: Config = {
       width: {
         inner: "1200px",
       },
+      fontFamily: {
+        sans: ["var(--font-SUIT)", "sans-serif"],
+      },
     },
   },
   plugins: [],

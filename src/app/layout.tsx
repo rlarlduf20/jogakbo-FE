@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import AuthSessionProvider from "@/components/provider/SessionProvider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { SUITFont } from "./fonts";
 
 export const metadata: Metadata = {
   title: "조각보",
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en">
+    <html lang="en" className={`${SUITFont.variable}`}>
       <body>
         <AuthSessionProvider>
           <Header />
