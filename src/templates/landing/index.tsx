@@ -1,6 +1,11 @@
+import Trapezoid from "@/components/shape/Trapezoid";
+
 const LandingSection = async () => {
   return (
-    <div className="text-xl font-bold text-test_green">지금 시작하세요!</div>
+    <>
+      <div className="text-xl font-bold text-test_green">지금 시작하세요!</div>
+      <Trapezoid>사다리</Trapezoid>
+    </>
   );
 };
 
