@@ -1,17 +1,23 @@
-const Trapezoid = (props: any) => {
+interface TrapezoidPropsType {
+  styles: {
+    width: string;
+    height: string;
+    bgImg?: string;
+    clipPath: string;
+  };
+  children?: any;
+}
+
+const Trapezoid = (props: TrapezoidPropsType) => {
+  const { styles } = props;
   const trapezoidStyles = {
-    "background-color": "blue",
-    color: "white",
-    width: "100px",
-    height: "100px",
-    "clip-path": "polygon(0 0, 30% 0, 58% 100%, 0% 100%)",
+    backgroundColor: "lightgray",
+    width: styles.width,
+    height: styles.height,
+    clipPath: styles.clipPath,
   };
 
-  return (
-    <div className="trapzoid" style={trapezoidStyles}>
-      {props.children}
-    </div>
-  );
+  return <div style={trapezoidStyles}>{props.children}</div>;
 };
 
 export default Trapezoid;
