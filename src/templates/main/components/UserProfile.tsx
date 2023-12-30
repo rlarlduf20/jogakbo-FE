@@ -17,17 +17,17 @@ const UserProfile = () => {
         <p className="text-[24px] font-semibold mb-[16px]">{userInfo.name}</p>
         <div className="mb-[16px]">
           <div className="flex h-[20px] mb-[18px] items-center font-medium">
-            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-black w-[10px] h-[20px] mr-[8px]" />
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">친구</p>
             <p>{userInfo.mateNum}</p>
           </div>
           <div className="flex mb-[18px] items-center font-medium">
-            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-black w-[10px] h-[20px] mr-[8px]" />
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각보</p>
             <p>{userInfo.jogakboNum}</p>
           </div>
           <div className="flex items-center font-medium">
-            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-black w-[10px] h-[20px] mr-[8px]" />
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각</p>
             <p>{userInfo.jogakNum}</p>
           </div>

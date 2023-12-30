@@ -1,3 +1,9 @@
 @tailwind base;
+@layer base {
+  html {
+    @apply bg-main_black;
+    @apply text-white;
+  }
+}
 @tailwind components;
 @tailwind utilities;
