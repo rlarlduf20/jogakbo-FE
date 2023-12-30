@@ -2,11 +2,27 @@ import Link from "next/link";
 
 const UserAlbums = () => {
   return (
-    <>
-      <Link href="/album" className="ml-24">
-        앨범 생성
-      </Link>
-    </>
+    <div className="w-full">
+      <div className="mb-[30px]">
+        <Link href="/album" className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path d="M5.5 0V16H11.5L9.7 0H5.5Z" fill="white" />
+            <path
+              d="M16 5.5L0 5.5L-2.62268e-07 11.5L16 9.7L16 5.5Z"
+              fill="white"
+            />
+          </svg>
+          <p className="ml-[5px]">새로운 조각보 만들기</p>
+        </Link>
+      </div>
+      <div className="border border-white-500 w-full h-[500px]"></div>
+    </div>
   );
 };
 
