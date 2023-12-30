@@ -9,27 +9,22 @@ export const albumInfo = [
   {
     title: "부산 여행",
     access: "owner",
-    tags: ["여행", "1박 2일"],
   },
   {
     title: "일상",
-    access: "follow",
-    tags: [],
+    access: "all",
   },
   {
     title: "비버",
     access: "all",
-    tags: ["비버"],
   },
   {
     title: "가족 여행 - 제주도",
     access: "owner",
-    tags: ["3박 4일"],
   },
   {
     title: "유럽에서 한달 살기 - 2023.11.25 ~ 2023.12.24",
     access: "owner",
-    tags: ["프랑스", "독일", "이탈리아", "스페인"],
   },
 ];
 
