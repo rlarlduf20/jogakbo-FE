@@ -1,3 +1,10 @@
+export const userInfo = {
+  name: "김기열",
+  mateNum: 24,
+  jogakNum: 1382,
+  jogakboNum: 211,
+};
+
 export const albumInfo = [
   {
     title: "부산 여행",
