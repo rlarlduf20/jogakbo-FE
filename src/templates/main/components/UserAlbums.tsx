@@ -1,3 +1,4 @@
+import Trapezoid from "@/components/shape/Trapezoid";
 import { albumInfo } from "@/templates/album/assets/mockData";
 import Link from "next/link";
 
@@ -24,8 +25,16 @@ const UserAlbums = () => {
       </div>
       <div className="flex gap-[10px] border border-white-500 w-full h-[500px]">
         {albumInfo.map((item, index) => (
-          <div key={index} className="w-[70px] h-[200px] bg-slate-300">
-            {item.title}
+          <div key={index}>
+            <Trapezoid
+              styles={{
+                width: "70px",
+                height: "200px",
+                clipPath: "polygon(0 0, 80% 0, 100% 100%, 0% 100%)",
+              }}
+            >
+              <p>{item.title}</p>
+            </Trapezoid>
           </div>
         ))}
       </div>
