@@ -37,9 +37,8 @@ const Albums = () => {
                 <Image
                   src={item.src}
                   alt="thumbnail"
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="center"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
                 />
               )}
               <p
