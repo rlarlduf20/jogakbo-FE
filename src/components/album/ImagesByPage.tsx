@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 import Konva from "konva";
-import type { ImagePropsType, TransformedBoxType } from "../types";
-import { getImageMinMaxValue } from "../lib/utils";
+import type {
+  ImagePropsType,
+  TransformedBoxType,
+} from "../../types/imageTypes";
+import { getImageMinMaxValue } from "@/lib/getImgValue";
 
 const ImagesByPage = ({
   bodyData,

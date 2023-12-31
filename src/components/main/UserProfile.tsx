@@ -1,5 +1,5 @@
-import Trapezoid from "@/components/shape/Trapezoid";
-import { userInfo } from "@/templates/album/assets/mockData";
+import Trapezoid from "@/components/Trapezoid";
+import { userInfo } from "@/assets/mockData";
 
 const UserProfile = () => {
   return (

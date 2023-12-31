@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignOutButton from "../button/SignOutButton";
+import SignOutButton from "../SignOutButton";
 
 const MainNav = () => {
   return (

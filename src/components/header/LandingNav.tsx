@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SignButton from "../button/SignButton";
+import SignButton from "../SignButton";
 
 const LandingNav = () => {
   return (

@@ -1,5 +1,5 @@
-import Trapezoid from "@/components/shape/Trapezoid";
-import { albumInfo } from "@/templates/album/assets/mockData";
+import Trapezoid from "@/components/Trapezoid";
+import { albumInfo } from "@/assets/mockData";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -4,10 +4,10 @@ import { Client } from "@stomp/stompjs";
 import { useSession } from "next-auth/react";
 import Konva from "konva";
 import { Layer, Stage } from "react-konva";
-import ImagesByPage from "./components/ImagesByPage";
-import AlbumInfo from "./components/AlbumInfo";
-import type { ImageType } from "./types";
-import { parsingImagesSize } from "./lib/utils";
+import ImagesByPage from "@/components/album/ImagesByPage";
+import AlbumInfo from "@/components/album/AlbumInfo";
+import type { ImageType } from "@/types/imageTypes";
+import { parsingImagesSize } from "@/lib/getImgValue";
 
 const AlbumSection = () => {
   const [page, setPage] = useState<number>(0);
