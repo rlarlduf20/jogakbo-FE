@@ -26,6 +26,94 @@ export const albumInfo = [
     title: "유럽에서 한달 살기 - 2023.11.25 ~ 2023.12.24",
     access: "owner",
   },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+  },
 ];
 
 export const albumMockDataList = [

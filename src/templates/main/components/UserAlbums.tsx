@@ -2,6 +2,44 @@ import Trapezoid from "@/components/shape/Trapezoid";
 import { albumInfo } from "@/templates/album/assets/mockData";
 import Link from "next/link";
 
+const Albums = () => {
+  const shpapeByIndex = [
+    [
+      "polygon(0 0, 75% 0, 100% 100%, 0% 100%)",
+      "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
+    ],
+    [
+      "polygon(0 0, 100% 0, 75% 100%, 0 100%)",
+      "polygon(25% 0, 100% 0, 100% 100%, 0 100%)",
+    ],
+  ];
+
+  return (
+    <>
+      {albumInfo.map((item, index) => {
+        const column = index % 2;
+        const row = Math.floor(index / 10) % 2;
+        return (
+          <div
+            key={index}
+            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"}`}
+          >
+            <Trapezoid
+              styles={{
+                width: "80px",
+                height: "200px",
+                clipPath: shpapeByIndex[row][column],
+              }}
+            >
+              <p className="rotate-90">{item.title}</p>
+            </Trapezoid>
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
 const UserAlbums = () => {
   return (
     <div className="w-full">
@@ -23,20 +61,8 @@ const UserAlbums = () => {
           <p className="ml-[5px]">새로운 조각보 만들기</p>
         </Link>
       </div>
-      <div className="flex gap-[10px] border border-white-500 w-full h-[500px]">
-        {albumInfo.map((item, index) => (
-          <div key={index}>
-            <Trapezoid
-              styles={{
-                width: "70px",
-                height: "200px",
-                clipPath: "polygon(0 0, 80% 0, 100% 100%, 0% 100%)",
-              }}
-            >
-              <p>{item.title}</p>
-            </Trapezoid>
-          </div>
-        ))}
+      <div className="flex flex-wrap w-[800px] gap-y-[10px]">
+        <Albums />
       </div>
     </div>
   );
