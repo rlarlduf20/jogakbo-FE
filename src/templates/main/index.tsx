@@ -1,13 +1,11 @@
-import Link from "next/link";
+import UserAlbums from "./components/UserAlbums";
 import UserProfile from "./components/UserProfile";
 
 const MainSection = async () => {
   return (
-    <section className="flex pt-[70px]">
+    <section className="flex pt-[40px] gap-[127px]">
       <UserProfile />
-      <Link href="/album" className="ml-24">
-        앨범 생성
-      </Link>
+      <UserAlbums />
     </section>
   );
 };

@@ -1,23 +1,38 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { getServerSession } from 'next-auth';
+import Trapezoid from "@/components/shape/Trapezoid";
+import { userInfo } from "@/templates/album/assets/mockData";
 
-const UserProfile = async () => {
-  const session = await getServerSession(authOptions);
+const UserProfile = () => {
   return (
     <div>
       <div className="w-[180px]">
-        <div className="h-[180px] bg-gray-300 mb-6"></div>
-        <div className="text-2xl font-semibold mb-3">{session?.user?.name}</div>
-        <div className="mb-14">
-          <div className="flex mb-1">
-            <p className="grow">팔로우</p>
-            <p>{200}</p>
+        <div className="mb-[20px]">
+          <Trapezoid
+            styles={{
+              width: "180px",
+              height: "180px",
+              clipPath: "polygon(0 0, 100% 0, 100% 90%, 0% 100%)",
+            }}
+          />
+        </div>
+        <p className="text-[24px] font-semibold mb-[16px]">{userInfo.name}</p>
+        <div className="mb-[16px]">
+          <div className="flex h-[20px] mb-[18px] items-center font-medium">
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
+            <p className="grow">친구</p>
+            <p>{userInfo.mateNum}</p>
           </div>
-          <div className="flex">
-            <p className="grow">팔로워</p>
-            <p>{200}</p>
+          <div className="flex mb-[18px] items-center font-medium">
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
+            <p className="grow">조각보</p>
+            <p>{userInfo.jogakboNum}</p>
+          </div>
+          <div className="flex items-center font-medium">
+            <div className="[clip-path:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
+            <p className="grow">조각</p>
+            <p>{userInfo.jogakNum}</p>
           </div>
         </div>
+        <div className="text-[14px] font-medium">회원정보 수정</div>
       </div>
     </div>
   );

@@ -1,28 +1,145 @@
+export const userInfo = {
+  name: "김기열",
+  mateNum: 24,
+  jogakNum: 1382,
+  jogakboNum: 211,
+};
+
 export const albumInfo = [
   {
     title: "부산 여행",
     access: "owner",
-    tags: ["여행", "1박 2일"],
+    src: "/images/ocean.jpeg",
   },
   {
     title: "일상",
-    access: "follow",
-    tags: [],
+    access: "all",
+    src: "/images/desert.jpeg",
   },
   {
     title: "비버",
     access: "all",
-    tags: ["비버"],
+    src: "/images/lion.png",
   },
   {
     title: "가족 여행 - 제주도",
     access: "owner",
-    tags: ["3박 4일"],
+    src: "/images/rabbit.png",
   },
   {
     title: "유럽에서 한달 살기 - 2023.11.25 ~ 2023.12.24",
     access: "owner",
-    tags: ["프랑스", "독일", "이탈리아", "스페인"],
+    src: "/images/smileBall.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/gameover.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/park.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/ocean.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/lion.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/rabbit.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/park.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/gameover.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/rabbit.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/desert.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/ocean.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/park.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/desert.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/park.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/ocean.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/smileBall.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/smileBall.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/desert.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/lion.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/ocean.jpeg",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/gameover.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/lion.png",
+  },
+  {
+    title: "부산 여행",
+    access: "owner",
+    src: "/images/ocean.jpeg",
   },
 ];
 
