@@ -2,18 +2,18 @@ import Trapezoid from "@/components/shape/Trapezoid";
 import { albumInfo } from "@/templates/album/assets/mockData";
 import Link from "next/link";
 
-const Albums = () => {
-  const shpapeByIndex = [
-    [
-      "polygon(0 0, 75% 0, 100% 100%, 0% 100%)",
-      "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
-    ],
-    [
-      "polygon(0 0, 100% 0, 75% 100%, 0 100%)",
-      "polygon(25% 0, 100% 0, 100% 100%, 0 100%)",
-    ],
-  ];
+const shpapeByIndex = [
+  [
+    "polygon(0 0, 75% 0, 100% 100%, 0% 100%)",
+    "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
+  ],
+  [
+    "polygon(0 0, 100% 0, 75% 100%, 0 100%)",
+    "polygon(25% 0, 100% 0, 100% 100%, 0 100%)",
+  ],
+];
 
+const Albums = () => {
   return (
     <>
       {albumInfo.map((item, index) => {
@@ -22,7 +22,7 @@ const Albums = () => {
         return (
           <div
             key={index}
-            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"}`}
+            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} relative`}
           >
             <Trapezoid
               styles={{
@@ -31,7 +31,13 @@ const Albums = () => {
                 clipPath: shpapeByIndex[row][column],
               }}
             >
-              <p className="rotate-90">{item.title}</p>
+              <p
+                className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
+                  column === 0 ? "left-[35px]" : "left-[75px]"
+                }`}
+              >
+                {item.title}
+              </p>
             </Trapezoid>
           </div>
         );

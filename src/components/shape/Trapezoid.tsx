@@ -17,7 +17,7 @@ const Trapezoid = (props: TrapezoidPropsType) => {
     clipPath: styles.clipPath,
   };
 
-  return <div style={trapezoidStyles}>{props.children}</div>;
+  return <div style={{ ...trapezoidStyles }}>{props.children}</div>;
 };
 
 export default Trapezoid;
