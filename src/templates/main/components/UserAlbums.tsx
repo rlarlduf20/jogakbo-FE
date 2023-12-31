@@ -1,5 +1,6 @@
 import Trapezoid from "@/components/shape/Trapezoid";
 import { albumInfo } from "@/templates/album/assets/mockData";
+import Image from "next/image";
 import Link from "next/link";
 
 const shpapeByIndex = [
@@ -29,8 +30,18 @@ const Albums = () => {
                 width: "80px",
                 height: "200px",
                 clipPath: shpapeByIndex[row][column],
+                bgImg: item.src,
               }}
             >
+              {item.src && (
+                <Image
+                  src={item.src}
+                  alt="thumbnail"
+                  layout="fill"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+              )}
               <p
                 className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
                   column === 0 ? "left-[35px]" : "left-[75px]"
