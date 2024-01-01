@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
-import LandingSection from "../templates/landing";
-import MainSection from "../templates/main";
+import LandingSection from "@/templates/LandingSection";
+import MainSection from "@/templates/MainSection";
 
 const HomePage = async () => {
   const session = await getServerSession();

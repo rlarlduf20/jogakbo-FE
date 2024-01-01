@@ -7,7 +7,7 @@ const AlbumPage = async () => {
   if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
-  const AlbumComponent = dynamic(() => import("@/templates/album"), {
+  const AlbumComponent = dynamic(() => import("@/templates/AlbumSection"), {
     ssr: false,
   });
   return <AlbumComponent />;

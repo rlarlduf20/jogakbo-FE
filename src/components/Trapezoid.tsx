@@ -11,7 +11,7 @@ interface TrapezoidPropsType {
 const Trapezoid = (props: TrapezoidPropsType) => {
   const { styles } = props;
   const trapezoidStyles = {
-    backgroundColor: "gray",
+    backgroundColor: "white",
     width: styles.width,
     height: styles.height,
     clipPath: styles.clipPath,
