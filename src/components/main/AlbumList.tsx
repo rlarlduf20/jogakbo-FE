@@ -2,7 +2,7 @@ import Trapezoid from "@/components/Trapezoid";
 import { albumInfo } from "@/assets/mockData";
 import Image from "next/image";
 
-const shpapeByIndex = [
+const shapeByIndex = [
   [
     "polygon(0 0, 75% 0, 100% 100%, 0% 100%)",
     "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
@@ -28,7 +28,7 @@ const AlbumList = () => {
               styles={{
                 width: "80px",
                 height: "200px",
-                clipPath: shpapeByIndex[row][column],
+                clipPath: shapeByIndex[row][column],
                 bgImg: item.src,
               }}
             >

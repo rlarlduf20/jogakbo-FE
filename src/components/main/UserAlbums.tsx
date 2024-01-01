@@ -5,7 +5,7 @@ const UserAlbums = () => {
   return (
     <div className="w-full">
       <div className="mb-[30px]">
-        <Link href="/album" className="flex items-center">
+        <Link href="/addAlbum" scroll={false} className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
