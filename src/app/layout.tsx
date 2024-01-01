@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AuthSessionProvider from "@/components/SessionProvider";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { SUITFont } from "./fonts";
+import { SUITFont } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "조각보",
