@@ -1,5 +1,5 @@
 import Modal from "@/components/Modal";
-import AddAlbum from "@/components/main/AddAlbum";
+import AddAlbum from "@/templates/MainSection/AddAlbum";
 
 const AddAlbumModalPage = () => {
   return (
