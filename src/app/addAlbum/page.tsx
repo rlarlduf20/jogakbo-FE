@@ -1,4 +1,4 @@
-import AddAlbum from "@/components/main/AddAlbum";
+import AddAlbum from "@/templates/MainSection/AddAlbum";
 
 const AddAlbumPage = () => {
   return (

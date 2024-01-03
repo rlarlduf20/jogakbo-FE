@@ -4,8 +4,8 @@ import { Client } from "@stomp/stompjs";
 import { useSession } from "next-auth/react";
 import Konva from "konva";
 import { Layer, Stage } from "react-konva";
-import ImagesByPage from "@/components/album/ImagesByPage";
-import AlbumInfo from "@/components/album/AlbumInfo";
+import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
+import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
 import type { ImageType } from "@/types/imageTypes";
 import { parsingImagesSize } from "@/lib/getImgValue";
 

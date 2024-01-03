@@ -1,5 +1,5 @@
-import UserAlbums from "@/components/main/UserAlbums";
-import UserProfile from "@/components/main/UserProfile";
+import UserAlbums from "@/templates/MainSection/UserAlbums";
+import UserProfile from "@/templates/MainSection/UserProfile";
 
 const MainSection = async () => {
   return (
