@@ -1,9 +1,9 @@
-import AddAlbum from "@/templates/MainSection/AddAlbum";
+import AddAlbumSection from "@/templates/AddAlbumSection";
 
 const AddAlbumPage = () => {
   return (
-    <section className="pt-[120px] flex items-center">
-      <AddAlbum />
+    <section className="pt-[120px] flex items-center justify-center">
+      <AddAlbumSection />
     </section>
   );
 };
