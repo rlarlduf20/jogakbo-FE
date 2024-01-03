@@ -162,7 +162,7 @@ const AlbumSection = () => {
     setPage((prev) => prev + 1);
   };
   return (
-    <section>
+    <section className="relative pb-[80px]">
       <AlbumInfo
         page={page}
         movePrevPage={() => {
@@ -174,7 +174,7 @@ const AlbumSection = () => {
       <Stage
         width={1200}
         height={800}
-        className={`${isDragging ? "border-4" : "border-2"}`}
+        className={`${isDragging ? "border-4" : "border-2"} bg-white`}
         ref={stageRef}
         onMouseDown={(e) => imageFocus(e)}
         onTouchStart={(e) => imageFocus(e)}
