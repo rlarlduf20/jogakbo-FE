@@ -1,5 +1,6 @@
 import Trapezoid from "@/components/Trapezoid";
 import { userInfo } from "@/assets/mockData";
+import SignOutButton from "@/components/SignOutButton";
 
 const UserProfile = () => {
   return (
@@ -33,6 +34,7 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="text-[14px]">회원정보 수정</div>
+        <SignOutButton />
       </div>
     </div>
   );
