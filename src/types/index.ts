@@ -10,3 +10,5 @@ export interface ImageType {
   };
   rotation: number;
 }
+
+export interface UserType {}

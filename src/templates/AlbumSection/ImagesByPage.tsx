@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
 import Konva from "konva";
-import type { ImageType } from "@/types/imageTypes";
+import type { ImageType } from "@/types";
 import { getImageMinMaxValue } from "@/lib/getImgValue";
 
 interface ImagePropsType {

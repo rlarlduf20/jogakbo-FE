@@ -6,7 +6,7 @@ import Konva from "konva";
 import { Layer, Stage } from "react-konva";
 import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
 import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
-import type { ImageType } from "@/types/imageTypes";
+import type { ImageType } from "@/types";
 import { parsingImagesSize } from "@/lib/getImgValue";
 
 const AlbumSection = () => {
