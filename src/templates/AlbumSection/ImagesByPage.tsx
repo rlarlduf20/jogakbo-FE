@@ -84,6 +84,7 @@ const ImagesByPage = ({
         //   reLocArr(data);
         // }}
         onDragMove={(e) => {
+          const node = imageRef.current;
           const image = getImageMinMaxValue({
             ...e.target.attrs,
             rotation: transformedBox?.rotation,
@@ -101,32 +102,29 @@ const ImagesByPage = ({
             if (image.x + image.width > 1200) {
               e.target.x(e.target.x() - (image.x + image.width - 1200));
             }
-            return;
+          } else {
+            e.target.y(Math.max(e.target.y(), 0));
+            e.target.x(Math.max(e.target.x(), 0));
+            e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
+            e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
           }
-
-          e.target.y(Math.max(e.target.y(), 0));
-          e.target.x(Math.max(e.target.x(), 0));
-          e.target.y(Math.min(e.target.y(), 800 - imageInfo.size.height));
-          e.target.x(Math.min(e.target.x(), 1200 - imageInfo.size.width));
 
           onChangeAttrs({
             ...imageInfo,
-
             location: {
               x: e.target.x(),
               y: e.target.y(),
             },
-            // size: {
-            //   width: node.width(),
-            //   height: node.height(),
-            // },
+            size: {
+              width: node.width(),
+              height: node.height(),
+            },
           });
         }}
         // onDragEnd={(e) => {
         //   const node = imageRef.current;
         // onChangeAttrs({
         //   ...imageInfo,
-
         //   location: {
         //     x: e.target.x(),
         //     y: e.target.y(),
