@@ -1,6 +1,5 @@
 import Link from "next/link";
-import TitleInputBox from "./TitleInputBox";
-import AddButton from "./AddButton";
+import SubmitTitleBox from "./SubmitTitleBox";
 
 const AddAlbumSection = () => {
   return (
@@ -24,13 +23,11 @@ const AddAlbumSection = () => {
         </svg>
         <p className="text-[20px] font-semibold">새 조각보 만들기</p>
       </div>
-      <TitleInputBox />
-      <div className="flex gap-[60px] w-full justify-center">
+      <SubmitTitleBox>
         <Link href="/" className="font-medium">
           취소
         </Link>
-        <AddButton />
-      </div>
+      </SubmitTitleBox>
     </div>
   );
 };

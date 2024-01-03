@@ -1,15 +1,16 @@
-"use client";
+interface AddButtonPropsType {
+  title: string;
+  handleInputTitle: (v: string) => void;
+}
 
-import { useRouter } from "next/navigation";
-
-const AddButton = () => {
-  const router = useRouter();
-
+const AddButton = ({ title, handleInputTitle }: AddButtonPropsType) => {
   const handleClick = async () => {
-    try {
-      const res = await fetch("api/createAlbum");
-      router.push("/album");
-    } catch (e) {}
+    if (title === "") {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    handleInputTitle("");
+    console.log(title);
   };
   return <button onClick={handleClick}>만들기</button>;
 };
