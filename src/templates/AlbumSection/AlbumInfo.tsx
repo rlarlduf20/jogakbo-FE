@@ -17,12 +17,10 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
           width={50}
           height={50}
         />
-        <div className="grow ml-[11px] text-[20px] font-medium">
+        <div className="grow ml-[11px] text-[20px]">
           {"제목이 들어갈 자리입니다"}
         </div>
-        <Link href="/" className="font-medium">
-          내 조각보
-        </Link>
+        <Link href="/">내 조각보</Link>
       </header>
       <button
         className={`absolute left-[-50px] top-[410px] ${

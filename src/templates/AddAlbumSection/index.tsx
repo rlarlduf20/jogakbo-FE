@@ -24,9 +24,7 @@ const AddAlbumSection = () => {
         <p className="text-[20px] font-semibold">새 조각보 만들기</p>
       </div>
       <SubmitTitleBox>
-        <Link href="/" className="font-medium">
-          취소
-        </Link>
+        <Link href="/">취소</Link>
       </SubmitTitleBox>
     </div>
   );
