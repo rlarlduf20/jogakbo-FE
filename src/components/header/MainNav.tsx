@@ -11,7 +11,7 @@ const MainNav = () => {
         viewBox="0 0 42 42"
         fill="none"
       >
-        <g clip-path="url(#clip0_325_261)">
+        <g clipPath="url(#clip0_325_261)">
           <path
             d="M16.8417 25.1584L25.075 25.9834L27.6583 0.166748H14.3417L16.8417 25.1584Z"
             fill="#FFE381"

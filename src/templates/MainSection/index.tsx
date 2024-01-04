@@ -17,7 +17,7 @@ const MainSection = async () => {
   return (
     <section className="flex pt-[40px] gap-[127px]">
       <UserProfile user={user} />
-      <UserAlbums />
+      <UserAlbums albums={user.albums} />
     </section>
   );
 };
