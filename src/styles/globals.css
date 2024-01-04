@@ -3,6 +3,7 @@
   html {
     @apply bg-main_black;
     @apply text-white;
+    @apply font-medium;
   }
 }
 @tailwind components;

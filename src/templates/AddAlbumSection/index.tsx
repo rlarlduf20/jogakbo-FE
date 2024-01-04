@@ -1,6 +1,7 @@
 import Link from "next/link";
+import SubmitTitleBox from "./SubmitTitleBox";
 
-const AddAlbum = () => {
+const AddAlbumSection = () => {
   return (
     <div
       className="w-[550px] h-[350px] border-[1px] border-white 
@@ -22,24 +23,11 @@ const AddAlbum = () => {
         </svg>
         <p className="text-[20px] font-semibold">새 조각보 만들기</p>
       </div>
-      <div className="w-full mb-[90px]">
-        <input
-          placeholder="새 조각보 이름"
-          className="block mx-auto pb-[13.5px] bg-main_black w-[200px] h-[50px] 
-          border-b-[1px] border-white placeholder:text-white font-medium text-[18px] 
-          outline-none text-center"
-        />
-      </div>
-      <div className="flex gap-[60px] w-full justify-center">
-        <Link href="/" className="font-medium">
-          취소
-        </Link>
-        <Link href="/album" className="font-medium">
-          만들기
-        </Link>
-      </div>
+      <SubmitTitleBox>
+        <Link href="/">취소</Link>
+      </SubmitTitleBox>
     </div>
   );
 };
 
-export default AddAlbum;
+export default AddAlbumSection;

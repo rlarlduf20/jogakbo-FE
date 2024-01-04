@@ -6,10 +6,10 @@ import Konva from "konva";
 import { Layer, Stage } from "react-konva";
 import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
 import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
-import type { ImageType } from "@/types/imageTypes";
+import type { ImageType } from "@/types";
 import { parsingImagesSize } from "@/lib/getImgValue";
 
-const AlbumSection = () => {
+const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
@@ -27,7 +27,7 @@ const AlbumSection = () => {
       },
       onConnect: () => {
         console.log("연결 성공");
-        client.current.subscribe("/topic/sub", (body: any) => {
+        client.current.subscribe(`/topic/${params.id}`, (body: any) => {
           const json_body = body.body;
           console.log("socket data", JSON.parse(json_body));
           setAlbumBodyData(JSON.parse(json_body));
@@ -39,7 +39,7 @@ const AlbumSection = () => {
       console.log("연결 해제");
       client.current.deactivate();
     };
-  }, [session]);
+  }, [session, params.id]);
 
   useEffect(() => {
     const stage = stageRef.current?.getStage();
@@ -50,13 +50,16 @@ const AlbumSection = () => {
 
       //   return newData;
       // });
-      await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/album/img/1`, {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
-        },
-      });
+      await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/album/img/${params.id}`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
+          },
+        }
+      );
 
       // const resJson = await res.json();
       // setAlbumBodyData(resJson);
@@ -121,7 +124,7 @@ const AlbumSection = () => {
       stage?.container().removeEventListener("drop", handleDrop);
       stage?.container().removeEventListener("dragleave", handleDragLeave);
     };
-  }, [page, session?.jogakTokens.accessToken]);
+  }, [page, session?.jogakTokens.accessToken, params.id]);
 
   const imageFocus = (
     e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
@@ -135,7 +138,7 @@ const AlbumSection = () => {
     if (!client.current.connected) return;
     console.log("msg", msg);
     client.current.publish({
-      destination: "/app/img",
+      destination: `/app/album/${params.id}`,
       body: msg,
     });
   };
@@ -162,7 +165,7 @@ const AlbumSection = () => {
     setPage((prev) => prev + 1);
   };
   return (
-    <section>
+    <section className="relative pb-[80px]">
       <AlbumInfo
         page={page}
         movePrevPage={() => {
@@ -174,7 +177,7 @@ const AlbumSection = () => {
       <Stage
         width={1200}
         height={800}
-        className={`${isDragging ? "border-4" : "border-2"}`}
+        className={`${isDragging ? "border-4" : "border-2"} bg-white`}
         ref={stageRef}
         onMouseDown={(e) => imageFocus(e)}
         onTouchStart={(e) => imageFocus(e)}

@@ -1,9 +1,13 @@
 import Link from "next/link";
 import AlbumList from "./AlbumList";
+import type { AlbumsType } from "@/types";
 
-const UserAlbums = () => {
+interface UserAlbumsProps {
+  albums: AlbumsType[];
+}
+const UserAlbums = ({ albums }: UserAlbumsProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full min-h-[800px] pb-[80px]">
       <div className="mb-[30px]">
         <Link href="/addAlbum" scroll={false} className="flex items-center">
           <svg
@@ -23,7 +27,7 @@ const UserAlbums = () => {
         </Link>
       </div>
       <div className="flex flex-wrap w-[800px] gap-y-[10px]">
-        <AlbumList />
+        <AlbumList albums={albums} />
       </div>
     </div>
   );
