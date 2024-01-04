@@ -15,6 +15,7 @@ export async function POST(request: Request) {
       },
     }
   );
+  console.log(res);
 
   return res;
 }

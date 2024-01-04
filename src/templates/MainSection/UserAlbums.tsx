@@ -3,7 +3,7 @@ import AlbumList from "./AlbumList";
 
 const UserAlbums = () => {
   return (
-    <div className="w-full">
+    <div className="w-full pb-[80px]">
       <div className="mb-[30px]">
         <Link href="/addAlbum" scroll={false} className="flex items-center">
           <svg

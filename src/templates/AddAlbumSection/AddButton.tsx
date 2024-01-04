@@ -23,10 +23,9 @@ const AddButton = ({ title, handleInputTitle }: AddButtonPropsType) => {
       alert("다시 시도해주세요!");
       return;
     }
-    const data = await res.json();
-
+    const data = await res.text();
     handleInputTitle("");
-    router.push(`/album?id=${data.res}`);
+    router.push(`/album/${data}`);
   };
 
   return <button onClick={handleClick}>만들기</button>;

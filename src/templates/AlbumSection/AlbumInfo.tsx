@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 interface InfoPropType {
@@ -50,7 +49,44 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
         <div className="grow ml-[11px] text-[20px]">
           {"제목이 들어갈 자리입니다"}
         </div>
-        <Link href="/">내 조각보</Link>
+        <div className="flex mr-[61px]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="24"
+            viewBox="0 0 10 24"
+            fill="none"
+          >
+            <path d="M0 0V24H10L7 0H0Z" fill="white" />
+          </svg>
+          <p className="ml-[3px]">정보</p>
+        </div>
+        <div className="flex mr-[47px]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="24"
+            viewBox="0 0 10 24"
+            fill="none"
+          >
+            <path d="M0 0V24H10L7 0H0Z" fill="white" />
+          </svg>
+          <p className="ml-[3px]">구성원</p>
+        </div>
+        <div className="flex">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="10"
+            height="24"
+            viewBox="0 0 10 24"
+            fill="none"
+          >
+            <path d="M0 0V24H10L7 0H0Z" fill="white" />
+          </svg>
+          <Link href="/" className="ml-[3px]">
+            내 조각보
+          </Link>
+        </div>
       </header>
       <button
         className={`absolute left-[-50px] top-[410px] ${

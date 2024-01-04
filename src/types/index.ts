@@ -11,4 +11,22 @@ export interface ImageType {
   rotation: number;
 }
 
-export interface UserType {}
+export interface UserType {
+  nickname: string;
+  profileImageUrl: string | null;
+  friends: FriendsType[];
+  albums: AlbumsType[];
+}
+
+export interface FriendsType {
+  nickname: string;
+  socialId: string;
+  profileImageUrl: string | null;
+}
+
+export interface AlbumsType {
+  albumID: string;
+  albumName: string;
+  images: ImageType[];
+  albumEditors: any;
+}
