@@ -1,6 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import AlbumList from "./AlbumList";
 import type { AlbumsType } from "@/types";
+import PlusIcon from "../../../public/images/svg/plus.svg";
 
 interface UserAlbumsProps {
   albums: AlbumsType[];
@@ -10,19 +12,7 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
     <div className="w-full min-h-[800px] pb-[80px]">
       <div className="mb-[30px]">
         <Link href="/addAlbum" scroll={false} className="flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path d="M5.5 0V16H11.5L9.7 0H5.5Z" fill="white" />
-            <path
-              d="M16 5.5L0 5.5L-2.62268e-07 11.5L16 9.7L16 5.5Z"
-              fill="white"
-            />
-          </svg>
+          <Image src={PlusIcon} alt="추가 아이콘" />
           <p className="ml-[5px]">새로운 조각보 만들기</p>
         </Link>
       </div>
