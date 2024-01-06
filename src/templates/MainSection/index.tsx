@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import UserAlbums from "@/templates/MainSection/UserAlbums";
 import UserProfile from "@/templates/MainSection/UserProfile";
 
-const MainSection = async () => {
+const getUser = async () => {
   const { jogakTokens } = await getServerSession(authOptions);
   const res = await fetch(`${process.env.SERVER_URL}/user/profile`, {
     method: "GET",
@@ -13,6 +13,12 @@ const MainSection = async () => {
     },
   });
   const user = await res.json();
+
+  return user;
+};
+
+const MainSection = async () => {
+  const user = await getUser();
 
   return (
     <section className="flex pt-[40px] gap-[127px]">
