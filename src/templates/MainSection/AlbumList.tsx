@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import Trapezoid from "@/components/Trapezoid";
 import type { AlbumsType } from "@/types";
 
@@ -17,13 +17,22 @@ const shapeByIndex = [
     "polygon(25% 0, 100% 0, 100% 100%, 0 100%)",
   ],
 ];
-
+const mockThumbnailList = [
+  "/images/desert.jpeg",
+  "/images/gameover.png",
+  "/images/lion.png",
+  "/images/ocean.jpeg",
+  "/images/park.jpeg",
+  "/images/rabbit.png",
+  "/images/smileBall.png",
+];
 const AlbumList = ({ albums }: AlbumListProps) => {
   return (
     <>
       {albums.map((item, index) => {
         const column = index % 2;
         const row = Math.floor(index / 10) % 2;
+        const random = Math.floor(Math.random() * 7);
         return (
           <div
             key={index}
@@ -37,14 +46,12 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   clipPath: shapeByIndex[row][column],
                 }}
               >
-                {/* {item.src && (
                 <Image
-                  src={item.src}
+                  src={mockThumbnailList[random]}
                   alt="thumbnail"
                   fill
                   style={{ objectFit: "cover", objectPosition: "center" }}
                 />
-              )} */}
                 <p
                   className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
                     column === 0 ? "left-[35px]" : "left-[75px]"
