@@ -34,7 +34,7 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
           <p>새로운 조각보 만들기</p>
         </Link>
       </div>
-      <div className="flex flex-wrap gap-y-[10px]">
+      <div className="w-[800px] flex flex-wrap gap-y-[10px]">
         <AlbumList albums={albums} />
       </div>
     </div>
