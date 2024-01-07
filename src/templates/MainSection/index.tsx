@@ -6,7 +6,6 @@ import UserProfile from "@/templates/MainSection/UserProfile";
 const getUser = async () => {
   const { jogakTokens } = await getServerSession(authOptions);
   const res = await fetch(`${process.env.SERVER_URL}/user/profile`, {
-    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jogakTokens.accessToken}`,

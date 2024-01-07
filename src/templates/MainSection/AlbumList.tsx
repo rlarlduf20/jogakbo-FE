@@ -47,7 +47,7 @@ const EachAlbumInfo = ({
       <p
         className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
           column === 0 ? "left-[35px]" : "left-[75px]"
-        }`}
+        } z-30 relative`}
       >
         {albumName}
       </p>
@@ -72,8 +72,19 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   width: "80px",
                   height: "200px",
                   clipPath: SHAPE_BY_INDEX[row][column],
+                  position: "relative",
                 }}
               >
+                <Trapezoid
+                  styles={{
+                    width: "80px",
+                    height: "200px",
+                    clipPath: SHAPE_BY_INDEX[row][column],
+                    bgColor: "rgba(21,21,21,0.3)",
+                    position: "absolute",
+                    zIndex: 10,
+                  }}
+                />
                 <EachAlbumInfo
                   random={index % 7}
                   column={column}
