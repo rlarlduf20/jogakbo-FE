@@ -10,14 +10,14 @@ interface AlbumListProps {
   albums: AlbumsType[];
 }
 
-const shapeByIndex = [
+const SHAPE_BY_INDEX = [
   [
-    "polygon(0 0, 75% 0, 100% 100%, 0% 100%)",
-    "polygon(0 0, 100% 0, 100% 100%, 25% 100%)",
+    "[clipPath:polygon(0%_0%,75%_0%,100%_100%,0%_100%)]",
+    "[clipPath:polygon(0%_0%,100%_0%,100%_100%,25%_100%)]",
   ],
   [
-    "polygon(0 0, 100% 0, 75% 100%, 0 100%)",
-    "polygon(25% 0, 100% 0, 100% 100%, 0 100%)",
+    "[clipPath:polygon(0%_0%,100%_0%,75%_100%,0%_100%)]",
+    "[clipPath:polygon(25%_0%,100%_0%,100%_100%,0%_100%)]",
   ],
 ];
 const mockThumbnailList = [
@@ -71,28 +71,30 @@ const AlbumList = ({ albums }: AlbumListProps) => {
             key={index}
             onMouseEnter={() => setHoverIndex(index)}
             onMouseLeave={() => setHoverIndex(null)}
-            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} ${
+            className={`${
+              index === hoverIndex
+                ? column === 0
+                  ? "mr-[10px]"
+                  : "ml-[20px] mr-[10px]"
+                : column === 0
+                ? "mr-[-10px]"
+                : "mr-[10px]"
+            } ${
               hoverIndex !== null
                 ? index === Math.floor(hoverIndex / 10) * 10 + 9
                   ? "mr-0"
                   : (index + 1) % 10 === 0 && "mr-[83px]"
                 : (index + 1) % 10 === 0 && "mr-[83px]"
-            } ${index === hoverIndex && "w-[160px]"} relative`}
+            } ${index === hoverIndex ? "w-[150px]" : "w-[80px]"} relative ${
+              index === hoverIndex || SHAPE_BY_INDEX[row][column]
+            } h-[200px] $`}
           >
             <Link href={`/album/${item.albumID}`}>
-              <Trapezoid
-                styles={{
-                  width: "80px",
-                  height: "200px",
-                  clipPath: shapeByIndex[row][column],
-                }}
-              >
-                <EachAlbumInfo
-                  random={index % 7}
-                  column={column}
-                  albumName={item.albumName}
-                />
-              </Trapezoid>
+              <EachAlbumInfo
+                random={index % 7}
+                column={column}
+                albumName={item.albumName}
+              />
             </Link>
           </div>
         );
