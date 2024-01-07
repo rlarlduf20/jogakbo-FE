@@ -11,8 +11,8 @@ interface UserAlbumsProps {
 }
 const UserAlbums = ({ albums }: UserAlbumsProps) => {
   return (
-    <div className="w-[790px] min-h-[800px] pb-[80px]">
-      <div className="flex mb-[30px] gap-[30px]">
+    <div className="w-full min-h-[800px] pb-[80px]">
+      <div className="w-[790px] flex mb-[30px] gap-[30px]">
         <div className="flex gap-[5px]">
           <Image src={SortIcon} alt="정렬 아이콘" />
           <p>정렬</p>
@@ -34,7 +34,7 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
           <p>새로운 조각보 만들기</p>
         </Link>
       </div>
-      <div className="flex flex-wrap w-[800px] gap-y-[10px]">
+      <div className="flex flex-wrap gap-y-[10px]">
         <AlbumList albums={albums} />
       </div>
     </div>

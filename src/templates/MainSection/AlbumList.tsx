@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Trapezoid from "@/components/Trapezoid";
@@ -26,17 +29,55 @@ const mockThumbnailList = [
   "/images/rabbit.png",
   "/images/smileBall.png",
 ];
+const EachAlbumInfo = ({
+  random,
+  column,
+  albumName,
+}: {
+  random: number;
+  column: number;
+  albumName: string;
+}) => {
+  return (
+    <>
+      <Image
+        src={mockThumbnailList[random]}
+        alt="thumbnail"
+        fill
+        style={{ objectFit: "cover", objectPosition: "center" }}
+      />
+      <p
+        className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
+          column === 0 ? "left-[35px]" : "left-[75px]"
+        }`}
+      >
+        {albumName}
+      </p>
+    </>
+  );
+};
+
 const AlbumList = ({ albums }: AlbumListProps) => {
+  const [hoverIndex, setHoverIndex] = useState<any>(null);
+  console.log(Math.floor(hoverIndex / 10) * 10 + 9);
   return (
     <>
       {albums.map((item, index) => {
         const column = index % 2;
         const row = Math.floor(index / 10) % 2;
-        const random = Math.floor(Math.random() * 7);
+
         return (
           <div
             key={index}
-            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} relative`}
+            onMouseEnter={() => setHoverIndex(index)}
+            onMouseLeave={() => setHoverIndex(null)}
+            className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} ${
+              hoverIndex !== null
+                ? index === Math.floor(hoverIndex / 10) * 10 + 9
+                  ? "mr-0"
+                  : (index + 1) % 10 === 0 && "mr-[83px]"
+                : (index + 1) % 10 === 0 && "mr-[83px]"
+            } ${index === hoverIndex && "w-[160px]"} relative`}
           >
             <Link href={`/album/${item.albumID}`}>
               <Trapezoid
@@ -46,19 +87,11 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   clipPath: shapeByIndex[row][column],
                 }}
               >
-                <Image
-                  src={mockThumbnailList[random]}
-                  alt="thumbnail"
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "center" }}
+                <EachAlbumInfo
+                  random={index % 7}
+                  column={column}
+                  albumName={item.albumName}
                 />
-                <p
-                  className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
-                    column === 0 ? "left-[35px]" : "left-[75px]"
-                  }`}
-                >
-                  {item.albumName}
-                </p>
               </Trapezoid>
             </Link>
           </div>

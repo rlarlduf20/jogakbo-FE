@@ -2,7 +2,6 @@ interface TrapezoidPropsType {
   styles: {
     width: string;
     height: string;
-    bgImg?: string;
     clipPath: string;
   };
   children?: any;
