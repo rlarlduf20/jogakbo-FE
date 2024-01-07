@@ -1,6 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import AlbumList from "./AlbumList";
 import type { AlbumsType } from "@/types";
+import PlusIcon from "../../../public/images/svg/plus.svg";
+import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
+import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
 
 interface UserAlbumsProps {
   albums: AlbumsType[];
@@ -8,25 +12,29 @@ interface UserAlbumsProps {
 const UserAlbums = ({ albums }: UserAlbumsProps) => {
   return (
     <div className="w-full min-h-[800px] pb-[80px]">
-      <div className="mb-[30px]">
-        <Link href="/addAlbum" scroll={false} className="flex items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-          >
-            <path d="M5.5 0V16H11.5L9.7 0H5.5Z" fill="white" />
-            <path
-              d="M16 5.5L0 5.5L-2.62268e-07 11.5L16 9.7L16 5.5Z"
-              fill="white"
-            />
-          </svg>
-          <p className="ml-[5px]">새로운 조각보 만들기</p>
+      <div className="w-[790px] flex mb-[30px] gap-[30px]">
+        <div className="flex gap-[5px]">
+          <Image src={SortIcon} alt="정렬 아이콘" />
+          <p>정렬</p>
+        </div>
+        <div className="flex gap-[5px]">
+          <Image src={SortIcon} alt="정렬 아이콘" />
+          <p>분류</p>
+        </div>
+        <div className="flex gap-[5px] grow ml-[-">
+          <Image src={OwnerSortIcon} alt="정렬 아이콘" />
+          <p>내가 만든 조각보만 보기</p>
+        </div>
+        <Link
+          href="/addAlbum"
+          scroll={false}
+          className="flex gap-[5px] items-center"
+        >
+          <Image src={PlusIcon} alt="추가 아이콘" />
+          <p>새로운 조각보 만들기</p>
         </Link>
       </div>
-      <div className="flex flex-wrap w-[800px] gap-y-[10px]">
+      <div className="w-[800px] flex flex-wrap gap-y-[10px]">
         <AlbumList albums={albums} />
       </div>
     </div>

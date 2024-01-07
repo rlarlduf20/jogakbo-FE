@@ -16,6 +16,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
               width: "180px",
               height: "180px",
               clipPath: "polygon(0 0, 100% 0, 100% 90%, 0% 100%)",
+              bgColor: "white",
             }}
           />
         </div>

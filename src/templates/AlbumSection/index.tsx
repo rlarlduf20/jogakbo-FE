@@ -27,7 +27,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       },
       onConnect: () => {
         console.log("연결 성공");
-        client.current.subscribe(`/topic/${params.id}`, (body: any) => {
+        client.current.subscribe(`/sub/edit/${params.id}`, (body: any) => {
           const json_body = body.body;
           console.log("socket data", JSON.parse(json_body));
           setAlbumBodyData(JSON.parse(json_body));
@@ -50,7 +50,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
       //   return newData;
       // });
-      await fetch(
+      const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/album/img/${params.id}`,
         {
           method: "POST",
@@ -60,7 +60,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           },
         }
       );
-
+      console.log(res);
       // const resJson = await res.json();
       // setAlbumBodyData(resJson);
     };
@@ -78,7 +78,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       e.preventDefault();
       stageRef.current?.setPointersPositions(e);
       setIsDragging(false);
-
       const files = e.dataTransfer?.files;
 
       if (files) {
@@ -138,7 +137,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     if (!client.current.connected) return;
     console.log("msg", msg);
     client.current.publish({
-      destination: `/app/album/${params.id}`,
+      destination: `pub/edit/${params.id}`,
       body: msg,
     });
   };
