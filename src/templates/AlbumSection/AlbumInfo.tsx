@@ -21,12 +21,12 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
           {"제목이 들어갈 자리입니다"}
         </div>
         <div className="mr-[61px]">
-          <ModalSection>
+          <ModalSection type="정보">
             <TypeInfo />
           </ModalSection>
         </div>
         <div className="mr-[47px]">
-          <ModalSection>
+          <ModalSection type="구성원">
             <TypeMembers />
           </ModalSection>
         </div>
