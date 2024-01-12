@@ -7,19 +7,23 @@ import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
 
 interface InfoPropType {
+  title: string;
   page: number;
   movePrevPage: () => void;
   moveNextPage: () => void;
 }
 
-const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
+const AlbumInfo = ({
+  title,
+  page,
+  movePrevPage,
+  moveNextPage,
+}: InfoPropType) => {
   return (
     <>
       <header className="h-[80px] flex items-center">
         <Image src={AlbumLogoIcon} alt="앨범 로고 아이콘" />
-        <div className="grow ml-[11px] text-[20px]">
-          {"제목이 들어갈 자리입니다"}
-        </div>
+        <div className="grow ml-[11px] text-[20px]">{title}</div>
         <div className="mr-[61px]">
           <ModalSection type="정보">
             <TypeInfo />
