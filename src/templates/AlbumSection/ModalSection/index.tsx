@@ -1,6 +1,7 @@
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import RouteTrapezoidIcon from "../../../../public/images/svg/route-trapezoid.svg";
+import ModalLogoIcon from "../../../../public/images/svg/album-modal-logo.svg";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -20,7 +21,10 @@ const AlbumModal = ({ children, type }: ModalProps) => {
           className="w-[800px] h-[500px] bg-main_black border-[1px] border-white 
         pt-[23px] pl-[30px] pr-[40px]"
         >
-          <header className="font-semibold text-[20px]">조각보 {type}</header>
+          <header className="flex gap-[6px] pb-[42px]">
+            <Image src={ModalLogoIcon} alt="로고" />
+            <p className="font-semibold text-[20px]">조각보 {type}</p>
+          </header>
           {children}
           <Dialog.Close>닫기</Dialog.Close>
         </div>
