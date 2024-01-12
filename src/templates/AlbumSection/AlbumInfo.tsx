@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
+import ModalSection from "./ModalSection";
+import TypeInfo from "./ModalSection/TypeInfo";
+import TypeMembers from "./ModalSection/TypeMembers";
 
 interface InfoPropType {
   page: number;
@@ -17,13 +20,15 @@ const AlbumInfo = ({ page, movePrevPage, moveNextPage }: InfoPropType) => {
         <div className="grow ml-[11px] text-[20px]">
           {"제목이 들어갈 자리입니다"}
         </div>
-        <div className="flex mr-[61px]">
-          <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-          <p className="ml-[3px]">정보</p>
+        <div className="mr-[61px]">
+          <ModalSection>
+            <TypeInfo />
+          </ModalSection>
         </div>
-        <div className="flex mr-[47px]">
-          <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-          <p className="ml-[3px]">구성원</p>
+        <div className="mr-[47px]">
+          <ModalSection>
+            <TypeMembers />
+          </ModalSection>
         </div>
         <div className="flex">
           <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
