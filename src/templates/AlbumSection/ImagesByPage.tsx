@@ -182,9 +182,9 @@ const ImagesByPage = ({
         <Transformer
           ref={trRef}
           enabledAnchors={[
-            "top-left",
-            "top-right",
-            "bottom-left",
+            // "top-left",
+            // "top-right",
+            // "bottom-left",
             "bottom-right",
           ]}
           flipEnabled={false}

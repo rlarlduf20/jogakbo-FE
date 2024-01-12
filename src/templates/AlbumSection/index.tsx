@@ -40,7 +40,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       client.current.deactivate();
     };
   }, [session, params.id]);
-
+  console.log(params.id);
   useEffect(() => {
     const stage = stageRef.current?.getStage();
     const pushData = async (data: any, formData: any) => {
@@ -137,7 +137,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     if (!client.current.connected) return;
     console.log("msg", msg);
     client.current.publish({
-      destination: `pub/edit/${params.id}`,
+      destination: `/pub/edit/${params.id}`,
       body: msg,
     });
   };
