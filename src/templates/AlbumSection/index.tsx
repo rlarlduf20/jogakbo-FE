@@ -20,6 +20,20 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     let accessToken = session?.jogakTokens.accessToken;
+    async function getInitData() {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/album?albumID=${params.id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const data = await res.json();
+      setAlbumBodyData(data.imagesInfo);
+    }
+    getInitData();
     client.current = new Client({
       brokerURL: `ws://${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/album-ws`,
       connectHeaders: {
@@ -40,7 +54,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       client.current.deactivate();
     };
   }, [session, params.id]);
-  console.log(params.id);
+
   useEffect(() => {
     const stage = stageRef.current?.getStage();
     const pushData = async (data: any, formData: any) => {
