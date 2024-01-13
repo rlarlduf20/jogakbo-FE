@@ -11,6 +11,7 @@ import { parsingImagesSize } from "@/lib/getImgValue";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
+  const [albumTitle, setAlbumTitle] = useState<string>("");
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const stageRef = useRef<Konva.Stage>(null);
@@ -20,6 +21,21 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     let accessToken = session?.jogakTokens.accessToken;
+    async function getInitData() {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/album?albumID=${params.id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      const data = await res.json();
+      setAlbumTitle(data.albumName);
+      setAlbumBodyData(data.imagesInfo);
+    }
+    getInitData();
     client.current = new Client({
       brokerURL: `ws://${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/album-ws`,
       connectHeaders: {
@@ -40,7 +56,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       client.current.deactivate();
     };
   }, [session, params.id]);
-  console.log(params.id);
+
   useEffect(() => {
     const stage = stageRef.current?.getStage();
     const pushData = async (data: any, formData: any) => {
@@ -167,6 +183,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     <section className="relative pb-[80px]">
       <AlbumInfo
         page={page}
+        title={albumTitle}
         movePrevPage={() => {
           setSelectedImageId(null);
           setPage((prev) => prev - 1);
