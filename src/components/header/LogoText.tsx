@@ -7,7 +7,7 @@ const LogoText = () => {
 
   return (
     <p className="flex-grow font-semibold text-[22px] ml-[10px]">
-      {pathname === "/" ? "내 조각보" : "둘러보기"}
+      {pathname === "/browse" ? "둘러보기" : "조각보"}
     </p>
   );
 };

@@ -11,7 +11,7 @@ const Modal = ({ children }: ModalProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  if (!pathname.includes("addAlbum")) {
+  if (!pathname.includes("addAlbum") && !pathname.includes("addMate")) {
     return null;
   }
   const handleOnOpenChange = (open: boolean) => {
