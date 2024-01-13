@@ -171,3 +171,27 @@ export const albumMockDataList = [
     },
   ],
 ];
+
+export const mockMembersList = [
+  { name: "김기하나", profileImg: "/", owner: true, isStandBy: false },
+  { name: "김기둘", profileImg: "/", owner: false, isStandBy: false },
+  { name: "김기넷", profileImg: "/", owner: false, isStandBy: false },
+  { name: "김기셋", profileImg: "/", owner: false, isStandBy: false },
+  { name: "김기다섯", profileImg: "/", owner: false, isStandBy: false },
+  { name: "열라면요리사", profileImg: "/", owner: false, isStandBy: false },
+  { name: "박종호", profileImg: "/", owner: false, isStandBy: true },
+  { name: "문예린", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+];
+
+export const mockFriendsList = [
+  { name: "김기하나", profileImg: "/" },
+  { name: "김기둘", profileImg: "/" },
+  { name: "김기넷", profileImg: "/" },
+  { name: "김기셋", profileImg: "/" },
+  { name: "김기다섯", profileImg: "/" },
+  { name: "열라면요리사", profileImg: "/" },
+  { name: "박종호", profileImg: "/" },
+  { name: "문예린", profileImg: "/" },
+  { name: "비버", profileImg: "/" },
+];
