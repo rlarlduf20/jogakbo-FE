@@ -54,7 +54,12 @@ const SearchBox = () => {
                   bgColor: "white",
                 }}
               />
-              <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
+              <div className="ml-[10px] grow">
+                <p className="text-[14px]">{item.nickname}</p>
+                <p className="text-[12px] text-gray-400">
+                  #{item.socialID.slice(0, 6)}
+                </p>
+              </div>
               <p className="underline text-[14px] cursor-pointer">초대</p>
             </div>
           ))}

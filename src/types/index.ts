@@ -33,6 +33,6 @@ export interface AlbumsType {
 
 export interface SearchUsersType {
   nickname: string;
-  socialId: string;
+  socialID: string;
   profileImageUrl: string | null;
 }
