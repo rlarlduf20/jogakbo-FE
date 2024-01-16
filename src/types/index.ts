@@ -30,3 +30,9 @@ export interface AlbumsType {
   images: ImageType[];
   albumEditors: any;
 }
+
+export interface SearchUsersType {
+  nickname: string;
+  socialId: string;
+  profileImageUrl: string | null;
+}
