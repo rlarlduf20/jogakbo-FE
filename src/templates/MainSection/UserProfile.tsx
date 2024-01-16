@@ -42,7 +42,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
         </div>
         <div className="text-[14px]">회원정보 수정</div>
         <SignOutButton />
-        <Link href="/addMate">
+        <Link href="/addMate" scroll={false}>
           <div className="text-[14px]">친구 만들기</div>
         </Link>
         <Notification />

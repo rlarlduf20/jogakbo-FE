@@ -1,12 +1,17 @@
 "use client";
 
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Notification = () => {
   const notificationRef = useRef<any>();
   const { isOpen, setIsOpen } = useMouseDownOutside(notificationRef);
-
+  useEffect(() => {
+    console.log("connect");
+    return () => {
+      console.log("decon");
+    };
+  }, []);
   return (
     <section ref={notificationRef} className="relative">
       <div
