@@ -12,6 +12,20 @@ const SearchBox = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
+  const handleInvite = async (userID: string) => {
+    const res = await fetch("api/inviteUser", {
+      method: "POST",
+      body: JSON.stringify({
+        userID,
+      }),
+    });
+    if (!res.ok) {
+      alert("요청에 실패했습니다. 다시 시도해주세요.");
+      return;
+    }
+
+    alert("초대 메시지가 발송됐습니다.");
+  };
 
   useEffect(() => {
     const getSearchedUserList = async () => {
@@ -60,7 +74,9 @@ const SearchBox = () => {
                   #{item.socialID.slice(0, 6)}
                 </p>
               </div>
-              <p className="underline text-[14px] cursor-pointer">초대</p>
+              <div onClick={() => handleInvite(item.socialID)}>
+                <p className="underline text-[14px] cursor-pointer">초대</p>
+              </div>
             </div>
           ))}
         </div>
