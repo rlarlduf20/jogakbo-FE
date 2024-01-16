@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Trapezoid from "@/components/Trapezoid";
 import SignOutButton from "@/components/SignOutButton";
+import Notification from "@/components/Notification";
 import type { UserType } from "@/types";
 
 interface UserProfileProps {
@@ -44,6 +45,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
         <Link href="/addMate">
           <div className="text-[14px]">친구 만들기</div>
         </Link>
+        <Notification />
       </div>
     </div>
   );
