@@ -10,7 +10,6 @@ const useMouseDownOutside = (ref: any) => {
       }
     };
     document.addEventListener("mousedown", outsideMouseDown);
-    console.log(isOpen);
     return () => {
       document.removeEventListener("mousedown", outsideMouseDown);
     };

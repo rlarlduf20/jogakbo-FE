@@ -3,10 +3,11 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request: Request) {
   const { jogakTokens } = await getServerSession(authOptions);
-  const { userID } = await request.json();
+
+  const { responseType, userID } = await request.json();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/user/friend?socialID=${userID}`,
+    `${process.env.SERVER_URL}/user/friend-reply?socialID=${userID}&reply=${responseType}`,
     {
       method: "POST",
       headers: {
