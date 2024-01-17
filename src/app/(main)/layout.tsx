@@ -12,10 +12,15 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode;
+  addAlbumModal: React.ReactNode;
+  addMateModal: React.ReactNode;
 }
 
-const RootLayout = async ({ children, modal }: RootLayoutProps) => {
+const RootLayout = async ({
+  children,
+  addAlbumModal,
+  addMateModal,
+}: RootLayoutProps) => {
   return (
     <html lang="en" className={`${SUITFont.variable}`}>
       <body>
@@ -23,7 +28,8 @@ const RootLayout = async ({ children, modal }: RootLayoutProps) => {
           <Header />
           <main className="w-inner mx-auto">
             {children}
-            {modal}
+            {addAlbumModal}
+            {addMateModal}
           </main>
           <Footer />
         </AuthSessionProvider>

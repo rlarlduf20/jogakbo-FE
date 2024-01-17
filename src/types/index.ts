@@ -16,11 +16,13 @@ export interface UserType {
   profileImageUrl: string | null;
   friends: FriendsType[];
   albums: AlbumsType[];
+  sentFriendRequest: FriendsType[];
+  receivedFriendRequest: FriendsType[];
 }
 
 export interface FriendsType {
   nickname: string;
-  socialId: string;
+  socialID: string;
   profileImageUrl: string | null;
 }
 
@@ -29,4 +31,10 @@ export interface AlbumsType {
   albumName: string;
   images: ImageType[];
   albumEditors: any;
+}
+
+export interface SearchUsersType {
+  nickname: string;
+  socialID: string;
+  profileImageUrl: string | null;
 }

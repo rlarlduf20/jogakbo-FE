@@ -8,10 +8,10 @@ const NavLink = () => {
 
   return (
     <>
-      {pathname === "/" ? (
-        <Link href="/browse">둘러보기</Link>
-      ) : (
+      {pathname === "/browse" ? (
         <Link href="/">내 조각보</Link>
+      ) : (
+        <Link href="/browse">둘러보기</Link>
       )}
     </>
   );
