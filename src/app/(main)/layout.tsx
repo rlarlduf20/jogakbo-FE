@@ -26,12 +26,12 @@ const RootLayout = async ({
       <body>
         <AuthSessionProvider>
           <Header />
-          <main className="w-inner mx-auto">
+          <main className="w-inner h-[calc(100vh-80px)] mx-auto">
             {children}
             {addAlbumModal}
             {addMateModal}
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </AuthSessionProvider>
       </body>
     </html>
