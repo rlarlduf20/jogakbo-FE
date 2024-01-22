@@ -34,5 +34,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  mathcher: [...withAuthList, ...withOutAuthList],
+  matcher: [...withAuthList, ...withOutAuthList],
 };
