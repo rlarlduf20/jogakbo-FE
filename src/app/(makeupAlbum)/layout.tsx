@@ -8,11 +8,7 @@ export const metadata: Metadata = {
   description: "작은 기억의 조각들로 추억을 떠올려요.",
 };
 
-interface AlbumRootLayoutProps {
-  children: React.ReactNode;
-}
-
-const AlbumRootLayout = async ({ children }: AlbumRootLayoutProps) => {
+const AlbumRootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={`${SUITFont.variable}`}>
       <body>
