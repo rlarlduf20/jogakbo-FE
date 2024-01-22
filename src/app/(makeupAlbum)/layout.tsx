@@ -13,7 +13,7 @@ interface RootLayoutProps {
   modal: React.ReactNode;
 }
 
-const RootLayout = async ({ children }: RootLayoutProps) => {
+const AlbumRootLayout = async ({ children }: RootLayoutProps) => {
   return (
     <html lang="en" className={`${SUITFont.variable}`}>
       <body>
@@ -25,4 +25,4 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
   );
 };
 
-export default RootLayout;
+export default AlbumRootLayout;
