@@ -17,6 +17,10 @@ export const authOptions = {
       clientSecret: process.env.NAVER_CLIENT_SECRET ?? "",
     }),
   ],
+  pages: {
+    signIn: "/signIn",
+    error: "/signIn/error",
+  },
   callbacks: {
     async signIn({ user, account }: any) {
       let userData = {
