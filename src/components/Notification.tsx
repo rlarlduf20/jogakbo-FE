@@ -4,7 +4,6 @@ import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
 import { useEffect, useRef, useState } from "react";
 import type { FriendsType } from "@/types";
-import { useSession } from "next-auth/react";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
@@ -53,7 +52,6 @@ const Notification = () => {
   const { isOpen, setIsOpen } = useMouseDownOutside(notificationRef);
   const { pushMsg, isAppear, setIsAppear } = usePushNotification();
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
-  const { data: session } = useSession();
 
   const handleResponse = async (
     responseType: string,
@@ -82,27 +80,18 @@ const Notification = () => {
 
   useEffect(() => {
     const getReceivedReq = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/user/profile`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
-          },
-        }
-      );
+      const res = await fetch(`api/profile`);
       const data = await res.json();
       setReceivedReq(data.receivedFriendRequest);
     };
-    if (session?.jogakTokens.accessToken) {
-      getReceivedReq();
-    }
+    getReceivedReq();
+
     if (pushMsg) {
       setReceivedReq((prev: any) => {
         return [...prev, pushMsg];
       });
     }
-  }, [session?.jogakTokens.accessToken, pushMsg]);
+  }, [pushMsg]);
 
   return (
     <section ref={notificationRef} className="relative">
