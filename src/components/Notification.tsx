@@ -65,11 +65,14 @@ const Notification = () => {
         responseType,
       }),
     });
-    if (res.ok) {
-      if (responseType === "reject") alert("거절하셨습니다.");
-      if (responseType === "accept")
-        alert(`${nickname}님과 친구가 되었습니다.`);
+
+    if (!res.ok) {
+      alert("잠시 후 다시 시도해주세요.");
+      return;
     }
+
+    if (responseType === "reject") alert("거절하셨습니다.");
+    if (responseType === "accept") alert(`${nickname}님과 친구가 되었습니다.`);
   };
   const handleFilterPushMsg = (userID: string) => {
     const filteredReceivedReq = receivedReq.filter((item) => {

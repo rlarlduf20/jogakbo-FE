@@ -31,7 +31,7 @@ const usePushNotification = () => {
       const data = JSON.parse(e.data);
       timer = setTimeout(() => {
         setIsAppear(false);
-      }, 3000);
+      }, 5000);
 
       setPushMsg(data);
     });
