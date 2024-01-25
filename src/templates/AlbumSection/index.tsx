@@ -37,7 +37,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     }
     getInitData();
     client.current = new Client({
-      brokerURL: `ws://${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/album-ws`,
+      brokerURL: `${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/album-ws`,
       connectHeaders: {
         Authorization: `Bearer ${accessToken}`,
       },
