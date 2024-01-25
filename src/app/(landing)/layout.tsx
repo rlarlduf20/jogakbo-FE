@@ -1,37 +1,27 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 import AuthSessionProvider from "@/components/SessionProvider";
-import { MainHeader } from "@/components/header";
-import Footer from "@/components/footer";
 import { SUITFont } from "@/lib/fonts";
+import { LandingHeader } from "@/components/header";
 
 export const metadata: Metadata = {
   title: "조각보",
   description: "작은 기억의 조각들로 추억을 떠올려요.",
 };
 
-interface RootLayoutProps {
+interface LandingLayoutProps {
   children: React.ReactNode;
-  addAlbumModal: React.ReactNode;
-  addMateModal: React.ReactNode;
 }
 
-const RootLayout = async ({
-  children,
-  addAlbumModal,
-  addMateModal,
-}: RootLayoutProps) => {
+const RootLayout = async ({ children }: LandingLayoutProps) => {
   return (
     <html lang="en" className={`${SUITFont.variable}`}>
       <body>
         <AuthSessionProvider>
-          <MainHeader />
+          <LandingHeader />
           <main className="w-inner h-[calc(100vh-80px)] mx-auto">
             {children}
-            {addAlbumModal}
-            {addMateModal}
           </main>
-          {/* <Footer /> */}
         </AuthSessionProvider>
       </body>
     </html>

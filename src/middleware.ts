@@ -1,8 +1,8 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const withAuthList = ["/browse", "/album", "/addAlbum", "/addMate"];
-const withOutAuthList = ["/signIn"];
+const withAuthList = ["/my", "/browse", "/album", "/addAlbum", "/addMate"];
+const withOutAuthList = ["/signIn", "/"];
 
 const withAuth = async (req: NextRequest, token: boolean) => {
   const url = req.nextUrl.clone();
@@ -18,7 +18,8 @@ const withOutAuth = async (req: NextRequest, token: boolean) => {
   const url = req.nextUrl.clone();
 
   if (token) {
-    return NextResponse.redirect(url.origin);
+    url.pathname = "/my";
+    return NextResponse.redirect(url);
   }
 };
 
