@@ -1,7 +1,6 @@
-import Link from "next/link";
 import Trapezoid from "@/components/Trapezoid";
-import SignOutButton from "@/components/SignOutButton";
 import type { UserType } from "@/types";
+import MateBox from "./MateBox";
 
 interface UserProfileProps {
   user: UserType;
@@ -40,10 +39,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           </div>
         </div>
         <div className="text-[14px]">회원정보 수정</div>
-        <SignOutButton />
-        <Link href="/addMate" scroll={false}>
-          <div className="text-[14px]">친구 만들기</div>
-        </Link>
+        <MateBox />
       </div>
     </div>
   );
