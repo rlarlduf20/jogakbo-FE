@@ -1,5 +1,7 @@
+import ProfileSection from "@/templates/ProfileSection";
+
 const Profile = () => {
-  return <></>;
+  return <ProfileSection />;
 };
 
 export default Profile;
