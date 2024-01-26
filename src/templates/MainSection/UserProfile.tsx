@@ -1,6 +1,7 @@
 import Trapezoid from "@/components/Trapezoid";
 import type { UserType } from "@/types";
 import MateBox from "./MateBox";
+import Link from "next/link";
 
 interface UserProfileProps {
   user: UserType;
@@ -38,7 +39,9 @@ const UserProfile = ({ user }: UserProfileProps) => {
             <p>{user.albums.length}</p>
           </div>
         </div>
-        <div className="text-[14px]">회원정보 수정</div>
+        <Link href="/my/profile" className="text-[14px]">
+          회원정보 수정
+        </Link>
         <MateBox />
       </div>
     </div>
