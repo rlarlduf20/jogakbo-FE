@@ -15,7 +15,9 @@ const SignOutButton = () => {
 
   return (
     <>
-      <button onClick={onClickSignOut}>로그아웃</button>
+      <button onClick={onClickSignOut} className="text-[14px] underline">
+        로그아웃
+      </button>
     </>
   );
 };

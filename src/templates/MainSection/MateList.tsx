@@ -15,8 +15,9 @@ const MateList = () => {
     setIsOpen(true);
     setOpenIdx(index);
   };
+
   return (
-    <div ref={editBoxRef} className="h-[250px] overflow-scroll">
+    <div className="h-[250px] overflow-scroll">
       {mockFriendsList.map((item, index) => (
         <div
           key={index}
@@ -24,8 +25,16 @@ const MateList = () => {
           onContextMenu={(e) => handleRightClick(e, index)}
         >
           {isOpen && openIdx === index && (
-            <div className="absolute top-[15px] right-[0px] w-[80px] h-[56px] bg-main_black border-white border-[1px] px-[12px] py-[5px]">
-              <p className="text-[14px] mb-[4px] cursor-pointer">친구 삭제</p>
+            <div
+              ref={editBoxRef}
+              className="absolute z-30 top-[35px] left-[50px] w-[80px] h-[56px] bg-main_black border-white border-[1px] px-[12px] py-[5px]"
+            >
+              <p
+                className="text-[14px] mb-[4px] cursor-pointer"
+                onClick={() => console.log("closed")}
+              >
+                친구 삭제
+              </p>
               <p className="text-[14px] cursor-pointer">짱친 등록</p>
             </div>
           )}

@@ -40,7 +40,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           </div>
         </div>
         <Link href="/my/profile" className="text-[14px]">
-          회원정보 수정
+          내 정보 관리
         </Link>
         <MateBox />
       </div>
