@@ -5,14 +5,14 @@ import EditBox from "./EditBox";
 
 const ProfileSection = () => {
   return (
-    <section className="pt-[20px] w-full flex flex-col items-center gap-[100px]">
+    <section className="pt-[20px] w-full flex flex-col items-center gap-[80px]">
       <EditBox />
       <div className="w-[200px] flex flex-col gap-[20px]">
         <div className="flex items-center">
           <p className="grow text-[18px] font-bold">로그인 정보</p>
           <p>{"카카오 로그인"}</p>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center mb-[20px]">
           <p className="grow text-[18px] font-bold">고유 번호</p>
           <p>{"#098765"}</p>
         </div>

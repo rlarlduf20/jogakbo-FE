@@ -12,7 +12,6 @@ const MainHeader = () => {
         <Image src={HomeLogoIcon} alt="홈 로고 아이콘" />
         <LogoText />
         <Notification />
-        <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
         <div className="ml-[3px] flex gap-[3px]">
           <NavLink />
         </div>
