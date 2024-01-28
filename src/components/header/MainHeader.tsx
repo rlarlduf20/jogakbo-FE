@@ -2,7 +2,6 @@ import Image from "next/image";
 import LogoText from "./LogoText";
 import NavLink from "./NavLink";
 import HomeLogoIcon from "../../../public/images/svg/home-logo.svg";
-import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
 import Notification from "../Notification";
 
 const MainHeader = () => {
