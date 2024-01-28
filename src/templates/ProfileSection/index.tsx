@@ -4,12 +4,14 @@ import Link from "next/link";
 import EditBox from "./EditBox";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getUser } from "@/lib/user/getUser";
 
 const ProfileSection = async () => {
   const { info } = await getServerSession(authOptions);
+  const { nickname, profileImageUrl } = await getUser();
   return (
     <section className="pt-[20px] pb-[100px] w-full flex flex-col items-center gap-[80px]">
-      <EditBox />
+      <EditBox nickname={nickname} profileImageUrl={profileImageUrl} />
       <div className="w-[200px] flex flex-col gap-[20px]">
         <div className="flex items-center">
           <p className="grow text-[18px] font-bold">로그인 정보</p>
