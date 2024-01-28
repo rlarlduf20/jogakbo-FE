@@ -11,39 +11,52 @@ interface EditBoxPropsType {
 
 const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
   const [isHoverProfile, setIsHoverProfile] = useState<boolean>(false);
-  const [profileImg, setProfileImg] = useState<string | null>(profileImageUrl);
+  const [profileImg, setProfileImg] = useState<any>(profileImageUrl);
   const [name, setName] = useState<string>(nickname);
   const disabledEditByNameLength = name.length < 2 || name.length > 10;
+
+  const upLoadImage = (e: any) => {
+    const { files } = e.target;
+    const uploadFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadFile);
+
+    reader.onloadend = () => {
+      setProfileImg(reader.result);
+    };
+  };
 
   return (
     <div className="flex flex-col items-center">
       <div>
-        <Trapezoid
-          isHover={isHoverProfile}
-          styles={{
-            width: "180px",
-            height: "180px",
-            clipPath: "polygon(0 0, 100% 0, 100% 90%, 0% 100%)",
-            bgColor: "white",
-          }}
+        <div
+          onMouseOver={() => setIsHoverProfile(true)}
+          onMouseLeave={() => setIsHoverProfile(false)}
+          className="relative w-[180px] h-[180px] bg-white 
+          [clipPath:polygon(0%_0%,100%_0%,100%_90%,0%_100%)]
+          bg-cover bg-center
+           "
+          style={{ backgroundImage: `url(${profileImg})` }}
         >
-          {profileImageUrl && (
-            <Image
-              src={profileImageUrl}
-              alt="thumbnail"
-              fill
-              style={{ objectFit: "cover", objectPosition: "center" }}
-            />
+          <input
+            id="uploadImg"
+            type="file"
+            accept="image/*"
+            onChange={upLoadImage}
+            className="hidden"
+          />
+          {isHoverProfile && (
+            <label
+              htmlFor="uploadImg"
+              // onMouseOver={() => setIsHoverProfile(true)}
+              // onMouseLeave={() => setIsHoverProfile(false)}
+              className="z-30 bg-main_black_opacity cursor-pointer 
+                w-full h-full flex justify-center items-center"
+            >
+              <p className="text-[20px] font-semibold">수정</p>
+            </label>
           )}
-          <input />
-          <div
-            onMouseOver={() => setIsHoverProfile(true)}
-            onMouseLeave={() => setIsHoverProfile(false)}
-            className="cursor-pointer w-full h-full flex justify-center items-center"
-          >
-            <p className="text-[20px] font-semibold">수정</p>
-          </div>
-        </Trapezoid>
+        </div>
       </div>
       <div className="mb-[30px]">
         <p className="text-[18px] mt-[20px]">이름</p>

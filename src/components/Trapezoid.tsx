@@ -7,12 +7,11 @@ interface TrapezoidPropsType {
     position?: any;
     zIndex?: number;
   };
-  isHover?: boolean;
   children?: any;
 }
 
 const Trapezoid = (props: TrapezoidPropsType) => {
-  const { styles, isHover } = props;
+  const { styles } = props;
   const trapezoidStyles = {
     backgroundColor: styles.bgColor,
     width: styles.width,
@@ -22,25 +21,7 @@ const Trapezoid = (props: TrapezoidPropsType) => {
     zIndex: styles.zIndex,
   };
 
-  return (
-    <>
-      {isHover ? (
-        <div
-          style={{
-            ...trapezoidStyles,
-            backgroundColor: "#b9b9b9",
-            transition: "0.3s",
-          }}
-        >
-          {props.children}
-        </div>
-      ) : (
-        <div style={{ ...trapezoidStyles, transition: "0.2s" }}>
-          {props.children}
-        </div>
-      )}
-    </>
-  );
+  return <div style={{ ...trapezoidStyles }}>{props.children}</div>;
 };
 
 export default Trapezoid;
