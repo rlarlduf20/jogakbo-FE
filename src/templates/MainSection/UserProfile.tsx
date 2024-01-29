@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Trapezoid from "@/components/Trapezoid";
 import type { UserType } from "@/types";
 import MateBox from "./MateBox";
@@ -18,8 +19,19 @@ const UserProfile = ({ user }: UserProfileProps) => {
               height: "180px",
               clipPath: "polygon(0 0, 100% 0, 100% 90%, 0% 100%)",
               bgColor: "white",
+              position: "relative",
             }}
-          />
+          >
+            {user.profileImageUrl && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${user.profileImageUrl}`}
+                alt="thumbnail"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center" }}
+                className="border-[1px] border-white"
+              />
+            )}
+          </Trapezoid>
         </div>
         <p className="text-[24px] font-semibold mb-[16px]">{user.nickname}</p>
         <div className="mb-[16px]">

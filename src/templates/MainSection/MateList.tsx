@@ -21,7 +21,7 @@ const MateList = () => {
       {mockFriendsList.map((item, index) => (
         <div
           key={index}
-          className="relative flex items-center mb-[20px]"
+          className="relative flex items-center mb-[20px] cursor:context-menu"
           onContextMenu={(e) => handleRightClick(e, index)}
         >
           {isOpen && openIdx === index && (
