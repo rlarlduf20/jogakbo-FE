@@ -1,7 +1,14 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-const withAuthList = ["/my", "/browse", "/album", "/addAlbum", "/addMate"];
+const withAuthList = [
+  "/my",
+  "/my/profile",
+  "/browse",
+  "/album",
+  "/addAlbum",
+  "/addMate",
+];
 const withOutAuthList = ["/signIn", "/"];
 
 const withAuth = async (req: NextRequest, token: boolean) => {
