@@ -22,16 +22,12 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     let accessToken = session?.jogakTokens.accessToken;
     async function getInitData() {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/album?albumID=${params.id}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const res = await fetch("/api/albumInfo", {
+        method: "POST",
+        body: JSON.stringify({ albumID: params.id }),
+      });
       const data = await res.json();
+
       setAlbumTitle(data.albumName);
       setAlbumBodyData(data.imagesInfo);
     }
@@ -59,27 +55,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const stage = stageRef.current?.getStage();
-    const pushData = async (data: any, formData: any) => {
-      // setAlbumBodyData((prevData: any) => {
-      //   const newData = [...prevData];
-      //   newData[page] = newData[page].concat(data);
-
-      //   return newData;
-      // });
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/album/img/${params.id}`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
-          },
-        }
-      );
-      console.log(res);
-      // const resJson = await res.json();
-      // setAlbumBodyData(resJson);
-    };
 
     const handleDragOver = (e: any) => {
       setIsDragging(true);
@@ -126,7 +101,11 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           fileInfo.push(obj);
         }
         formData.append("fileInfos", JSON.stringify(fileInfo));
-        pushData(dropImgInfo, formData);
+
+        await fetch(`/api/dropImage/${params.id}`, {
+          method: "POST",
+          body: formData,
+        });
       }
     };
 
@@ -211,11 +190,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
                 setSelectedImageId(item.imageUUID);
               }}
               onChangeAttrs={(newAttrs: ImageType) => {
-                // setAlbumBodyData((prevData) => {
-                //   const newData = [...prevData];
-                //   newData[page][index] = newAttrs;
-                //   return newData;
-                // });
                 let arr = [];
                 let obj = {
                   imageUUID: newAttrs.imageUUID,
@@ -235,14 +209,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
                 arr.push(obj);
                 publish(JSON.stringify(arr));
               }}
-              // reLocArr={(newImageArr: ImageType[]) => {
-              //   setAlbumBodyData((prevData) => {
-              //     const newData = [...prevData];
-              //     newData[page] = newImageArr;
-
-              //     return newData;
-              //   });
-              // }}
             />
           ))}
         </Layer>
