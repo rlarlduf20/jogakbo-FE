@@ -45,7 +45,7 @@ export const authOptions = {
         expiresIn: expiresIn,
       };
       user.jogakTokens = jogakTokens;
-
+      user.info = userData;
       return true;
     },
     async jwt({ token, user }: any) {
@@ -60,6 +60,7 @@ export const authOptions = {
     },
     async session({ session, token }: any) {
       session.jogakTokens = token.jogakTokens;
+      session.info = token.info;
 
       return session;
     },

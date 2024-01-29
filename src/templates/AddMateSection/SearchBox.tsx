@@ -13,7 +13,7 @@ const SearchBox = () => {
     setSearchText(e.target.value);
   };
   const handleInvite = async (userID: string) => {
-    const res = await fetch("api/inviteUser", {
+    const res = await fetch("/api/inviteUser", {
       method: "POST",
       body: JSON.stringify({
         userID,
@@ -29,7 +29,7 @@ const SearchBox = () => {
 
   useEffect(() => {
     const getSearchedUserList = async () => {
-      const res = await fetch("api/searchUser", {
+      const res = await fetch("/api/searchUser", {
         method: "POST",
         body: JSON.stringify({
           debouncedSearchText,

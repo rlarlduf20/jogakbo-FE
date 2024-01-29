@@ -12,7 +12,7 @@ const AddButton = ({ title, handleInputTitle }: AddButtonPropsType) => {
       alert("제목을 입력해주세요.");
       return;
     }
-    const res = await fetch("api/createAlbum", {
+    const res = await fetch("/api/createAlbum", {
       method: "POST",
       body: JSON.stringify({
         title,

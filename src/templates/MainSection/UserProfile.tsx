@@ -1,7 +1,8 @@
-import Link from "next/link";
+import Image from "next/image";
 import Trapezoid from "@/components/Trapezoid";
-import SignOutButton from "@/components/SignOutButton";
 import type { UserType } from "@/types";
+import MateBox from "./MateBox";
+import Link from "next/link";
 
 interface UserProfileProps {
   user: UserType;
@@ -18,8 +19,19 @@ const UserProfile = ({ user }: UserProfileProps) => {
               height: "180px",
               clipPath: "polygon(0 0, 100% 0, 100% 90%, 0% 100%)",
               bgColor: "white",
+              position: "relative",
             }}
-          />
+          >
+            {user.profileImageUrl && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${user.profileImageUrl}`}
+                alt="thumbnail"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center" }}
+                className="border-[1px] border-white"
+              />
+            )}
+          </Trapezoid>
         </div>
         <p className="text-[24px] font-semibold mb-[16px]">{user.nickname}</p>
         <div className="mb-[16px]">
@@ -39,11 +51,10 @@ const UserProfile = ({ user }: UserProfileProps) => {
             <p>{user.albums.length}</p>
           </div>
         </div>
-        <div className="text-[14px]">회원정보 수정</div>
-        <SignOutButton />
-        <Link href="/addMate" scroll={false}>
-          <div className="text-[14px]">친구 만들기</div>
+        <Link href="/my/profile" className="text-[14px]">
+          내 정보 관리
         </Link>
+        <MateBox />
       </div>
     </div>
   );

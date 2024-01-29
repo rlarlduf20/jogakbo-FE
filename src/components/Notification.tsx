@@ -58,7 +58,7 @@ const Notification = () => {
     userID: string,
     nickname: string
   ) => {
-    const res = await fetch("api/replyMate", {
+    const res = await fetch("/api/replyMate", {
       method: "POST",
       body: JSON.stringify({
         userID,
@@ -83,7 +83,7 @@ const Notification = () => {
 
   useEffect(() => {
     const getReceivedReq = async () => {
-      const res = await fetch(`api/profile`);
+      const res = await fetch(`/api/profile`);
       const data = await res.json();
       setReceivedReq(data.receivedFriendRequest);
     };

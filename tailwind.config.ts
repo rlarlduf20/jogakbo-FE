@@ -10,7 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         main_black: "#151515",
-        test_green: "#56AD65",
+        main_black_opacity: "rgba(15,15,15,0.3)",
+        main_pink: "#ff9898",
+        main_yellow: "#ffe381",
+        main_green: "#59b86e",
+        main_blue: "#7aacf7",
       },
       width: {
         inner: "1200px",
