@@ -10,13 +10,13 @@ interface EditBoxPropsType {
 }
 
 const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
+  const router = useRouter();
   const [isHoverProfile, setIsHoverProfile] = useState<boolean>(false);
   const [profileImg, setProfileImg] = useState<any>(profileImageUrl);
   const [name, setName] = useState<string>(nickname);
   const [imageFile, setImageFile] = useState<any>();
   const disabledEditByNameLength = name.length < 2 || name.length > 10;
   const disabledNotChange = name === nickname && profileImageUrl === profileImg;
-  const router = useRouter();
 
   const upLoadImage = (e: any) => {
     const { files } = e.target;

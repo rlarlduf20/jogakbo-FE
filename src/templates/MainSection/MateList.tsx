@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Trapezoid from "@/components/Trapezoid";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import { FriendsType } from "@/types";
@@ -10,6 +11,7 @@ interface MateBoxPropsType {
 }
 
 const MateList = ({ mateList }: MateBoxPropsType) => {
+  const router = useRouter();
   const [openIdx, setOpenIdx] = useState<number>(-1);
   const editBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(editBoxRef);
@@ -19,7 +21,20 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
     setIsOpen(true);
     setOpenIdx(index);
   };
-
+  const handleDeleteMate = async (name: string, userID: string) => {
+    const res = await fetch("/api/friend", {
+      method: "DELETE",
+      body: JSON.stringify({
+        userID,
+      }),
+    });
+    if (res.ok) {
+      alert(`이제 ${name}님과 친구가 아닙니다.`);
+      router.refresh();
+      return;
+    }
+    alert("다시 시도해주세요.");
+  };
   return (
     <div className="h-[250px] overflow-scroll">
       {mateList?.map((item, index) => (
@@ -35,7 +50,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
             >
               <p
                 className="text-[14px] mb-[4px] cursor-pointer"
-                onClick={() => console.log("closed")}
+                onClick={() => handleDeleteMate(item.nickname, item.socialID)}
               >
                 친구 삭제
               </p>

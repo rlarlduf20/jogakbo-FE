@@ -13,7 +13,7 @@ const SearchBox = () => {
     setSearchText(e.target.value);
   };
   const handleInvite = async (userID: string) => {
-    const res = await fetch("/api/inviteUser", {
+    const res = await fetch("/api/friend", {
       method: "POST",
       body: JSON.stringify({
         userID,
