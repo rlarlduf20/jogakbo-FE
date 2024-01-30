@@ -54,7 +54,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
         <Link href="/my/profile" className="text-[14px]">
           내 정보 관리
         </Link>
-        <MateBox />
+        <MateBox mateList={user.friends} />
       </div>
     </div>
   );

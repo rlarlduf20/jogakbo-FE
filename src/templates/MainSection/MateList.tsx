@@ -2,10 +2,14 @@
 
 import { useState, useRef } from "react";
 import Trapezoid from "@/components/Trapezoid";
-import { mockFriendsList } from "@/assets/mockData";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
+import { FriendsType } from "@/types";
 
-const MateList = () => {
+interface MateBoxPropsType {
+  mateList: FriendsType[];
+}
+
+const MateList = ({ mateList }: MateBoxPropsType) => {
   const [openIdx, setOpenIdx] = useState<number>(-1);
   const editBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(editBoxRef);
@@ -18,7 +22,7 @@ const MateList = () => {
 
   return (
     <div className="h-[250px] overflow-scroll">
-      {mockFriendsList.map((item, index) => (
+      {mateList?.map((item, index) => (
         <div
           key={index}
           className="relative flex items-center mb-[20px] cursor:context-menu"
@@ -47,7 +51,7 @@ const MateList = () => {
               bgColor: "white",
             }}
           />
-          <p className="ml-[10px] grow text-[14px]">{item.name}</p>
+          <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
         </div>
       ))}
     </div>
