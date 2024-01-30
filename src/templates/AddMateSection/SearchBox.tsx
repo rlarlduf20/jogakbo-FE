@@ -58,7 +58,13 @@ const SearchBox = () => {
       ) : (
         <div>
           {searchedUser.map((item, index) => (
-            <div key={index} className="flex items-center mb-[20px]">
+            <div key={index} className="relative flex items-center mb-[20px]">
+              {(item.friendStatus === "WAITING" ||
+                item.friendStatus === "FRIEND") && (
+                <div className="absolute flex items-center justify-center w-full h-full bg-main_pink opacity-50">
+                  <p>초대할수없는유저</p>
+                </div>
+              )}
               <Trapezoid
                 styles={{
                   width: "40px",
@@ -69,14 +75,20 @@ const SearchBox = () => {
                 }}
               />
               <div className="ml-[10px] grow">
-                <p className="text-[14px]">{item.nickname}</p>
+                <p className="text-[14px]">{item.friend.nickname}</p>
                 <p className="text-[12px] text-gray-400">
-                  #{item.socialID.slice(0, 6)}
+                  #{item.friend.socialID.slice(0, 6)}
                 </p>
               </div>
-              <div onClick={() => handleInvite(item.socialID)}>
-                <p className="underline text-[14px] cursor-pointer">초대</p>
-              </div>
+              <button
+                disabled={
+                  item.friendStatus === "WAITING" ||
+                  item.friendStatus === "FRIEND"
+                }
+                onClick={() => handleInvite(item.friend.socialID)}
+              >
+                <p className="underline text-[14px]">초대</p>
+              </button>
             </div>
           ))}
         </div>

@@ -34,7 +34,10 @@ export interface AlbumsType {
 }
 
 export interface SearchUsersType {
-  nickname: string;
-  socialID: string;
-  profileImageUrl: string | null;
+  friend: {
+    nickname: string;
+    socialID: string;
+    profileImageUrl: string | null;
+  };
+  friendStatus: string;
 }
