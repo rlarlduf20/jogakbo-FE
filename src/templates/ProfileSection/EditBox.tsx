@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 
 interface EditBoxPropsType {
   nickname: string;

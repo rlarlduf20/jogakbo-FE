@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import type { UserType } from "@/types";
 import MateBox from "./MateBox";
 import Link from "next/link";

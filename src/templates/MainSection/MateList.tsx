@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import { FriendsType } from "@/types";
 

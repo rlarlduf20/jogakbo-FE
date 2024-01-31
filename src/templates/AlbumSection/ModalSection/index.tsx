@@ -2,7 +2,7 @@ import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import RouteTrapezoidIcon from "../../../../public/images/svg/route-trapezoid.svg";
 import ModalLogoIcon from "../../../../public/images/svg/album-modal-logo.svg";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 
 interface ModalProps {
   children: React.ReactNode;

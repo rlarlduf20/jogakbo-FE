@@ -1,5 +1,5 @@
 import SignOutButton from "@/components/SignOutButton";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import Link from "next/link";
 import EditBox from "./EditBox";
 import { getServerSession } from "next-auth";
