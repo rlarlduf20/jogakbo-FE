@@ -8,7 +8,7 @@
 
 ---
 
-👉[조각보 만나러 가기](htts://jogakbo.vercel.app)
+👉[조각보 만나러 가기](https://jogakbo.vercel.app)
 
 ![조각보 스크린](/public/images/docs/DOCS_SCREEN.png)
 ![조각보 명함](/public/images/docs/DOCS_CARD.png)
