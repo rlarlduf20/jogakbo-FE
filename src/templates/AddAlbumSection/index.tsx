@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import SubmitTitleBox from "./SubmitTitleBox";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 
@@ -13,9 +12,7 @@ const AddAlbumSection = () => {
         <Image src={PlusIcon} alt="추가 아이콘" width={24} height={24} />
         <p className="text-[20px] font-semibold">새 조각보 만들기</p>
       </div>
-      <SubmitTitleBox>
-        <Link href="/">취소</Link>
-      </SubmitTitleBox>
+      <SubmitTitleBox />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { TrapeButton } from "@/components/Trapezoid";
 import { useRouter } from "next/navigation";
 
 interface AddButtonPropsType {
@@ -28,7 +29,7 @@ const AddButton = ({ title, handleInputTitle }: AddButtonPropsType) => {
     router.push(`/album/${data}`);
   };
 
-  return <button onClick={handleClick}>만들기</button>;
+  return <TrapeButton handleClick={handleClick}>만들기</TrapeButton>;
 };
 
 export default AddButton;
