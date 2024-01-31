@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import useDebounce from "@/hooks/useDebounce";
 import type { SearchUsersType } from "@/types";
 import { Trapezoid } from "@/components/Trapezoid";
@@ -77,7 +78,16 @@ const SearchBox = () => {
                     position: "relative",
                     bgColor: "white",
                   }}
-                />
+                >
+                  {item.friend.profileImageURL && (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.friend.profileImageURL}`}
+                      alt="thumbnail"
+                      fill
+                      style={{ objectFit: "cover", objectPosition: "center" }}
+                    />
+                  )}
+                </Trapezoid>
                 <div className="ml-[10px] grow">
                   <p>{item.friend.nickname}</p>
                   <p className="text-[14px] text-[#888]">

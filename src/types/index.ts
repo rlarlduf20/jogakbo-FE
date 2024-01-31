@@ -23,7 +23,7 @@ export interface UserType {
 export interface FriendsType {
   nickname: string;
   socialID: string;
-  profileImageUrl: string | null;
+  profileImageURL: string | null;
 }
 
 export interface AlbumsType {
@@ -37,7 +37,7 @@ export interface SearchUsersType {
   friend: {
     nickname: string;
     socialID: string;
-    profileImageUrl: string | null;
+    profileImageURL: string | null;
   };
   friendStatus: string;
 }

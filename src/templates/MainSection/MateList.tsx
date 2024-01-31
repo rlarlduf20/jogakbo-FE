@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Trapezoid } from "@/components/Trapezoid";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
@@ -15,7 +16,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
   const [openIdx, setOpenIdx] = useState<number>(-1);
   const editBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(editBoxRef);
-
+  console.log(mateList);
   const handleRightClick = (e: React.MouseEvent, index: number) => {
     e.preventDefault();
     setIsOpen(true);
@@ -54,7 +55,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
               >
                 친구 삭제
               </p>
-              <p className="text-[14px] cursor-pointer">짱친 등록</p>
+              <p className="text-[14px] cursor-no-drop">알림 끄기</p>
             </div>
           )}
           <Trapezoid
@@ -65,7 +66,16 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
               position: "relative",
               bgColor: "white",
             }}
-          />
+          >
+            {item.profileImageURL && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.profileImageURL}`}
+                alt="thumbnail"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+            )}
+          </Trapezoid>
           <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
         </div>
       ))}
