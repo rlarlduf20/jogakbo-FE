@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import type { AlbumsType } from "@/types";
 
 interface AlbumListProps {

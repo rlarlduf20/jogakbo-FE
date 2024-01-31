@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import SearchIcon from "../../../../public/images/svg/search.svg";
 import { mockMembersList, mockFriendsList } from "@/assets/mockData";
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Trapezoid from "@/components/Trapezoid";
+import { TrapeButton } from "@/components/Trapezoid";
 
 interface EditBoxPropsType {
   nickname: string;
@@ -10,13 +10,13 @@ interface EditBoxPropsType {
 }
 
 const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
+  const router = useRouter();
   const [isHoverProfile, setIsHoverProfile] = useState<boolean>(false);
   const [profileImg, setProfileImg] = useState<any>(profileImageUrl);
   const [name, setName] = useState<string>(nickname);
   const [imageFile, setImageFile] = useState<any>();
   const disabledEditByNameLength = name.length < 2 || name.length > 10;
   const disabledNotChange = name === nickname && profileImageUrl === profileImg;
-  const router = useRouter();
 
   const upLoadImage = (e: any) => {
     const { files } = e.target;
@@ -105,22 +105,12 @@ const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
           2-10자로 설정해주세요.
         </label>
       </div>
-      <Trapezoid
-        styles={{
-          width: "78px",
-          height: "32px",
-          clipPath: "polygon(0 0, 100% 25%, 100% 100%, 0% 100%)",
-          bgColor: "white",
-        }}
+      <TrapeButton
+        disabled={disabledEditByNameLength || disabledNotChange}
+        handleClick={handleEdit}
       >
-        <button
-          disabled={disabledEditByNameLength || disabledNotChange}
-          className="w-full h-full"
-          onClick={handleEdit}
-        >
-          <p className="text-main_black text-center pt-[5.5px]">수정</p>
-        </button>
-      </Trapezoid>
+        수정
+      </TrapeButton>
     </div>
   );
 };

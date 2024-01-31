@@ -1,24 +1,44 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Trapezoid from "@/components/Trapezoid";
-import { mockFriendsList } from "@/assets/mockData";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Trapezoid } from "@/components/Trapezoid";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
+import { FriendsType } from "@/types";
 
-const MateList = () => {
+interface MateBoxPropsType {
+  mateList: FriendsType[];
+}
+
+const MateList = ({ mateList }: MateBoxPropsType) => {
+  const router = useRouter();
   const [openIdx, setOpenIdx] = useState<number>(-1);
   const editBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(editBoxRef);
-
+  console.log(mateList);
   const handleRightClick = (e: React.MouseEvent, index: number) => {
     e.preventDefault();
     setIsOpen(true);
     setOpenIdx(index);
   };
-
+  const handleDeleteMate = async (name: string, userID: string) => {
+    const res = await fetch("/api/friend", {
+      method: "DELETE",
+      body: JSON.stringify({
+        userID,
+      }),
+    });
+    if (res.ok) {
+      alert(`이제 ${name}님과 친구가 아닙니다.`);
+      router.refresh();
+      return;
+    }
+    alert("다시 시도해주세요.");
+  };
   return (
     <div className="h-[250px] overflow-scroll">
-      {mockFriendsList.map((item, index) => (
+      {mateList?.map((item, index) => (
         <div
           key={index}
           className="relative flex items-center mb-[20px] cursor:context-menu"
@@ -31,11 +51,11 @@ const MateList = () => {
             >
               <p
                 className="text-[14px] mb-[4px] cursor-pointer"
-                onClick={() => console.log("closed")}
+                onClick={() => handleDeleteMate(item.nickname, item.socialID)}
               >
                 친구 삭제
               </p>
-              <p className="text-[14px] cursor-pointer">짱친 등록</p>
+              <p className="text-[14px] cursor-no-drop">알림 끄기</p>
             </div>
           )}
           <Trapezoid
@@ -46,8 +66,17 @@ const MateList = () => {
               position: "relative",
               bgColor: "white",
             }}
-          />
-          <p className="ml-[10px] grow text-[14px]">{item.name}</p>
+          >
+            {item.profileImageURL && (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.profileImageURL}`}
+                alt="thumbnail"
+                fill
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+            )}
+          </Trapezoid>
+          <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
         </div>
       ))}
     </div>
