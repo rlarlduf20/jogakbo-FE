@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import type { SearchUsersType } from "@/types";
-import { TrapeButton, Trapezoid } from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
+import CloseButton from "./CloseButton";
 
 const SearchBox = () => {
   const [searchText, setSearchText] = useState<string>("");
@@ -98,9 +98,7 @@ const SearchBox = () => {
           </div>
         )}
       </div>
-      <Link href="/my">
-        <TrapeButton>닫기</TrapeButton>
-      </Link>
+      <CloseButton />
     </div>
   );
 };

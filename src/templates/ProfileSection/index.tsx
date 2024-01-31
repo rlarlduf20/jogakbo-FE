@@ -1,5 +1,5 @@
 import SignOutButton from "@/components/SignOutButton";
-import { Trapezoid } from "@/components/Trapezoid";
+import { TrapeButton } from "@/components/Trapezoid";
 import Link from "next/link";
 import EditBox from "./EditBox";
 import { getServerSession } from "next-auth";
@@ -24,16 +24,7 @@ const ProfileSection = async () => {
         <SignOutButton />
         <button className="text-[14px] underline mb-[30px]">탈퇴</button>
         <Link href="/my" className="mx-auto">
-          <Trapezoid
-            styles={{
-              width: "78px",
-              height: "32px",
-              clipPath: "polygon(0 0, 100% 25%, 100% 100%, 0% 100%)",
-              bgColor: "white",
-            }}
-          >
-            <p className="text-main_black text-center pt-[5.5px]">닫기</p>
-          </Trapezoid>
+          <TrapeButton>닫기</TrapeButton>
         </Link>
       </div>
     </section>
