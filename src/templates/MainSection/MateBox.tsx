@@ -3,8 +3,13 @@ import Link from "next/link";
 
 import PlusIcon from "../../../public/images/svg/plus.svg";
 import MateList from "./MateList";
+import { FriendsType } from "@/types";
 
-const MateBox = () => {
+interface MateBoxPropsType {
+  mateList: FriendsType[];
+}
+
+const MateBox = ({ mateList }: MateBoxPropsType) => {
   return (
     <div className="mt-[64px]">
       <div className="flex items-center mb-[28px]">
@@ -16,7 +21,7 @@ const MateBox = () => {
           </Link>
         </div>
       </div>
-      <MateList />
+      <MateList mateList={mateList} />
     </div>
   );
 };

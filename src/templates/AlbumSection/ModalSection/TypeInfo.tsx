@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 
 const mockThumbnailImage = "/images/park.jpeg";
 

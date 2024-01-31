@@ -2,7 +2,7 @@ import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import RouteTrapezoidIcon from "../../../../public/images/svg/route-trapezoid.svg";
 import ModalLogoIcon from "../../../../public/images/svg/album-modal-logo.svg";
-import Trapezoid from "@/components/Trapezoid";
+import { TrapeButton } from "@/components/Trapezoid";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -29,16 +29,7 @@ const AlbumModal = ({ children, type }: ModalProps) => {
           {children}
           <footer className="flex justify-center pt-[20px]">
             <Dialog.Close>
-              <Trapezoid
-                styles={{
-                  width: "75px",
-                  height: "30px",
-                  clipPath: "polygon(0% 0%, 100% 25%, 100% 100%, 0% 100%)",
-                  bgColor: "white",
-                }}
-              >
-                <p className="text-main_black pt-[4px]">닫기</p>
-              </Trapezoid>
+              <TrapeButton>닫기</TrapeButton>
             </Dialog.Close>
           </footer>
         </div>

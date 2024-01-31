@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Trapezoid from "@/components/Trapezoid";
+import { Trapezoid } from "@/components/Trapezoid";
 import type { UserType } from "@/types";
 import MateBox from "./MateBox";
 import Link from "next/link";
@@ -42,19 +42,19 @@ const UserProfile = ({ user }: UserProfileProps) => {
           </div>
           <div className="flex mb-[18px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
-            <p className="grow">조각보</p>
+            <p className="grow">조각</p>
             <p>{0}</p>
           </div>
           <div className="flex items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
-            <p className="grow">조각</p>
+            <p className="grow">조각보</p>
             <p>{user.albums.length}</p>
           </div>
         </div>
         <Link href="/my/profile" className="text-[14px]">
           내 정보 관리
         </Link>
-        <MateBox />
+        <MateBox mateList={user.friends} />
       </div>
     </div>
   );
