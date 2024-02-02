@@ -72,8 +72,8 @@ const SearchBox = () => {
                 )}
                 <Trapezoid
                   styles={{
-                    width: "40px",
-                    height: "40px",
+                    width: "42px",
+                    height: "42px",
                     clipPath: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
                     position: "relative",
                     bgColor: "white",

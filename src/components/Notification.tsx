@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
-import { useEffect, useRef, useState } from "react";
 import type { FriendsType } from "@/types";
+import NotiIcon from "../../public/images/svg/noti.svg";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
@@ -99,13 +101,10 @@ const Notification = () => {
   return (
     <section ref={notificationRef} className="relative">
       <div
-        className="border-[1px] border-white p-3 cursor-pointer flex"
+        className="cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <p className="grow">알림</p>
-        <div className="border-[1px] border-white w-[24px] text-center">
-          {receivedReq.length}
-        </div>
+        <Image src={NotiIcon} alt="알림" />
       </div>
       {isOpen && (
         <div className="absolute w-[200px] h-[400px] border-[1px] border-white bg-main_black">

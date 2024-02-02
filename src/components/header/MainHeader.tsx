@@ -10,10 +10,10 @@ const MainHeader = () => {
       <nav className="flex h-[80px] w-inner items-center">
         <Image src={HomeLogoIcon} alt="홈 로고 아이콘" />
         <LogoText />
-        <Notification />
-        <div className="ml-[3px] flex gap-[3px]">
+        <div className="mr-[23px] flex gap-[3px]">
           <NavLink />
         </div>
+        <Notification />
       </nav>
     </header>
   );

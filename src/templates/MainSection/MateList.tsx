@@ -16,7 +16,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
   const [openIdx, setOpenIdx] = useState<number>(-1);
   const editBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(editBoxRef);
-  console.log(mateList);
+
   const handleRightClick = (e: React.MouseEvent, index: number) => {
     e.preventDefault();
     setIsOpen(true);
