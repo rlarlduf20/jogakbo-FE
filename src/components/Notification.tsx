@@ -15,6 +15,7 @@ interface PushNotiPropsType {
   setIsAppear?: any;
   handleFilterPushMsg: (u: string) => void;
   index?: any;
+  type?: string;
 }
 
 const notiIndexBoxColor = ["#7aacf7", "#ff9898", "#59b86e", "#ffe380"];
@@ -25,27 +26,32 @@ const PushNoti = ({
   handleResponse,
   setIsAppear,
   handleFilterPushMsg,
+  type,
 }: PushNotiPropsType) => {
   const router = useRouter();
   return (
     <div>
-      <div className="flex items-start pl-[8px]">
-        <div className="pt-[7px] mr-[14px]">
-          <Trapezoid
-            styles={{
-              width: "8px",
-              height: "8px",
-              clipPath: "polygon(0 0, 87.5% 0%, 100% 100%, 0% 100%)",
-              position: "relative",
-              bgColor: `${notiIndexBoxColor[index % 4]}`,
-            }}
-          />
+      <div className={`flex items-start ${type === "push" || "pl-[8px]"}`}>
+        <div className={`${type === "push" || "pt-[7px]"} mr-[13px]`}>
+          {type === "push" ? (
+            <Image src={NotiIcon} alt="알림" />
+          ) : (
+            <Trapezoid
+              styles={{
+                width: "8px",
+                height: "8px",
+                clipPath: "polygon(0 0, 87.5% 0%, 100% 100%, 0% 100%)",
+                position: "relative",
+                bgColor: `${notiIndexBoxColor[index % 4]}`,
+              }}
+            />
+          )}
         </div>
         <p className="mb-[6px] break-keep">
           {info?.nickname}님이 친구 요청을 보냈습니다.
         </p>
       </div>
-      <div>
+      <div className={`${type === "push" ? "ml-[38px]" : "ml-[30px]"}`}>
         <button
           onClick={() => {
             handleResponse("accept", info.socialID, info.nickname);
@@ -53,7 +59,7 @@ const PushNoti = ({
             setIsAppear(false);
             router.refresh();
           }}
-          className="underline ml-[30px] mr-[15px] text-[14px]"
+          className="underline mr-[15px] text-[14px]"
         >
           수락
         </button>
@@ -120,7 +126,6 @@ const Notification = () => {
       });
     }
   }, [pushMsg]);
-
   return (
     <section ref={notificationRef} className="relative">
       <div
@@ -164,10 +169,14 @@ const Notification = () => {
           </TrapeButton>
         </div>
       )}
-      {isAppear && (
-        <div className="fixed top-[50px] left-[300px] bg-main_black z-30">
+      {true && (
+        <div
+          className="fixed top-[50px] left-[300px] bg-main_black z-30 
+          border-[1px] border-white py-[23px] px-[30px] w-[360px]"
+        >
           <PushNoti
-            info={pushMsg}
+            type="push"
+            info={{ nickname: "김기열" }}
             handleResponse={handleResponse}
             setIsAppear={setIsAppear}
             handleFilterPushMsg={handleFilterPushMsg}
