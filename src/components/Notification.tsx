@@ -6,8 +6,8 @@ import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
 import type { FriendsType } from "@/types";
 import NotiIcon from "../../public/images/svg/noti.svg";
-import { mockNotiList } from "@/assets/mockData";
 import { Trapezoid, TrapeButton } from "./Trapezoid";
+import { useRouter } from "next/navigation";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
@@ -26,6 +26,7 @@ const PushNoti = ({
   setIsAppear,
   handleFilterPushMsg,
 }: PushNotiPropsType) => {
+  const router = useRouter();
   return (
     <div>
       <div className="flex items-start pl-[8px]">
@@ -50,6 +51,7 @@ const PushNoti = ({
             handleResponse("accept", info.socialID, info.nickname);
             handleFilterPushMsg(info.socialID);
             setIsAppear(false);
+            router.refresh();
           }}
           className="underline ml-[30px] mr-[15px] text-[14px]"
         >
