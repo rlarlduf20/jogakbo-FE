@@ -137,8 +137,8 @@ const Notification = () => {
             <p className="text-[20px] font-semibold">알림 목록</p>
           </div>
           <div className="h-[430px] mb-[28px] flex flex-col gap-[20px] overflow-scroll">
-            {!!mockNotiList.length ? (
-              mockNotiList.map((item, index) => (
+            {!!receivedReq.length ? (
+              receivedReq.map((item, index) => (
                 <PushNoti
                   key={index}
                   index={index}

@@ -51,7 +51,7 @@ const SearchBox = () => {
         onChange={handleSearch}
         className="block bg-main_black w-[300px] h-[50px] pb-[5px]
         border-b-[1px] border-white text-[18px] text-center mb-[20px]
-        outline-none placeholder:text-white"
+        outline-none placeholder:text-[#888]"
       />
       <div className="h-[332px] overflow-scroll mb-[55px]">
         {!searchText ? (
