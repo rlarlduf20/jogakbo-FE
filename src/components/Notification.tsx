@@ -126,6 +126,7 @@ const Notification = () => {
       });
     }
   }, [pushMsg]);
+
   return (
     <section ref={notificationRef} className="relative">
       <div
@@ -169,20 +170,22 @@ const Notification = () => {
           </TrapeButton>
         </div>
       )}
-      {true && (
-        <div
-          className="fixed top-[50px] left-[300px] bg-main_black z-30 
-          border-[1px] border-white py-[23px] px-[30px] w-[360px]"
-        >
-          <PushNoti
-            type="push"
-            info={{ nickname: "김기열" }}
-            handleResponse={handleResponse}
-            setIsAppear={setIsAppear}
-            handleFilterPushMsg={handleFilterPushMsg}
-          />
-        </div>
-      )}
+      <div
+        className={`fixed top-[70px] right-[-20%] bg-main_black z-30 
+          border-[1px] border-white py-[23px] px-[30px] w-[360px]
+         transition-all duration-700  
+         ${isAppear || "opacity-0"}
+          ${isAppear ? "right-[calc(50vw-600px)]" : "right-[-20%]"}
+          `}
+      >
+        <PushNoti
+          type="push"
+          info={pushMsg}
+          handleResponse={handleResponse}
+          setIsAppear={setIsAppear}
+          handleFilterPushMsg={handleFilterPushMsg}
+        />
+      </div>
     </section>
   );
 };
