@@ -53,7 +53,7 @@ const SearchBox = () => {
         border-b-[1px] border-white text-[18px] text-center mb-[20px]
         outline-none placeholder:text-white"
       />
-      <div className="h-[322px] overflow-scroll mb-[45px]">
+      <div className="h-[332px] overflow-scroll mb-[55px]">
         {!searchText ? (
           <p className="text-[14px]">
             친구를 추가하고 함께 조각을 완성해 보세요.

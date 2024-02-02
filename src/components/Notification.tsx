@@ -6,43 +6,64 @@ import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
 import type { FriendsType } from "@/types";
 import NotiIcon from "../../public/images/svg/noti.svg";
+import { mockNotiList } from "@/assets/mockData";
+import { Trapezoid, TrapeButton } from "./Trapezoid";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
   handleResponse: (r: string, u: string, n: string) => void;
   setIsAppear?: any;
   handleFilterPushMsg: (u: string) => void;
+  index?: any;
 }
 
+const notiIndexBoxColor = ["#7aacf7", "#ff9898", "#59b86e", "#ffe380"];
+
 const PushNoti = ({
+  index,
   info,
   handleResponse,
   setIsAppear,
   handleFilterPushMsg,
 }: PushNotiPropsType) => {
   return (
-    <div className="p-2 border-b-2 border-white">
-      <p className="pb-3">{info?.nickname}님이 친구 요청을 보냈습니다.</p>
+    <div>
+      <div className="flex items-start pl-[8px]">
+        <div className="pt-[7px] mr-[14px]">
+          <Trapezoid
+            styles={{
+              width: "8px",
+              height: "8px",
+              clipPath: "polygon(0 0, 87.5% 0%, 100% 100%, 0% 100%)",
+              position: "relative",
+              bgColor: `${notiIndexBoxColor[index % 4]}`,
+            }}
+          />
+        </div>
+        <p className="mb-[6px] break-keep">
+          {info?.nickname}님이 친구 요청을 보냈습니다.
+        </p>
+      </div>
       <div>
-        <button
-          onClick={() => {
-            handleResponse("reject", info.socialID, info.nickname);
-            handleFilterPushMsg(info.socialID);
-            setIsAppear(false);
-          }}
-          className="border-[1px] border-white px-3 py-1"
-        >
-          거절
-        </button>
         <button
           onClick={() => {
             handleResponse("accept", info.socialID, info.nickname);
             handleFilterPushMsg(info.socialID);
             setIsAppear(false);
           }}
-          className="bg-white border-[1px]  text-main_black px-3 py-1"
+          className="underline ml-[30px] mr-[15px] text-[14px]"
         >
           수락
+        </button>
+        <button
+          onClick={() => {
+            handleResponse("reject", info.socialID, info.nickname);
+            handleFilterPushMsg(info.socialID);
+            setIsAppear(false);
+          }}
+          className="underline text-[14px]"
+        >
+          거절
         </button>
       </div>
     </div>
@@ -107,16 +128,38 @@ const Notification = () => {
         <Image src={NotiIcon} alt="알림" />
       </div>
       {isOpen && (
-        <div className="absolute w-[200px] h-[400px] border-[1px] border-white bg-main_black">
-          {receivedReq.map((item, index) => (
-            <PushNoti
-              key={index}
-              info={item}
-              handleResponse={handleResponse}
-              setIsAppear={setIsAppear}
-              handleFilterPushMsg={handleFilterPushMsg}
-            />
-          ))}
+        <div
+          className="absolute top-[42px] left-[-336px] w-[360px] h-[600px] border-[1px] border-white 
+          bg-main_black px-[30px] pt-[23px]"
+        >
+          <div className="flex gap-[6px] mb-[32px]">
+            <Image src={NotiIcon} alt="알림" />
+            <p className="text-[20px] font-semibold">알림 목록</p>
+          </div>
+          <div className="h-[430px] mb-[28px] flex flex-col gap-[20px] overflow-scroll">
+            {!!mockNotiList.length ? (
+              mockNotiList.map((item, index) => (
+                <PushNoti
+                  key={index}
+                  index={index}
+                  info={item}
+                  handleResponse={handleResponse}
+                  setIsAppear={setIsAppear}
+                  handleFilterPushMsg={handleFilterPushMsg}
+                />
+              ))
+            ) : (
+              <p>새로운 알림이 없습니다.</p>
+            )}
+          </div>
+          <TrapeButton
+            styles="mx-auto"
+            handleClick={() => {
+              setIsOpen(false);
+            }}
+          >
+            닫기
+          </TrapeButton>
         </div>
       )}
       {isAppear && (
