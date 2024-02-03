@@ -32,6 +32,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
     if (res.ok) {
       alert(`이제 ${name}님과 친구가 아닙니다.`);
       router.refresh();
+      setIsOpen(false);
       return;
     }
     alert("다시 시도해주세요.");

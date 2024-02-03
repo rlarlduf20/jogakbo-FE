@@ -7,28 +7,22 @@ import usePushNotification from "@/hooks/usePushNotification";
 import type { FriendsType } from "@/types";
 import NotiIcon from "../../public/images/svg/noti.svg";
 import { Trapezoid, TrapeButton } from "./Trapezoid";
-import { useRouter } from "next/navigation";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
   handleResponse: (r: string, u: string, n: string) => void;
   setIsAppear?: any;
   handleFilterPushMsg: (u: string) => void;
-  index?: any;
   type?: string;
 }
 
-const notiIndexBoxColor = ["#7aacf7", "#ff9898", "#59b86e", "#ffe380"];
-
 const PushNoti = ({
-  index,
   info,
   handleResponse,
   setIsAppear,
   handleFilterPushMsg,
   type,
 }: PushNotiPropsType) => {
-  const router = useRouter();
   return (
     <div>
       <div className={`flex items-start ${type === "push" || "pl-[8px]"}`}>
@@ -42,7 +36,7 @@ const PushNoti = ({
                 height: "8px",
                 clipPath: "polygon(0 0, 87.5% 0%, 100% 100%, 0% 100%)",
                 position: "relative",
-                bgColor: `${notiIndexBoxColor[index % 4]}`,
+                bgColor: "#7aacf7",
               }}
             />
           )}
@@ -57,7 +51,6 @@ const PushNoti = ({
             handleResponse("accept", info.socialID, info.nickname);
             handleFilterPushMsg(info.socialID);
             setIsAppear(false);
-            router.refresh();
           }}
           className="underline mr-[15px] text-[14px]"
         >
@@ -149,7 +142,6 @@ const Notification = () => {
               receivedReq.map((item, index) => (
                 <PushNoti
                   key={index}
-                  index={index}
                   info={item}
                   handleResponse={handleResponse}
                   setIsAppear={setIsAppear}

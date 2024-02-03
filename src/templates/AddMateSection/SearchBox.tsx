@@ -11,6 +11,17 @@ const SearchBox = () => {
   const [searchText, setSearchText] = useState<string>("");
   const [searchedUser, setSearchedUser] = useState<SearchUsersType[]>([]);
   const debouncedSearchText = useDebounce(searchText, 500);
+
+  const isDisabledInvite = (item: SearchUsersType, type?: string) => {
+    if (type === "friend") {
+      return item.friendStatus === "FRIEND";
+    }
+    if (type === "waiting") {
+      return item.friendStatus === "WAITING";
+    }
+    return item.friendStatus === "WAITING" || item.friendStatus === "FRIEND";
+  };
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -64,12 +75,6 @@ const SearchBox = () => {
           <div>
             {searchedUser.map((item, index) => (
               <div key={index} className="relative flex items-center mb-[20px]">
-                {(item.friendStatus === "WAITING" ||
-                  item.friendStatus === "FRIEND") && (
-                  <div className="absolute flex items-center justify-center w-full h-full bg-main_pink opacity-50">
-                    <p>초대할수없는유저</p>
-                  </div>
-                )}
                 <Trapezoid
                   styles={{
                     width: "42px",
@@ -87,9 +92,14 @@ const SearchBox = () => {
                       style={{ objectFit: "cover", objectPosition: "center" }}
                     />
                   )}
+                  {isDisabledInvite(item) && (
+                    <div className="absolute w-full h-full bg-main_black_opacity"></div>
+                  )}
                 </Trapezoid>
                 <div className="ml-[10px] grow">
-                  <p>{item.friend.nickname}</p>
+                  <p className={`${isDisabledInvite(item) && "text-[#888]"}`}>
+                    {item.friend.nickname}
+                  </p>
                   <p className="text-[14px] text-[#888]">
                     #{item.friend.socialID.slice(0, 6)}
                   </p>
@@ -101,7 +111,13 @@ const SearchBox = () => {
                   }
                   onClick={() => handleInvite(item.friend.socialID)}
                 >
-                  <p className="underline text-[14px]">요청</p>
+                  {isDisabledInvite(item, "friend") ? (
+                    <p className="text-[#888] text-[14px]">친구</p>
+                  ) : isDisabledInvite(item, "waiting") ? (
+                    <p className="text-[#888] text-[14px]">대기중</p>
+                  ) : (
+                    <p className="underline text-[14px]">요청</p>
+                  )}
                 </button>
               </div>
             ))}
