@@ -93,8 +93,9 @@ const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
+          placeholder="이름을 입력해주세요."
           className="block mx-auto bg-main_black w-[180px] h-[50px] 
-        border-b-[1px] border-white placeholder:text-white text-[18px] 
+        border-b-[1px] border-white placeholder:text-[#888]] text-[18px] 
         outline-none text-center"
         />
         <label
