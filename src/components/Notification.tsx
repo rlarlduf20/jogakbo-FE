@@ -123,10 +123,15 @@ const Notification = () => {
   return (
     <section ref={notificationRef} className="relative">
       <div
-        className="cursor-pointer"
+        className="relative cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <Image src={NotiIcon} alt="알림" />
+        {receivedReq.length === 0 || (
+          <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
+            {receivedReq.length}
+          </p>
+        )}
       </div>
       {isOpen && (
         <div
