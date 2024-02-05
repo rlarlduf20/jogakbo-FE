@@ -107,7 +107,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         }
         formData.append("fileInfos", JSON.stringify(fileInfo));
 
-        const res = await fetch(`/api/dropImage/${params.id}`, {
+        const res = await fetch(`/api/image/${params.id}`, {
           method: "POST",
           body: formData,
         });
@@ -192,6 +192,8 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
               index={index}
               key={item.imageUUID}
               selectedImageId={selectedImageId}
+              albumID={params.id}
+              pageNum={page}
               isSelected={item.imageUUID === selectedImageId}
               onSelect={() => {
                 setSelectedImageId(item.imageUUID);

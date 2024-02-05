@@ -5,12 +5,14 @@ import Konva from "konva";
 import type { ImageType } from "@/types";
 import { getImageMinMaxValue } from "@/lib/getImgValue";
 
-interface ImagePropsType {
+interface ImageByPagePropsType {
   imageInfo: ImageType;
   bodyData: ImageType[];
   // reLocArr: (data: ImageType[]) => void;
   index: number;
   selectedImageId: string | null;
+  albumID: string;
+  pageNum: number;
   isSelected: boolean;
   onSelect: () => void;
   onChangeAttrs: (data: ImageType) => void;
@@ -30,9 +32,11 @@ const ImagesByPage = ({
   selectedImageId,
   index,
   // reLocArr,
+  albumID,
+  pageNum,
   onSelect,
   onChangeAttrs,
-}: ImagePropsType) => {
+}: ImageByPagePropsType) => {
   const [image] = useImage(
     `${process.env.NEXT_PUBLIC_S3_URL}${imageInfo.imageUUID}`
   );
@@ -47,21 +51,29 @@ const ImagesByPage = ({
     }
   }, [isSelected]);
   useEffect(() => {
-    const handleKeyDown = (e: any) => {
+    const handleKeyDown = async (e: any) => {
       if (e.key === "Backspace" && isSelected) {
-        const data = [...bodyData];
-        const newData = data.filter(
-          (item) => item.imageUUID !== selectedImageId
-        );
+        // const data = [...bodyData];
+        // const newData = data.filter(
+        //   (item) => item.imageUUID !== selectedImageId
+        // );
         // reLocArr(newData);
         // setSelectedImage(null);
+        const res = await fetch(`/api/image/${albumID}`, {
+          method: "DELETE",
+          body: JSON.stringify({ pageNum, imageUUID: selectedImageId }),
+        });
+        if (!res.ok) {
+          alert("다시 시도해주세요.");
+          return;
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isSelected, selectedImageId, bodyData]);
+  }, [isSelected, albumID, pageNum, selectedImageId]);
 
   return (
     <>
