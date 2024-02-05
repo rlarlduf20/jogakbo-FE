@@ -145,19 +145,17 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       body: msg,
     });
   };
-  const handleNextBtnClick = async () => {
-    if (!albumBodyData[page] || albumBodyData[page].length === 0) {
-      alert("페이지 추가를 위해서는 적어도 한장의 사진이 필요합니다.");
-      return;
-    }
-    const res = await fetch("/api/newPage", {
-      method: "POST",
-      body: JSON.stringify({ albumID: params.id }),
-    });
-    if (!res.ok) {
-      alert("에러가 발생했습니다. 다시 시도해주세요.");
-      console.error(res);
-      return;
+  const handleNextBtnClick = async (isCreate: boolean) => {
+    if (isCreate) {
+      const res = await fetch("/api/newPage", {
+        method: "POST",
+        body: JSON.stringify({ albumID: params.id }),
+      });
+      if (!res.ok) {
+        alert("에러가 발생했습니다. 다시 시도해주세요.");
+        console.error(res);
+        return;
+      }
     }
     setSelectedImageId(null);
     setPage((prev) => prev + 1);
@@ -167,6 +165,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       {isUpLoading && <LoadingGIF />}
       <AlbumInfo
         page={page}
+        albumSize={albumBodyData.length}
         title={albumTitle}
         movePrevPage={() => {
           setSelectedImageId(null);
@@ -222,6 +221,9 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           ))}
         </Layer>
       </Stage>
+      <p className="text-white text-center">
+        {page + 1}/{albumBodyData.length}
+      </p>
     </section>
   );
 };

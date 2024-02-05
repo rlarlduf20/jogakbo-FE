@@ -9,13 +9,15 @@ import TypeMembers from "./ModalSection/TypeMembers";
 interface InfoPropType {
   title: string;
   page: number;
+  albumSize: number;
   movePrevPage: () => void;
-  moveNextPage: () => void;
+  moveNextPage: (isCreate: boolean) => void;
 }
 
 const AlbumInfo = ({
   title,
   page,
+  albumSize,
   movePrevPage,
   moveNextPage,
 }: InfoPropType) => {
@@ -50,12 +52,21 @@ const AlbumInfo = ({
       >
         이전
       </button>
-      <button
-        className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
-        onClick={moveNextPage}
-      >
-        다음
-      </button>
+      {page + 1 === albumSize ? (
+        <button
+          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
+          onClick={() => moveNextPage(true)}
+        >
+          생성
+        </button>
+      ) : (
+        <button
+          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
+          onClick={() => moveNextPage(false)}
+        >
+          다음
+        </button>
+      )}
     </>
   );
 };
