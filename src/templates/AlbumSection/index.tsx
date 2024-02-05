@@ -150,15 +150,10 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       alert("페이지 추가를 위해서는 적어도 한장의 사진이 필요합니다.");
       return;
     }
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/album/page`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
-        },
-      }
-    );
+    const res = await fetch("/api/newPage", {
+      method: "POST",
+      body: JSON.stringify({ albumID: params.id }),
+    });
     if (!res.ok) {
       alert("에러가 발생했습니다. 다시 시도해주세요.");
       console.error(res);
