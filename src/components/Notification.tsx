@@ -159,6 +159,7 @@ const Notification = () => {
           </div>
           <TrapeButton
             styles="mx-auto"
+            type="outline"
             handleClick={() => {
               setIsOpen(false);
             }}
