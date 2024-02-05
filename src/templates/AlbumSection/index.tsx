@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import { Client } from "@stomp/stompjs";
 import { useSession } from "next-auth/react";
@@ -8,14 +9,17 @@ import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
 import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
 import type { ImageType } from "@/types";
 import { parsingImagesSize } from "@/lib/getImgValue";
+import LoadingGIF from "@/components/LoadingGIF";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
   const [albumTitle, setAlbumTitle] = useState<string>("");
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
-  const stageRef = useRef<Konva.Stage>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isUpLoading, setIsUpLoading] = useState<boolean>(false);
+
+  const stageRef = useRef<Konva.Stage>(null);
   const client = useRef<any>({});
   const { data: session } = useSession();
 
@@ -69,6 +73,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       e.preventDefault();
       stageRef.current?.setPointersPositions(e);
       setIsDragging(false);
+      setIsUpLoading(true);
       const files = e.dataTransfer?.files;
 
       if (files) {
@@ -102,10 +107,14 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         }
         formData.append("fileInfos", JSON.stringify(fileInfo));
 
-        await fetch(`/api/dropImage/${params.id}`, {
+        const res = await fetch(`/api/dropImage/${params.id}`, {
           method: "POST",
           body: formData,
         });
+        if (!res.ok) {
+          alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+        setIsUpLoading(false);
       }
     };
 
@@ -160,6 +169,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   };
   return (
     <section className="relative pb-[80px]">
+      {isUpLoading && <LoadingGIF />}
       <AlbumInfo
         page={page}
         title={albumTitle}
@@ -172,7 +182,9 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       <Stage
         width={1200}
         height={800}
-        className={`${isDragging ? "border-4" : "border-2"} bg-white`}
+        className={` ${isDragging && "border-[1px] border-white"} ${
+          isDragging ? "bg-main_black" : "bg-[#303030]"
+        }`}
         ref={stageRef}
         onMouseDown={(e) => imageFocus(e)}
         onTouchStart={(e) => imageFocus(e)}
