@@ -13,7 +13,9 @@ import LoadingGIF from "@/components/LoadingGIF";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
-  const [albumTitle, setAlbumTitle] = useState<string>("");
+  const [albumInfo, setAlbumInfo] = useState<any>({});
+  const [albumName, setAlbumName] = useState<string>("");
+  const [albumThumbnail, setAlbumThumbnail] = useState<any>();
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -31,8 +33,13 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         body: JSON.stringify({ albumID: params.id }),
       });
       const data = await res.json();
-
-      setAlbumTitle(data.albumName);
+      setAlbumName(data.albumName);
+      setAlbumThumbnail(data.thumbnailImage);
+      setAlbumInfo({
+        albumName: data.albumName,
+        createdDate: data.createdDate,
+        thumbnailImage: data.thumbnailImage,
+      });
       setAlbumBodyData(data.imagesInfo);
     }
     getInitData();
@@ -73,7 +80,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       e.preventDefault();
       stageRef.current?.setPointersPositions(e);
       setIsDragging(false);
-      setIsUpLoading(true);
+
       const files = e.dataTransfer?.files;
 
       if (files) {
@@ -87,6 +94,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           return;
         }
         // 드랍한 외부 이미지 파일 정보 서버로 보내기
+        setIsUpLoading(true);
         const dropImgInfo = await parsingImagesSize(
           files,
           stageRef.current?.getPointerPosition()
@@ -165,8 +173,12 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       {isUpLoading && <LoadingGIF />}
       <AlbumInfo
         page={page}
+        albumID={params.id}
         albumSize={albumBodyData.length}
-        title={albumTitle}
+        title={albumName}
+        thumbnail={albumThumbnail}
+        info={albumInfo}
+        setAlbumInfo={setAlbumInfo}
         movePrevPage={() => {
           setSelectedImageId(null);
           setPage((prev) => prev - 1);
