@@ -14,6 +14,7 @@ interface TrapeButtonPropsType {
   handleClick?: any;
   styles?: string;
   disabled?: boolean;
+  type?: string;
 }
 
 export const Trapezoid = (props: TrapezoidPropsType) => {
@@ -35,14 +36,30 @@ export const TrapeButton = ({
   handleClick,
   styles,
   disabled,
+  type,
 }: TrapeButtonPropsType) => {
   return (
     <div
-      onClick={handleClick}
-      className={`bg-white w-[78px] h-[32px] [clipPath:polygon(0%_0%,100%_25%,100%_100%,0%_100%)]
-        cursor-pointer ${styles} ${disabled && "pointer-events-none"}`}
+      className={`${styles} ${
+        type === "outline" &&
+        "bg-white w-[78px] h-[32px] flex items-center justify-center [clipPath:polygon(0%_0%,100%_25%,100%_100%,0%_100%)]"
+      }`}
     >
-      <p className="text-main_black text-center pt-[5.5px]">{children}</p>
+      <div
+        onClick={handleClick}
+        className={`${type === "outline" ? "bg-main_black" : "bg-white"} ${
+          type === "outline" ? "w-[76px] h-[30px]" : "w-[78px] h-[32px]"
+        } [clipPath:polygon(0%_0%,100%_25%,100%_100%,0%_100%)]
+        cursor-pointer ${disabled && "pointer-events-none"} ${styles}`}
+      >
+        <p
+          className={`${
+            type === "outline" ? "text-white" : "text-main_black"
+          } text-center pt-[5.5px]`}
+        >
+          {children}
+        </p>
+      </div>
     </div>
   );
 };

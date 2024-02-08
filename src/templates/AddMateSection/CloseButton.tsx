@@ -7,7 +7,7 @@ const CloseButton = () => {
     router.back();
   };
   return (
-    <TrapeButton handleClick={handleBack} styles="mx-auto">
+    <TrapeButton type="outline" handleClick={handleBack} styles="mx-auto">
       닫기
     </TrapeButton>
   );

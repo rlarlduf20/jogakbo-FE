@@ -21,7 +21,9 @@ const SubmitTitleBox = () => {
     <>
       <TitleInputBox title={title} handleInputTitle={handleInputTitle} />
       <div className="flex gap-[60px] w-full justify-center">
-        <TrapeButton handleClick={handleBack}>취소</TrapeButton>
+        <TrapeButton type="outline" handleClick={handleBack}>
+          취소
+        </TrapeButton>
         <AddButton title={title} handleInputTitle={handleInputTitle} />
       </div>
     </>
