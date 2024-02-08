@@ -79,7 +79,7 @@ const AlbumInfo = ({
       alert("수정되었습니다.");
       return;
     }
-    alert("다시 시도해주세요.");
+    alert("수정 권한이 없습니다.");
   };
 
   return (

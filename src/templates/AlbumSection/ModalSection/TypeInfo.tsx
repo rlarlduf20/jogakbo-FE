@@ -1,8 +1,4 @@
 import { useState } from "react";
-import Image from "next/image";
-import { Trapezoid } from "@/components/Trapezoid";
-
-const mockThumbnailImage = "/images/park.jpeg";
 
 interface TypeInfoPropsType {
   info: {
@@ -31,7 +27,7 @@ const TypeInfo = ({
     createdDate.slice(5, 7) +
     "." +
     createdDate.slice(8, 10);
-  console.log("info", info.thumbnailImage, "prev", thumbnail);
+  console.log(info);
   return (
     <section className="flex h-[330px]">
       <div className="grow">
