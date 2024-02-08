@@ -22,19 +22,23 @@ const THUMBNAIL_COLOR = ["#ff9898", "#59b86e", "#ffe381", "#7aacf7"];
 
 const EachAlbumInfo = ({
   column,
-  albumName,
+  albumInfo,
 }: {
   column: number;
-  albumName: string;
+  albumInfo: any;
 }) => {
+  const { thumbnailImage, albumName } = albumInfo;
   return (
     <>
-      {/* <Image
-        src={mockThumbnailList[random]}
-        alt="thumbnail"
-        fill
-        style={{ objectFit: "cover", objectPosition: "center" }}
-      /> */}
+      {thumbnailImage && (
+        <Image
+          src={`${process.env.NEXT_PUBLIC_S3_URL}${thumbnailImage}`}
+          alt="thumbnail"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
+      )}
+
       <p
         className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
           column === 0 ? "left-[35px]" : "left-[75px]"
@@ -47,6 +51,7 @@ const EachAlbumInfo = ({
 };
 
 const AlbumList = ({ albums }: AlbumListProps) => {
+  console.log(albums);
   return (
     <>
       {albums.map((item, index) => {
@@ -77,7 +82,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                     zIndex: 10,
                   }}
                 />
-                <EachAlbumInfo column={column} albumName={item.albumName} />
+                <EachAlbumInfo column={column} albumInfo={item} />
               </Trapezoid>
             </Link>
           </div>
