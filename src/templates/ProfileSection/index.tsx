@@ -24,7 +24,7 @@ const ProfileSection = async () => {
         <SignOutButton />
         <button className="text-[14px] underline mb-[30px]">탈퇴</button>
         <Link href="/my" className="mx-auto">
-          <TrapeButton>닫기</TrapeButton>
+          <TrapeButton type="outline">닫기</TrapeButton>
         </Link>
       </div>
     </section>

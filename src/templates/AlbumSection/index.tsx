@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import { Client } from "@stomp/stompjs";
 import { useSession } from "next-auth/react";
@@ -8,14 +9,19 @@ import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
 import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
 import type { ImageType } from "@/types";
 import { parsingImagesSize } from "@/lib/getImgValue";
+import LoadingGIF from "@/components/LoadingGIF";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
-  const [albumTitle, setAlbumTitle] = useState<string>("");
+  const [albumInfo, setAlbumInfo] = useState<any>({});
+  const [albumName, setAlbumName] = useState<string>("");
+  const [albumThumbnail, setAlbumThumbnail] = useState<any>();
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
-  const stageRef = useRef<Konva.Stage>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isUpLoading, setIsUpLoading] = useState<boolean>(false);
+
+  const stageRef = useRef<Konva.Stage>(null);
   const client = useRef<any>({});
   const { data: session } = useSession();
 
@@ -27,8 +33,13 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         body: JSON.stringify({ albumID: params.id }),
       });
       const data = await res.json();
-
-      setAlbumTitle(data.albumName);
+      setAlbumName(data.albumName);
+      setAlbumThumbnail(data.thumbnailImage);
+      setAlbumInfo({
+        albumName: data.albumName,
+        createdDate: data.createdDate,
+        thumbnailImage: data.thumbnailImage,
+      });
       setAlbumBodyData(data.imagesInfo);
     }
     getInitData();
@@ -69,6 +80,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       e.preventDefault();
       stageRef.current?.setPointersPositions(e);
       setIsDragging(false);
+
       const files = e.dataTransfer?.files;
 
       if (files) {
@@ -82,6 +94,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           return;
         }
         // 드랍한 외부 이미지 파일 정보 서버로 보내기
+        setIsUpLoading(true);
         const dropImgInfo = await parsingImagesSize(
           files,
           stageRef.current?.getPointerPosition()
@@ -102,10 +115,14 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         }
         formData.append("fileInfos", JSON.stringify(fileInfo));
 
-        await fetch(`/api/dropImage/${params.id}`, {
+        const res = await fetch(`/api/image/${params.id}`, {
           method: "POST",
           body: formData,
         });
+        if (!res.ok) {
+          alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+        setIsUpLoading(false);
       }
     };
 
@@ -136,33 +153,32 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       body: msg,
     });
   };
-  const handleNextBtnClick = async () => {
-    if (!albumBodyData[page] || albumBodyData[page].length === 0) {
-      alert("페이지 추가를 위해서는 적어도 한장의 사진이 필요합니다.");
-      return;
-    }
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/album/page`,
-      {
+  const handleNextBtnClick = async (isCreate: boolean) => {
+    if (isCreate) {
+      const res = await fetch("/api/newPage", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${session?.jogakTokens.accessToken}`,
-        },
+        body: JSON.stringify({ albumID: params.id }),
+      });
+      if (!res.ok) {
+        alert("에러가 발생했습니다. 다시 시도해주세요.");
+        console.error(res);
+        return;
       }
-    );
-    if (!res.ok) {
-      alert("에러가 발생했습니다. 다시 시도해주세요.");
-      console.error(res);
-      return;
     }
     setSelectedImageId(null);
     setPage((prev) => prev + 1);
   };
   return (
     <section className="relative pb-[80px]">
+      {isUpLoading && <LoadingGIF />}
       <AlbumInfo
         page={page}
-        title={albumTitle}
+        albumID={params.id}
+        albumSize={albumBodyData.length}
+        title={albumName}
+        thumbnail={albumThumbnail}
+        info={albumInfo}
+        setAlbumInfo={setAlbumInfo}
         movePrevPage={() => {
           setSelectedImageId(null);
           setPage((prev) => prev - 1);
@@ -172,7 +188,9 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       <Stage
         width={1200}
         height={800}
-        className={`${isDragging ? "border-4" : "border-2"} bg-white`}
+        className={` ${isDragging && "border-[1px] border-white"} ${
+          isDragging ? "bg-main_black" : "bg-[#303030]"
+        }`}
         ref={stageRef}
         onMouseDown={(e) => imageFocus(e)}
         onTouchStart={(e) => imageFocus(e)}
@@ -185,6 +203,8 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
               index={index}
               key={item.imageUUID}
               selectedImageId={selectedImageId}
+              albumID={params.id}
+              pageNum={page}
               isSelected={item.imageUUID === selectedImageId}
               onSelect={() => {
                 setSelectedImageId(item.imageUUID);
@@ -213,6 +233,9 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           ))}
         </Layer>
       </Stage>
+      <p className="text-white text-center">
+        {page + 1}/{albumBodyData.length}
+      </p>
     </section>
   );
 };

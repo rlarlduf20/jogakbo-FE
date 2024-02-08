@@ -17,33 +17,28 @@ const SHAPE_BY_INDEX = [
     "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)",
   ],
 ];
-const mockThumbnailList = [
-  "/images/desert.jpeg",
-  "/images/gameover.png",
-  "/images/lion.png",
-  "/images/ocean.jpeg",
-  "/images/park.jpeg",
-  "/images/rabbit.png",
-  "/images/smileBall.png",
-];
+
+const THUMBNAIL_COLOR = ["#ff9898", "#59b86e", "#ffe381", "#7aacf7"];
 
 const EachAlbumInfo = ({
-  random,
   column,
-  albumName,
+  albumInfo,
 }: {
-  random: number;
   column: number;
-  albumName: string;
+  albumInfo: any;
 }) => {
+  const { thumbnailImage, albumName } = albumInfo;
   return (
     <>
-      <Image
-        src={mockThumbnailList[random]}
-        alt="thumbnail"
-        fill
-        style={{ objectFit: "cover", objectPosition: "center" }}
-      />
+      {thumbnailImage && (
+        <Image
+          src={`${process.env.NEXT_PUBLIC_S3_URL}${thumbnailImage}`}
+          alt="thumbnail"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center" }}
+        />
+      )}
+
       <p
         className={`rotate-90 font-semibold w-[200px] text-[20px] origin-top-left absolute top-[24px] ${
           column === 0 ? "left-[35px]" : "left-[75px]"
@@ -56,6 +51,7 @@ const EachAlbumInfo = ({
 };
 
 const AlbumList = ({ albums }: AlbumListProps) => {
+  console.log(albums);
   return (
     <>
       {albums.map((item, index) => {
@@ -73,6 +69,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   height: "200px",
                   clipPath: SHAPE_BY_INDEX[row][column],
                   position: "relative",
+                  bgColor: THUMBNAIL_COLOR[index % 4],
                 }}
               >
                 <Trapezoid
@@ -85,11 +82,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                     zIndex: 10,
                   }}
                 />
-                <EachAlbumInfo
-                  random={index % 7}
-                  column={column}
-                  albumName={item.albumName}
-                />
+                <EachAlbumInfo column={column} albumInfo={item} />
               </Trapezoid>
             </Link>
           </div>

@@ -5,18 +5,14 @@ import Image from "next/image";
 import KakaoLoginBtn from "../../../public/images/sign/kakao_login_btn.png";
 import NaverLoginBtn from "../../../public/images/sign/naver_login_btn.png";
 import { signIn } from "next-auth/react";
-import LoadingGIF from "../../../public/images/jogak_loading.gif";
+import LoadingGIF from "@/components/LoadingGIF";
 
 const SignInBox = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div>
-      {isLoading && (
-        <div className="fixed z-30 flex justify-center items-center top-0 left-0 w-full h-full bg-main_black bg-opacity-70">
-          <Image src={LoadingGIF} alt="로딩" width={80} height={80} />
-        </div>
-      )}
+      {isLoading && <LoadingGIF />}
       <Image
         src={KakaoLoginBtn}
         alt="카카오 로그인"
