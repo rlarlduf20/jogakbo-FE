@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
@@ -39,6 +39,9 @@ const AlbumInfo = ({
 
   const toggleEditStat = () => {
     setIsEditStat((prev) => !prev);
+    setAlbumInfo((prev: any) => {
+      return { ...prev, albumName: title, thumbnailImage: thumbnail };
+    });
   };
   const handleChangeInput = (value: string) => {
     setAlbumInfo((prev: any) => {
