@@ -1,18 +1,24 @@
-import { TrapeButton } from "@/components/Trapezoid";
 import { useRouter } from "next/navigation";
+import { TrapeButton } from "@/components/Trapezoid";
 
 interface AddButtonPropsType {
   title: string;
   handleInputTitle: (v: string) => void;
+  setIsLoading: any;
 }
 
-const AddButton = ({ title, handleInputTitle }: AddButtonPropsType) => {
+const AddButton = ({
+  title,
+  handleInputTitle,
+  setIsLoading,
+}: AddButtonPropsType) => {
   const router = useRouter();
   const handleClick = async () => {
     if (title === "") {
       alert("제목을 입력해주세요.");
       return;
     }
+    setIsLoading(true);
     const res = await fetch("/api/createAlbum", {
       method: "POST",
       body: JSON.stringify({

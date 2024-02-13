@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
@@ -39,6 +39,9 @@ const AlbumInfo = ({
 
   const toggleEditStat = () => {
     setIsEditStat((prev) => !prev);
+    setAlbumInfo((prev: any) => {
+      return { ...prev, albumName: title, thumbnailImage: thumbnail };
+    });
   };
   const handleChangeInput = (value: string) => {
     setAlbumInfo((prev: any) => {
@@ -77,6 +80,7 @@ const AlbumInfo = ({
 
     if (res.ok) {
       alert("수정되었습니다.");
+      setIsEditStat(false);
       return;
     }
     alert("수정 권한이 없습니다.");
