@@ -48,7 +48,7 @@ const AlbumModal = ({
             {isEditStat ? (
               <>
                 <TrapeButton type="outline" handleClick={toggleEditStat}>
-                  취소
+                  수정 종료
                 </TrapeButton>
                 <TrapeButton handleClick={handleSubmitEdit}>수정</TrapeButton>
               </>

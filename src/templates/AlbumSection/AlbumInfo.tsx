@@ -77,6 +77,7 @@ const AlbumInfo = ({
 
     if (res.ok) {
       alert("수정되었습니다.");
+      setIsEditStat(false);
       return;
     }
     alert("수정 권한이 없습니다.");
