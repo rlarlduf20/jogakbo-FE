@@ -27,7 +27,7 @@ const TypeInfo = ({
     createdDate.slice(5, 7) +
     "." +
     createdDate.slice(8, 10);
-  console.log(info);
+
   return (
     <section className="flex h-[330px]">
       <div className="grow">
