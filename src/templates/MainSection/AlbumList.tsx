@@ -51,7 +51,6 @@ const EachAlbumInfo = ({
 };
 
 const AlbumList = ({ albums }: AlbumListProps) => {
-  console.log(albums);
   return (
     <>
       {albums.map((item, index) => {
