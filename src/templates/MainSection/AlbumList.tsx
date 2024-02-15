@@ -51,6 +51,7 @@ const EachAlbumInfo = ({
 };
 
 const AlbumList = ({ albums }: AlbumListProps) => {
+  console.log(albums);
   return (
     <>
       {albums.map((item, index) => {
@@ -61,7 +62,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
             key={index}
             className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} relative`}
           >
-            <Link href={`/album/${item.albumID}`}>
+            <Link href={`/albumDetail/${item.albumID}`}>
               <Trapezoid
                 styles={{
                   width: "80px",

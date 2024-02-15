@@ -1,9 +1,9 @@
 import AlbumDetailSection from "@/templates/AlbumDetailSection";
 
-const AddMatePage = () => {
+const AddMatePage = ({ params }: { params: { id: string } }) => {
   return (
     <section className="pt-[120px] flex items-center justify-center">
-      <AlbumDetailSection />
+      <AlbumDetailSection albumID={params.id} />
     </section>
   );
 };
