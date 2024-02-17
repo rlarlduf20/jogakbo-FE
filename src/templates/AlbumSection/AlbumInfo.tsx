@@ -101,6 +101,7 @@ const AlbumInfo = ({
             <TypeInfo
               isEditStat={isEditStat}
               info={info}
+              albumID={albumID}
               thumbnail={thumbnail}
               handleChangeInput={handleChangeInput}
               upLoadImage={upLoadImage}

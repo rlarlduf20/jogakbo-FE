@@ -27,12 +27,13 @@ const EachAlbumInfo = ({
   column: number;
   albumInfo: any;
 }) => {
-  const { thumbnailImage, albumName } = albumInfo;
+  console.log(albumInfo);
+  const { thumbnailImage, albumName, albumID } = albumInfo;
   return (
     <>
       {thumbnailImage && (
         <Image
-          src={`${process.env.NEXT_PUBLIC_S3_URL}${thumbnailImage}`}
+          src={`${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${thumbnailImage}`}
           alt="thumbnail"
           fill
           style={{ objectFit: "cover", objectPosition: "center" }}
