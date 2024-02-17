@@ -34,7 +34,9 @@ const RouteButtons = ({ albumID }: RouteButtonsPropsType) => {
       <Link href={`/album/${albumID}`}>
         <TrapeButton>들어가기</TrapeButton>
       </Link>
-      <button onClick={handleDelete}>삭제하기</button>
+      <button onClick={handleDelete} className="absolute text-main_pink">
+        삭제하기
+      </button>
     </div>
   );
 };
