@@ -7,9 +7,10 @@ import { TrapeButton } from "@/components/Trapezoid";
 interface EditBoxPropsType {
   nickname: string;
   profileImageUrl: string;
+  socialId: string;
 }
 
-const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
+const EditBox = ({ nickname, profileImageUrl, socialId }: EditBoxPropsType) => {
   const router = useRouter();
   const [isHoverProfile, setIsHoverProfile] = useState<boolean>(false);
   const [profileImg, setProfileImg] = useState<any>(profileImageUrl);
@@ -65,7 +66,7 @@ const EditBox = ({ nickname, profileImageUrl }: EditBoxPropsType) => {
               profileImageUrl === profileImg
                 ? `url(${
                     profileImg && process.env.NEXT_PUBLIC_S3_URL
-                  }${profileImg})`
+                  }${socialId}/${profileImg})`
                 : `url(${profileImg})`
             }`,
           }}

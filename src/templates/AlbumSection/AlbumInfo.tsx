@@ -81,6 +81,7 @@ const AlbumInfo = ({
     if (res.ok) {
       alert("수정되었습니다.");
       setIsEditStat(false);
+      window.location.reload();
       return;
     }
     alert("수정 권한이 없습니다.");
@@ -101,6 +102,7 @@ const AlbumInfo = ({
             <TypeInfo
               isEditStat={isEditStat}
               info={info}
+              albumID={albumID}
               thumbnail={thumbnail}
               handleChangeInput={handleChangeInput}
               upLoadImage={upLoadImage}

@@ -8,6 +8,7 @@ interface TypeInfoPropsType {
   };
   isEditStat: boolean;
   thumbnail: any;
+  albumID: string;
   handleChangeInput: (t: string) => void;
   upLoadImage: any;
 }
@@ -17,6 +18,7 @@ const TypeInfo = ({
   isEditStat,
   handleChangeInput,
   thumbnail,
+  albumID,
   upLoadImage,
 }: TypeInfoPropsType) => {
   const [isHoverProfile, setIsHoverProfile] = useState<boolean>(false);
@@ -43,9 +45,9 @@ const TypeInfo = ({
             style={{
               backgroundImage: `${
                 thumbnail === info.thumbnailImage
-                  ? `url(${thumbnail && process.env.NEXT_PUBLIC_S3_URL}${
-                      info.thumbnailImage
-                    })`
+                  ? `url(${
+                      thumbnail && process.env.NEXT_PUBLIC_S3_URL
+                    }${albumID}/${info.thumbnailImage})`
                   : `url(${info.thumbnailImage})`
               }`,
             }}

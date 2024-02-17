@@ -3,12 +3,16 @@ import { Trapezoid } from "@/components/Trapezoid";
 import type { UserType } from "@/types";
 import MateBox from "./MateBox";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface UserProfileProps {
   user: UserType;
 }
 
-const UserProfile = ({ user }: UserProfileProps) => {
+const UserProfile = async ({ user }: UserProfileProps) => {
+  const { info } = await getServerSession(authOptions);
+
   return (
     <div>
       <div className="w-[180px]">
@@ -24,7 +28,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
           >
             {user.profileImageUrl && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_URL}${user.profileImageUrl}`}
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${info.socialId}/${user.profileImageUrl}`}
                 alt="thumbnail"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center" }}

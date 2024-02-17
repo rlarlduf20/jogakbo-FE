@@ -70,7 +70,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
           >
             {item.profileImageURL && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.profileImageURL}`}
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
                 alt="thumbnail"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center" }}

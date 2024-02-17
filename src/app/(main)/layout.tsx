@@ -14,12 +14,14 @@ interface RootLayoutProps {
   children: React.ReactNode;
   addAlbumModal: React.ReactNode;
   addMateModal: React.ReactNode;
+  albumDetailModal: React.ReactNode;
 }
 
 const RootLayout = async ({
   children,
   addAlbumModal,
   addMateModal,
+  albumDetailModal,
 }: RootLayoutProps) => {
   return (
     <html lang="en" className={`${SUITFont.variable}`}>
@@ -30,6 +32,7 @@ const RootLayout = async ({
             {children}
             {addAlbumModal}
             {addMateModal}
+            {albumDetailModal}
           </main>
           {/* <Footer /> */}
         </AuthSessionProvider>

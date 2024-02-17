@@ -30,7 +30,7 @@ const SubmitTitleBox = () => {
         </LoadingGIF>
       )}
       <TitleInputBox title={title} handleInputTitle={handleInputTitle} />
-      <div className="flex gap-[60px] w-full justify-center">
+      <div className="flex gap-[30px] w-full justify-center">
         <TrapeButton type="outline" handleClick={handleBack}>
           취소
         </TrapeButton>
