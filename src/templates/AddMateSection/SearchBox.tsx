@@ -86,7 +86,7 @@ const SearchBox = () => {
                 >
                   {item.friend.profileImageURL && (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.friend.profileImageURL}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.friend.socialID}/${item.friend.profileImageURL}`}
                       alt="thumbnail"
                       fill
                       style={{ objectFit: "cover", objectPosition: "center" }}
