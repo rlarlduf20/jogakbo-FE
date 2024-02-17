@@ -39,3 +39,20 @@ export async function PUT(request: Request) {
 
   return res;
 }
+
+export async function DELETE(request: Request) {
+  const { jogakTokens } = await getServerSession(authOptions);
+  const { albumID } = await request.json();
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/album/${albumID}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${jogakTokens.accessToken}`,
+      },
+    }
+  );
+
+  return res;
+}
