@@ -27,7 +27,6 @@ const EachAlbumInfo = ({
   column: number;
   albumInfo: any;
 }) => {
-  console.log(albumInfo);
   const { thumbnailImage, albumName, albumID } = albumInfo;
   return (
     <>
