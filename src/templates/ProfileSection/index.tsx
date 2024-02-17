@@ -11,7 +11,11 @@ const ProfileSection = async () => {
   const { nickname, profileImageUrl } = await getUser();
   return (
     <section className="pt-[20px] pb-[100px] w-full flex flex-col items-center gap-[80px]">
-      <EditBox nickname={nickname} profileImageUrl={profileImageUrl} />
+      <EditBox
+        nickname={nickname}
+        profileImageUrl={profileImageUrl}
+        socialId={info.socialId}
+      />
       <div className="w-[200px] flex flex-col gap-[20px]">
         <div className="flex items-center">
           <p className="grow text-[18px] font-bold">로그인 정보</p>
