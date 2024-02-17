@@ -2,6 +2,7 @@ import { getAlbumInfo } from "@/lib/getAlbumDetail";
 import RouteButtons from "./RouteButtons";
 import Image from "next/image";
 import ModalLogoIcon from "../../../public/images/svg/album-modal-logo.svg";
+import MembersLogoIcon from "../../../public/images/svg/members-logo.svg";
 
 interface AlbumDetailSectionPropsType {
   albumID: string;
@@ -36,13 +37,24 @@ const AlbumDetailSection = async ({ albumID }: AlbumDetailSectionPropsType) => {
           />
         )}
       </div>
-      <div className="text-center">
+      <div className="text-center mb-[23px]">
         <p className="text-[20px] font-semibold mb-[4px]">
           {albumInfo.albumName}
         </p>
         <p className="text-[14px]">{createdDateFormat}</p>
       </div>
-      <div></div>
+      <div className="w-[200px] flex gap-[4px] mb-[22px]">
+        <Image src={MembersLogoIcon} alt="로고" />
+        <p className="grow">구성원</p>
+        <p>-</p>
+      </div>
+      <div className="w-[200px] flex gap-[4px] mb-[44px]">
+        <div className="w-[24px]">
+          <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[14px] h-[24px] mx-auto" />
+        </div>
+        <p className="grow">조각</p>
+        <p>-</p>
+      </div>
       <RouteButtons albumID={albumID} />
     </div>
   );
