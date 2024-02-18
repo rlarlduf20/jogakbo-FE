@@ -7,6 +7,8 @@ import usePushNotification from "@/hooks/usePushNotification";
 import type { FriendsType } from "@/types";
 import NotiIcon from "../../public/images/svg/noti.svg";
 import { Trapezoid, TrapeButton } from "./Trapezoid";
+import useHoverText from "@/hooks/useHoverText";
+import HoverText from "./HoverText";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
@@ -76,6 +78,8 @@ const Notification = () => {
   const { isOpen, setIsOpen } = useMouseDownOutside(notificationRef);
   const { pushMsg, isAppear, setIsAppear } = usePushNotification();
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
+  const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
+    useHoverText();
 
   const handleResponse = async (
     responseType: string,
@@ -123,10 +127,13 @@ const Notification = () => {
   return (
     <section ref={notificationRef} className="relative">
       <div
-        className="relative cursor-pointer"
+        className="relative cursor-pointer whitespace-nowrap"
         onClick={() => setIsOpen((prev) => !prev)}
+        onMouseOver={handleIsHoverToTrue}
+        onMouseLeave={handleIsHoverToFalse}
       >
         <Image src={NotiIcon} alt="알림" />
+        {isHoverIcon && <HoverText>알림</HoverText>}
         {receivedReq.length === 0 || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
             {receivedReq.length}
