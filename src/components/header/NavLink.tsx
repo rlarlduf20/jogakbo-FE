@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
+import MyJogakboIcon from "../../../public/images/svg/my-jogakbo.svg";
 import BrowseIcon from "../../../public/images/svg/browse.svg";
 
 const NavLink = () => {
@@ -13,8 +13,9 @@ const NavLink = () => {
     <>
       {pathname === "/browse" ? (
         <>
-          <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-          <Link href="/">내 조각보</Link>
+          <Link href="/">
+            <Image src={MyJogakboIcon} alt="사다리꼴 아이콘" />
+          </Link>
         </>
       ) : (
         pathname !== "/my/profile" && (
