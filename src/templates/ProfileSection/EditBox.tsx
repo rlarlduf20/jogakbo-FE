@@ -59,7 +59,7 @@ const EditBox = ({ nickname, profileImageUrl, socialId }: EditBoxPropsType) => {
           onMouseLeave={() => setIsHoverProfile(false)}
           className="relative w-[180px] h-[180px] bg-white 
           [clipPath:polygon(0%_0%,100%_0%,100%_90%,0%_100%)]
-          bg-cover bg-center border-[1px] border-white
+          bg-cover bg-center
            "
           style={{
             backgroundImage: `${

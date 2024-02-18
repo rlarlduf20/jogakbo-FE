@@ -32,7 +32,6 @@ const UserProfile = async ({ user }: UserProfileProps) => {
                 alt="thumbnail"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center" }}
-                className="border-[1px] border-white"
               />
             )}
           </Trapezoid>

@@ -12,16 +12,12 @@ interface UserAlbumsProps {
 const UserAlbums = ({ albums }: UserAlbumsProps) => {
   return (
     <div className="w-full min-h-[800px] pb-[80px]">
-      <div className="w-[790px] flex mb-[30px] gap-[30px]">
+      <div className="flex mb-[30px] gap-[52px]">
         <div className="flex gap-[5px]">
           <Image src={SortIcon} alt="정렬 아이콘" />
           <p>정렬</p>
         </div>
-        <div className="flex gap-[5px]">
-          <Image src={SortIcon} alt="정렬 아이콘" />
-          <p>분류</p>
-        </div>
-        <div className="flex gap-[5px] grow ml-[-">
+        <div className="flex gap-[5px] grow">
           <Image src={OwnerSortIcon} alt="정렬 아이콘" />
           <p>내가 만든 조각보만 보기</p>
         </div>
@@ -34,7 +30,7 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
           <p>새로운 조각보 만들기</p>
         </Link>
       </div>
-      <div className="w-[800px] flex flex-wrap gap-y-[10px]">
+      <div className="flex flex-wrap gap-y-[10px]">
         <AlbumList albums={albums} />
       </div>
     </div>
