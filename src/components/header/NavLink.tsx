@@ -14,7 +14,7 @@ const NavLink = () => {
       {pathname === "/browse" ? (
         <>
           <Link href="/">
-            <Image src={MyJogakboIcon} alt="사다리꼴 아이콘" />
+            <Image src={MyJogakboIcon} alt="내 조각보 아이콘" />
           </Link>
         </>
       ) : (
