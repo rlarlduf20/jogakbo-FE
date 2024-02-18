@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import ExclamationMarkIcon from "../../../public/images/svg/exclamation-mark.svg";
-import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
 
 const mockFriends = [];
 
@@ -9,12 +8,13 @@ const NoFriend = () => {
   return (
     <section className="flex flex-col h-[calc(100vh-80px)] justify-center items-center">
       <Image src={ExclamationMarkIcon} alt="느낌표 아이콘" />
-      <p className="text-[20px] mt-[22px] mb-[51px] text-center">
+      <p className="text-[20px] mt-[50px] mb-[20px] text-center">
         둘러보기는 준비중이에요!
       </p>
       <div className="flex gap-[3px]">
-        <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-        <Link href="/">내 조각보</Link>
+        <Link href="/" className="text-[14px] underline">
+          내 조각보 돌아가기
+        </Link>
       </div>
     </section>
   );
