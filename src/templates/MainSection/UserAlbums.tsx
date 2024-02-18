@@ -17,10 +17,6 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
           <Image src={SortIcon} alt="정렬 아이콘" />
           <p>정렬</p>
         </div>
-        <div className="flex gap-[5px]">
-          <Image src={SortIcon} alt="정렬 아이콘" />
-          <p>분류</p>
-        </div>
         <div className="flex gap-[5px] grow ml-[-">
           <Image src={OwnerSortIcon} alt="정렬 아이콘" />
           <p>내가 만든 조각보만 보기</p>
