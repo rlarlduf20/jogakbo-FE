@@ -1,7 +1,8 @@
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
-import RouteTrapezoidIcon from "../../../../public/images/svg/route-trapezoid.svg";
 import ModalLogoIcon from "../../../../public/images/svg/album-modal-logo.svg";
+import InfoIcon from "../../../../public/images/svg/info.svg";
+import MembersLogoIcon from "../../../../public/images/svg/members-logo.svg";
 import { TrapeButton } from "@/components/Trapezoid";
 
 interface ModalProps {
@@ -22,8 +23,13 @@ const AlbumModal = ({
   return (
     <Dialog.Root>
       <Dialog.Trigger className="flex gap-[3px]">
-        <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-        <p>{type}</p>
+        <p>
+          {type === "정보" ? (
+            <Image src={InfoIcon} alt="정보 아이콘" />
+          ) : (
+            <Image src={MembersLogoIcon} alt="구성원 아이콘" />
+          )}
+        </p>
       </Dialog.Trigger>
       <Dialog.Overlay className="fixed z-30 inset-0 bg-black/70" />
       <Dialog.DialogContent className="z-30 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

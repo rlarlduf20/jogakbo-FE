@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
+import MyJogakboIcon from "../../../public/images/svg/my-jogakbo.svg";
 import ModalSection from "./ModalSection";
 import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
@@ -92,7 +92,7 @@ const AlbumInfo = ({
       <header className="h-[80px] flex items-center">
         <Image src={AlbumLogoIcon} alt="앨범 로고 아이콘" />
         <div className="grow ml-[11px] text-[20px]">{title}</div>
-        <div className="mr-[61px]">
+        <div className="mr-[30px]">
           <ModalSection
             type="정보"
             isEditStat={isEditStat}
@@ -109,15 +109,14 @@ const AlbumInfo = ({
             />
           </ModalSection>
         </div>
-        <div className="mr-[47px]">
+        <div className="mr-[30px]">
           <ModalSection type="구성원">
             <TypeMembers />
           </ModalSection>
         </div>
         <div className="flex">
-          <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
           <Link href="/" className="ml-[3px]">
-            내 조각보
+            <Image src={MyJogakboIcon} alt="내 조각보 아이콘" />
           </Link>
         </div>
       </header>
