@@ -6,6 +6,8 @@ import MyJogakboIcon from "../../../public/images/svg/my-jogakbo.svg";
 import ModalSection from "./ModalSection";
 import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
+import useHoverText from "@/hooks/useHoverText";
+import HoverText from "@/components/HoverText";
 
 interface InfoPropType {
   info: {
@@ -36,7 +38,8 @@ const AlbumInfo = ({
 }: InfoPropType) => {
   const [isEditStat, setIsEditStat] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<any>();
-
+  const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
+    useHoverText();
   const toggleEditStat = () => {
     setIsEditStat((prev) => !prev);
     setAlbumInfo((prev: any) => {
@@ -114,10 +117,15 @@ const AlbumInfo = ({
             <TypeMembers />
           </ModalSection>
         </div>
-        <div className="flex">
-          <Link href="/" className="ml-[3px]">
+        <div className="relative whitespace-nowrap">
+          <Link
+            href="/"
+            onMouseOver={handleIsHoverToTrue}
+            onMouseLeave={handleIsHoverToFalse}
+          >
             <Image src={MyJogakboIcon} alt="내 조각보 아이콘" />
           </Link>
+          {isHoverIcon && <HoverText>내 조각보</HoverText>}
         </div>
       </header>
       <button
