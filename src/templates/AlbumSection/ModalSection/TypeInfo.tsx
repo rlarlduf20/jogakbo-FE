@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Trapezoid } from "@/components/Trapezoid";
 
 interface TypeInfoPropsType {
   info: {
@@ -39,8 +40,8 @@ const TypeInfo = ({
             onMouseOver={() => setIsHoverProfile(true)}
             onMouseLeave={() => setIsHoverProfile(false)}
             className="relative w-[112px] h-[280px] bg-white 
-          [clipPath:polygon(0%_0%,75%_0%,100%_100%,0%_100%)]
-          bg-cover bg-center border-[1px] border-white
+              [clipPath:polygon(0%_0%,75%_0%,100%_100%,0%_100%)]
+              bg-cover bg-center
            "
             style={{
               backgroundImage: `${
@@ -52,6 +53,22 @@ const TypeInfo = ({
               }`,
             }}
           >
+            <Trapezoid
+              styles={{
+                width: "112px",
+                height: "280px",
+                clipPath: "polygon(0 0, 75% 0%, 100% 100%, 0% 100%)",
+                bgColor: "rgba(21,21,21,0.3)",
+                position: "absolute",
+                zIndex: 10,
+              }}
+            />
+            <p
+              className="rotate-90 font-semibold text-[28px] w-[280px] origin-top-left absolute top-[24px]
+                left-[56px] z-30"
+            >
+              {info.albumName}
+            </p>
             <input
               id="uploadImg"
               type="file"
