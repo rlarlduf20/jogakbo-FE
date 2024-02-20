@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import RouteTrapezoidIcon from "../../../public/images/svg/route-trapezoid.svg";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
+import MyJogakboIcon from "../../../public/images/svg/my-jogakbo.svg";
 import ModalSection from "./ModalSection";
 import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
+import useHoverText from "@/hooks/useHoverText";
+import HoverText from "@/components/HoverText";
 
 interface InfoPropType {
   info: {
@@ -16,10 +18,6 @@ interface InfoPropType {
   albumID: string;
   title: string;
   thumbnail: any;
-  page: number;
-  albumSize: number;
-  movePrevPage: () => void;
-  moveNextPage: (isCreate: boolean) => void;
   setAlbumInfo: any;
 }
 
@@ -28,14 +26,12 @@ const AlbumInfo = ({
   albumID,
   title,
   thumbnail,
-  page,
-  albumSize,
-  movePrevPage,
-  moveNextPage,
   setAlbumInfo,
 }: InfoPropType) => {
   const [isEditStat, setIsEditStat] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<any>();
+  const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
+    useHoverText();
 
   const toggleEditStat = () => {
     setIsEditStat((prev) => !prev);
@@ -92,7 +88,7 @@ const AlbumInfo = ({
       <header className="h-[80px] flex items-center">
         <Image src={AlbumLogoIcon} alt="앨범 로고 아이콘" />
         <div className="grow ml-[11px] text-[20px]">{title}</div>
-        <div className="mr-[61px]">
+        <div className="mr-[30px]">
           <ModalSection
             type="정보"
             isEditStat={isEditStat}
@@ -109,42 +105,22 @@ const AlbumInfo = ({
             />
           </ModalSection>
         </div>
-        <div className="mr-[47px]">
+        <div className="mr-[30px]">
           <ModalSection type="구성원">
             <TypeMembers />
           </ModalSection>
         </div>
-        <div className="flex">
-          <Image src={RouteTrapezoidIcon} alt="사다리꼴 아이콘" />
-          <Link href="/" className="ml-[3px]">
-            내 조각보
+        <div className="relative whitespace-nowrap">
+          <Link
+            href="/"
+            onMouseOver={handleIsHoverToTrue}
+            onMouseLeave={handleIsHoverToFalse}
+          >
+            <Image src={MyJogakboIcon} alt="내 조각보 아이콘" />
           </Link>
+          {isHoverIcon && <HoverText>내 조각보</HoverText>}
         </div>
       </header>
-      <button
-        className={`absolute left-[-50px] top-[410px] ${
-          page > 0 && "hover:cursor-pointer"
-        } ${page <= 0 && "text-red-500"}`}
-        disabled={page <= 0}
-        onClick={movePrevPage}
-      >
-        이전
-      </button>
-      {page + 1 === albumSize ? (
-        <button
-          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
-          onClick={() => moveNextPage(true)}
-        >
-          생성
-        </button>
-      ) : (
-        <button
-          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
-          onClick={() => moveNextPage(false)}
-        >
-          다음
-        </button>
-      )}
     </>
   );
 };
