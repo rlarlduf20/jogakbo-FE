@@ -40,6 +40,7 @@ const AlbumInfo = ({
   const [imageFile, setImageFile] = useState<any>();
   const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
     useHoverText();
+
   const toggleEditStat = () => {
     setIsEditStat((prev) => !prev);
     setAlbumInfo((prev: any) => {
