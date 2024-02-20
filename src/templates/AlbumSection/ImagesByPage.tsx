@@ -38,7 +38,7 @@ const ImagesByPage = ({
   onChangeAttrs,
 }: ImageByPagePropsType) => {
   const [image] = useImage(
-    `${process.env.NEXT_PUBLIC_S3_URL}${imageInfo.imageUUID}`
+    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.imageUUID}`
   );
   const imageRef = useRef<any>(null);
   const trRef = useRef<Konva.Transformer>(null);
