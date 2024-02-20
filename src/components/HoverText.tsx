@@ -11,5 +11,3 @@ const HoverText = ({ children }: HoverTextProps) => {
 };
 
 export default HoverText;
-
-// left-[50%] translate-x-[-50%]
