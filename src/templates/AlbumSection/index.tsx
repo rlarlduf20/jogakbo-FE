@@ -169,7 +169,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     setPage((prev) => prev + 1);
   };
   return (
-    <section className="relative pb-[80px]">
+    <section className="relative pb-[100px]">
       {isUpLoading && <LoadingGIF />}
       <AlbumInfo
         page={page}
@@ -233,9 +233,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           ))}
         </Layer>
       </Stage>
-      <p className="text-white text-center">
-        {page + 1}/{albumBodyData.length}
-      </p>
     </section>
   );
 };

@@ -133,23 +133,25 @@ const AlbumInfo = ({
           {isHoverIcon && <HoverText>내 조각보</HoverText>}
         </div>
       </header>
-      <button
-        className="absolute left-[-50px] top-[410px]"
-        disabled={page <= 0}
-        onClick={movePrevPage}
+      <section
+        className="absolute top-[913px] left-[50%] translate-x-[-50%]
+        flex items-center"
       >
-        <Image src={page <= 0 ? PrevDisabledIcon : PrevIcon} alt="이전" />
-      </button>
-
-      <button
-        className="absolute right-[-50px] top-[410px]"
-        onClick={() => moveNextPage(page + 1 === albumSize)}
-      >
-        <Image
-          src={page + 1 === albumSize ? NextDisabledIcon : NextIcon}
-          alt="다음"
-        />
-      </button>
+        <button disabled={page <= 0} onClick={movePrevPage}>
+          <Image src={page <= 0 ? PrevDisabledIcon : PrevIcon} alt="이전" />
+        </button>
+        <p className="text-white mx-[66px]">
+          <span className="mr-[20px]">{page + 1}</span>
+          <span>/</span>
+          <span className="ml-[20px]">{albumSize}</span>
+        </p>
+        <button onClick={() => moveNextPage(page + 1 === albumSize)}>
+          <Image
+            src={page + 1 === albumSize ? NextDisabledIcon : NextIcon}
+            alt="다음"
+          />
+        </button>
+      </section>
     </>
   );
 };
