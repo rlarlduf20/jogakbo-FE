@@ -190,7 +190,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         height={800}
         className={` ${isDragging && "border-[1px] border-white"} ${
           isDragging ? "bg-main_black" : "bg-[#303030]"
-        }`}
+        } ${isDragging && "opacity-50"}`}
         ref={stageRef}
         onMouseDown={(e) => imageFocus(e)}
         onTouchStart={(e) => imageFocus(e)}
