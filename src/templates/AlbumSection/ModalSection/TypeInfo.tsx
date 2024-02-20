@@ -48,7 +48,7 @@ const TypeInfo = ({
             </label>
           )}
         </div>
-        <div className="flex gap-[25px]">
+        <div className="flex gap-[60px]">
           <div
             className="relative w-[112px] h-[280px] bg-white 
               [clipPath:polygon(0%_0%,75%_0%,100%_100%,0%_100%)]
@@ -81,6 +81,18 @@ const TypeInfo = ({
               {info.albumName}
             </p>
           </div>
+          <div
+            className="relative w-[200px] h-[280px] bg-white bg-cover bg-center"
+            style={{
+              backgroundImage: `${
+                thumbnail === info.thumbnailImage
+                  ? `url(${
+                      thumbnail && process.env.NEXT_PUBLIC_S3_URL
+                    }${albumID}/${info.thumbnailImage})`
+                  : `url(${info.thumbnailImage})`
+              }`,
+            }}
+          ></div>
         </div>
       </div>
       <div className="flex flex-col gap-[36px]">

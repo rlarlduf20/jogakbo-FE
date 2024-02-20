@@ -68,7 +68,9 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   height: "200px",
                   clipPath: SHAPE_BY_INDEX[row][column],
                   position: "relative",
-                  bgColor: THUMBNAIL_COLOR[index % 4],
+                  bgColor: item.thumbnailImage
+                    ? "white"
+                    : THUMBNAIL_COLOR[index % 4],
                 }}
               >
                 <Trapezoid

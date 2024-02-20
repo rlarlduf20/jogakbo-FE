@@ -29,6 +29,7 @@ export interface FriendsType {
 export interface AlbumsType {
   albumID: string;
   albumName: string;
+  thumbnailImage: string;
   images: ImageType[];
   albumEditors: any;
 }
