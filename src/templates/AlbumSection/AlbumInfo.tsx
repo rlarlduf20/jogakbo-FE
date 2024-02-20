@@ -3,6 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
 import MyJogakboIcon from "../../../public/images/svg/my-jogakbo.svg";
+import PrevIcon from "../../../public/images/svg/prev.svg";
+import PrevDisabledIcon from "../../../public/images/svg/prev_disabled.svg";
+import NextIcon from "../../../public/images/svg/next.svg";
+import NextDisabledIcon from "../../../public/images/svg/next_disabled.svg";
 import ModalSection from "./ModalSection";
 import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
@@ -130,29 +134,22 @@ const AlbumInfo = ({
         </div>
       </header>
       <button
-        className={`absolute left-[-50px] top-[410px] ${
-          page > 0 && "hover:cursor-pointer"
-        } ${page <= 0 && "text-red-500"}`}
+        className="absolute left-[-50px] top-[410px]"
         disabled={page <= 0}
         onClick={movePrevPage}
       >
-        이전
+        <Image src={page <= 0 ? PrevDisabledIcon : PrevIcon} alt="이전" />
       </button>
-      {page + 1 === albumSize ? (
-        <button
-          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
-          onClick={() => moveNextPage(true)}
-        >
-          생성
-        </button>
-      ) : (
-        <button
-          className="absolute right-[-50px] top-[410px] hover:cursor-pointer"
-          onClick={() => moveNextPage(false)}
-        >
-          다음
-        </button>
-      )}
+
+      <button
+        className="absolute right-[-50px] top-[410px]"
+        onClick={() => moveNextPage(page + 1 === albumSize)}
+      >
+        <Image
+          src={page + 1 === albumSize ? NextDisabledIcon : NextIcon}
+          alt="다음"
+        />
+      </button>
     </>
   );
 };
