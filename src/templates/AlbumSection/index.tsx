@@ -10,6 +10,7 @@ import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
 import type { ImageType } from "@/types";
 import { parsingImagesSize } from "@/lib/getImgValue";
 import LoadingGIF from "@/components/LoadingGIF";
+import PagiNation from "./PagiNation";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
@@ -172,18 +173,11 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
     <section className="relative pb-[100px]">
       {isUpLoading && <LoadingGIF />}
       <AlbumInfo
-        page={page}
         albumID={params.id}
-        albumSize={albumBodyData.length}
         title={albumName}
         thumbnail={albumThumbnail}
         info={albumInfo}
         setAlbumInfo={setAlbumInfo}
-        movePrevPage={() => {
-          setSelectedImageId(null);
-          setPage((prev) => prev - 1);
-        }}
-        moveNextPage={handleNextBtnClick}
       />
       <Stage
         width={1200}
@@ -233,6 +227,15 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
           ))}
         </Layer>
       </Stage>
+      <PagiNation
+        page={page}
+        albumSize={albumBodyData.length}
+        movePrevPage={() => {
+          setSelectedImageId(null);
+          setPage((prev) => prev - 1);
+        }}
+        moveNextPage={handleNextBtnClick}
+      />
     </section>
   );
 };
