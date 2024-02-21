@@ -4,8 +4,10 @@ import IntroText from "./IntroText";
 
 const IntroSection = () => {
   return (
-    <section className="mt-[-80px]">
-      <Image src={LandingTitleGIF} width={1200} alt="gif" />
+    <section>
+      <div className="h-[1117px]">
+        <Image src={LandingTitleGIF} width={1200} alt="gif" />
+      </div>
       <IntroText />
     </section>
   );
