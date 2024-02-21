@@ -1,10 +1,11 @@
 import IntroSection from "./IntroSection";
+import MotiveSection from "./MotiveSection";
 
 const LandingSection = async () => {
   return (
     <>
       <IntroSection />
-      <section className="h-[2000px]"></section>
+      <MotiveSection />
     </>
   );
 };

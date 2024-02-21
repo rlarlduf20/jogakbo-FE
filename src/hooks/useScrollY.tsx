@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 
-const useScrollY = (ref: any) => {
-  const [scrollY, setScrollY] = useState<number>(0);
+const useScrollY = () => {
+  const [scrollYPos, setScrollYPos] = useState<number>(0);
+  const [isScrollStart, setIsScrollStart] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScrollMove = () => {
-      let elYPos = window.scrollY + ref?.current?.getBoundingClientRect().top;
-      setScrollY(elYPos);
+      setScrollYPos(window.scrollY);
     };
+    window.history.scrollRestoration = "manual";
+    // setScrollYPos(window.scrollY);
+    setIsScrollStart(true);
     window.addEventListener("scroll", handleScrollMove);
     return () => {
       window.removeEventListener("scroll", handleScrollMove);
     };
-  }, [ref]);
+  }, []);
 
-  return { scrollY };
+  return { scrollYPos, isScrollStart };
 };
 
 export default useScrollY;

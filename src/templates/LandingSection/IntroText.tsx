@@ -4,16 +4,16 @@ import useScrollY from "@/hooks/useScrollY";
 import { useRef } from "react";
 
 const IntroText = () => {
-  const ref = useRef<any>();
-  const { scrollY } = useScrollY(ref);
+  const ref = useRef<any>(null);
+  const { scrollYPos } = useScrollY();
 
   return (
     <p
       ref={ref}
       className={`${
-        scrollY >= 1117
-          ? "relative text-center"
-          : "fixed top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%]"
+        scrollYPos + ref?.current?.getBoundingClientRect()?.top >= 1117
+          ? "absolute left-[50%] translate-x-[-50%]"
+          : "fixed top-[340px] left-[50%] translate-x-[-50%]"
       }
          text-white text-[32px] font-semibold
           whitespace-nowrap`}
