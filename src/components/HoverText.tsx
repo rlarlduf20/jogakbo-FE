@@ -4,7 +4,7 @@ interface HoverTextProps {
 
 const HoverText = ({ children }: HoverTextProps) => {
   return (
-    <p className="absolute top-[26px] left-[50%] translate-x-[-50%] text-[10px] cursor-pointer">
+    <p className="absolute top-[33px] left-[50%] translate-x-[-50%] text-[12px] cursor-pointer">
       {children}
     </p>
   );

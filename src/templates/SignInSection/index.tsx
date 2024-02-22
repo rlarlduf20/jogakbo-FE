@@ -4,7 +4,7 @@ import SignInBox from "./SignInBox";
 
 const SignInSection = () => {
   return (
-    <section className="w-full h-full flex flex-col items-center justify-center gap-[75px] mt-[-80px]">
+    <section className="w-full h-full flex flex-col items-center pt-[254px] gap-[75px]">
       <div className="text-center">
         <Image src={SignInLogo} alt="로고" />
         <p className="mt-[11px] text-[24px]">로그인</p>

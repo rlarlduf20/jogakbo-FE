@@ -1,6 +1,12 @@
+import IntroSection from "./IntroSection";
+import MotiveSection from "./MotiveSection";
+
 const LandingSection = async () => {
   return (
-    <div className="text-xl font-bold text-test_green">지금 시작하세요!</div>
+    <>
+      <IntroSection />
+      <MotiveSection />
+    </>
   );
 };
 

@@ -8,6 +8,9 @@ import { SUITFont } from "@/lib/fonts";
 export const metadata: Metadata = {
   title: "조각보",
   description: "작은 기억의 조각들로 추억을 떠올려요.",
+  icons: {
+    icon: "/images/jogak-icon.png",
+  },
 };
 
 interface RootLayoutProps {
