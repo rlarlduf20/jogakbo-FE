@@ -22,7 +22,7 @@ const RootLayout = async ({ children }: LandingLayoutProps) => {
       <body>
         <AuthSessionProvider>
           <LandingHeader />
-          <main className="w-inner min-h-[100vh] mx-auto">{children}</main>
+          <main className="min-h-[100vh]">{children}</main>
         </AuthSessionProvider>
       </body>
     </html>
