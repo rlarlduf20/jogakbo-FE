@@ -6,7 +6,7 @@ const IntroSection = () => {
   return (
     <section>
       <div className="h-[1117px]">
-        <Image src={LandingTitleGIF} width={1200} alt="gif" />
+        <Image src={LandingTitleGIF} width={1200} priority alt="gif" />
       </div>
       <IntroText />
     </section>
