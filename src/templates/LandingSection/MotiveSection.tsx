@@ -26,7 +26,7 @@ const MotiveSection = () => {
         </div>
       </div>
       <p
-        className="text-[18px] text-center mb-[246px]"
+        className="text-[18px] text-center mb-[250px]"
         {...useScrollAppear("up", 1, 0.5)}
       >
         서로 다른 조각으로 하나의 보자기를 만드듯 여러 사진을 모아 정리한 앨범도
@@ -35,7 +35,10 @@ const MotiveSection = () => {
         온라인에서도 흩어진 사진들을 한 데 모아 추억으로 간직하고 함께 꾸미는
         경험을 나누고자 조각보를 만들었습니다.
       </p>
-      <div className="w-[785px] mx-auto" {...useScrollAppear("up", 1, 0)}>
+      <div
+        className="w-[785px] mx-auto"
+        {...useScrollAppear("left", 1, 0, 0.2)}
+      >
         <Image src={LandingDiagramImage} alt="다이어그램" />
       </div>
     </section>

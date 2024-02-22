@@ -1,6 +1,11 @@
 import { useRef, useEffect } from "react";
 
-const useScrollAppear = (direction: string, duration = 1, delay: number) => {
+const useScrollAppear = (
+  direction: string,
+  duration = 1,
+  delay: number,
+  threshold = 0.1
+) => {
   const elRef = useRef<any>(null);
 
   const translateByDirection = (value: string) => {
@@ -36,13 +41,13 @@ const useScrollAppear = (direction: string, duration = 1, delay: number) => {
 
     if (current) {
       observer = new IntersectionObserver(handleScroll, {
-        threshold: 0.1,
+        threshold,
       });
       observer.observe(current);
     }
 
     return () => observer && observer.disconnect();
-  }, [delay, duration]);
+  }, [delay, duration, threshold]);
 
   return {
     ref: elRef,
