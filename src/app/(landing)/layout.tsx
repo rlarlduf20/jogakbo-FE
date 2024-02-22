@@ -7,6 +7,9 @@ import { LandingHeader } from "@/components/header";
 export const metadata: Metadata = {
   title: "조각보",
   description: "작은 기억의 조각들로 추억을 떠올려요.",
+  icons: {
+    icon: "/images/jogak-icon.png",
+  },
 };
 
 interface LandingLayoutProps {
@@ -19,9 +22,7 @@ const RootLayout = async ({ children }: LandingLayoutProps) => {
       <body>
         <AuthSessionProvider>
           <LandingHeader />
-          <main className="w-inner h-[calc(100vh-80px)] mx-auto">
-            {children}
-          </main>
+          <main className="min-h-[100vh]">{children}</main>
         </AuthSessionProvider>
       </body>
     </html>
