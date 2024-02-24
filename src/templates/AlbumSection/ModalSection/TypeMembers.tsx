@@ -35,7 +35,7 @@ const TypeMembers = () => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap gap-x-[37px] gap-y-[20px]">
+        <div className="flex flex-wrap gap-x-[37px] gap-y-[20px] h-[250px] overflow-scroll">
           {mockMembersList.map((item, index) => (
             <div key={index} className={`${item.isStandBy && "opacity-30"}`}>
               <Trapezoid

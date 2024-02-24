@@ -182,6 +182,13 @@ export const mockMembersList = [
   { name: "박종호", profileImg: "/", owner: false, isStandBy: true },
   { name: "문예린", profileImg: "/", owner: false, isStandBy: true },
   { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
+  { name: "비버", profileImg: "/", owner: false, isStandBy: true },
 ];
 
 export const mockFriendsList = [
