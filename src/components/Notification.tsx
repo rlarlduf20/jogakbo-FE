@@ -13,6 +13,7 @@ import HoverText from "./HoverText";
 interface PushNotiPropsType {
   info: FriendsType | any;
   handleResponse: (r: string, u: string, n: string) => void;
+  handleResponseAlbumInvite: (r: string, a: string) => void;
   setIsAppear?: any;
   handleFilterPushMsg: (u: string) => void;
   type?: string;
@@ -21,6 +22,7 @@ interface PushNotiPropsType {
 const PushNoti = ({
   info,
   handleResponse,
+  handleResponseAlbumInvite,
   setIsAppear,
   handleFilterPushMsg,
   type,
@@ -44,30 +46,59 @@ const PushNoti = ({
           )}
         </div>
         <p className="mb-[6px] break-keep">
-          {info?.nickname}님이 친구 요청을 보냈습니다.
+          {info?.type === "friend"
+            ? `${info?.nickname}님이 친구 요청을 보냈습니다.`
+            : `${info?.albumName} 앨범에서 초대를 요청했습니다.`}
         </p>
       </div>
       <div className={`${type === "push" ? "ml-[38px]" : "ml-[30px]"}`}>
-        <button
-          onClick={() => {
-            handleResponse("accept", info.socialID, info.nickname);
-            handleFilterPushMsg(info.socialID);
-            setIsAppear(false);
-          }}
-          className="underline mr-[15px] text-[14px]"
-        >
-          수락
-        </button>
-        <button
-          onClick={() => {
-            handleResponse("reject", info.socialID, info.nickname);
-            handleFilterPushMsg(info.socialID);
-            setIsAppear(false);
-          }}
-          className="underline text-[14px]"
-        >
-          거절
-        </button>
+        {info?.type === "friend" ? (
+          <>
+            <button
+              onClick={() => {
+                handleResponse("accept", info.socialID, info.nickname);
+                handleFilterPushMsg(info.socialID);
+                setIsAppear(false);
+              }}
+              className="underline mr-[15px] text-[14px]"
+            >
+              수락
+            </button>
+            <button
+              onClick={() => {
+                handleResponse("reject", info.socialID, info.nickname);
+                handleFilterPushMsg(info.socialID);
+                setIsAppear(false);
+              }}
+              className="underline text-[14px]"
+            >
+              거절
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => {
+                handleResponseAlbumInvite("accept", info.albumID);
+                // handleFilterPushMsg(info.socialID);
+                setIsAppear(false);
+              }}
+              className="underline mr-[15px] text-[14px]"
+            >
+              수락
+            </button>
+            <button
+              onClick={() => {
+                handleResponseAlbumInvite("reject", info.albumID);
+                // handleFilterPushMsg(info.socialID);
+                setIsAppear(false);
+              }}
+              className="underline text-[14px]"
+            >
+              거절
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
@@ -80,7 +111,7 @@ const Notification = () => {
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
   const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
     useHoverText();
-
+  console.log(pushMsg);
   const handleResponse = async (
     responseType: string,
     userID: string,
@@ -101,6 +132,26 @@ const Notification = () => {
 
     if (responseType === "reject") alert("거절하셨습니다.");
     if (responseType === "accept") alert(`${nickname}님과 친구가 되었습니다.`);
+  };
+  const handleResponseAlbumInvite = async (
+    responseType: string,
+    albumID: string
+  ) => {
+    const res = await fetch("/api/albumInvite/reply", {
+      method: "POST",
+      body: JSON.stringify({
+        albumID,
+        responseType,
+      }),
+    });
+
+    if (!res.ok) {
+      alert("잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    if (responseType === "reject") alert("거절하셨습니다.");
+    if (responseType === "accept") alert("앨범에 초대되었습니다.");
   };
   const handleFilterPushMsg = (userID: string) => {
     const filteredReceivedReq = receivedReq.filter((item) => {
@@ -156,6 +207,7 @@ const Notification = () => {
                   key={index}
                   info={item}
                   handleResponse={handleResponse}
+                  handleResponseAlbumInvite={handleResponseAlbumInvite}
                   setIsAppear={setIsAppear}
                   handleFilterPushMsg={handleFilterPushMsg}
                 />
@@ -187,6 +239,7 @@ const Notification = () => {
           type="push"
           info={pushMsg}
           handleResponse={handleResponse}
+          handleResponseAlbumInvite={handleResponseAlbumInvite}
           setIsAppear={setIsAppear}
           handleFilterPushMsg={handleFilterPushMsg}
         />

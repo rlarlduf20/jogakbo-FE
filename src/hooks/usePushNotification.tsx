@@ -7,7 +7,6 @@ const usePushNotification = () => {
   const { data: session } = useSession();
   const [isAppear, setIsAppear] = useState<boolean>(false);
   const [pushMsg, setPushMsg] = useState<FriendsType>();
-  const [albumInvitePushMsg, setAlbumInvitePushMsg] = useState<FriendsType>();
 
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;
@@ -34,16 +33,16 @@ const usePushNotification = () => {
         setIsAppear(false);
       }, 5000);
 
-      setPushMsg(data);
+      setPushMsg({ ...data, type: "friend" });
     });
     eventSource?.addEventListener("albumInvitation", (e: any) => {
       setIsAppear(true);
       const data = JSON.parse(e.data);
-      timer = setTimeout(() => {
-        setIsAppear(false);
-      }, 5000);
+      // timer = setTimeout(() => {
+      //   setIsAppear(false);
+      // }, 5000);
 
-      setAlbumInvitePushMsg(data);
+      setPushMsg({ ...data, type: "album" });
     });
     return () => {
       eventSource?.close();
