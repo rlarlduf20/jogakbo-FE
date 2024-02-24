@@ -5,7 +5,11 @@ import SearchIcon from "../../../../public/images/svg/search.svg";
 import { mockMembersList } from "@/assets/mockData";
 import { FriendsType } from "@/types";
 
-const TypeMembers = () => {
+interface TypeMembersPropsType {
+  albumID: string;
+}
+
+const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   const [mateList, setMateList] = useState<FriendsType[]>([]);
   useEffect(() => {
     const getMateList = async () => {
@@ -15,6 +19,23 @@ const TypeMembers = () => {
     };
     getMateList();
   }, []);
+
+  const handleInvite = async (socialID: string) => {
+    const res = await fetch("/api/albumInvite", {
+      method: "POST",
+      body: JSON.stringify({
+        albumID,
+        socialID,
+      }),
+    });
+    if (!res.ok) {
+      alert("요청에 실패했습니다. 다시 시도해주세요.");
+      return;
+    }
+
+    alert("초대 메시지가 발송됐습니다.");
+  };
+
   return (
     <section className="flex pl-[10px] h-[330px] gap-[25px]">
       <div className="w-[510px]">
@@ -78,7 +99,12 @@ const TypeMembers = () => {
                 }}
               />
               <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
-              <p className="underline text-[14px] cursor-pointer">초대</p>
+              <p
+                className="underline text-[14px] cursor-pointer"
+                onClick={() => handleInvite(item.socialID)}
+              >
+                초대
+              </p>
             </div>
           ))}
         </div>

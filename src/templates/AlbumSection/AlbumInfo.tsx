@@ -107,7 +107,7 @@ const AlbumInfo = ({
         </div>
         <div className="mr-[30px]">
           <ModalSection type="구성원">
-            <TypeMembers />
+            <TypeMembers albumID={albumID} />
           </ModalSection>
         </div>
         <div className="relative whitespace-nowrap">
