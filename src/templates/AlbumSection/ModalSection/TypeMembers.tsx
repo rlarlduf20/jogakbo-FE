@@ -1,9 +1,20 @@
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Trapezoid } from "@/components/Trapezoid";
 import SearchIcon from "../../../../public/images/svg/search.svg";
-import { mockMembersList, mockFriendsList } from "@/assets/mockData";
+import { mockMembersList } from "@/assets/mockData";
+import { FriendsType } from "@/types";
 
 const TypeMembers = () => {
+  const [mateList, setMateList] = useState<FriendsType[]>([]);
+  useEffect(() => {
+    const getMateList = async () => {
+      const res = await fetch("/api/profile");
+      const { friends } = await res.json();
+      setMateList(friends);
+    };
+    getMateList();
+  }, []);
   return (
     <section className="flex pl-[10px] h-[330px] gap-[25px]">
       <div className="w-[510px]">
@@ -55,7 +66,7 @@ const TypeMembers = () => {
       <div className="grow">
         <p className="text-[18px] mb-[28px]">구성원 초대</p>
         <div className="h-[250px] overflow-scroll">
-          {mockFriendsList.map((item, index) => (
+          {mateList.map((item, index) => (
             <div key={index} className="flex items-center mb-[20px]">
               <Trapezoid
                 styles={{
@@ -66,7 +77,7 @@ const TypeMembers = () => {
                   bgColor: "white",
                 }}
               />
-              <p className="ml-[10px] grow text-[14px]">{item.name}</p>
+              <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
               <p className="underline text-[14px] cursor-pointer">초대</p>
             </div>
           ))}
