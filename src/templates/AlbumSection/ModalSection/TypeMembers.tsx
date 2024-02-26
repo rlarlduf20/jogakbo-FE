@@ -14,8 +14,8 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   useEffect(() => {
     const getMateList = async () => {
       const res = await fetch("/api/profile");
-      const { friends } = await res.json();
-      setMateList(friends);
+      const data = await res.json();
+      setMateList(data.friends);
     };
     getMateList();
   }, []);
@@ -97,7 +97,16 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                   position: "relative",
                   bgColor: "white",
                 }}
-              />
+              >
+                {item.profileImageURL && (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                    alt="thumbnail"
+                    fill
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                )}
+              </Trapezoid>
               <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
               <p
                 className="underline text-[14px] cursor-pointer"
