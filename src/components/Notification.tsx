@@ -111,7 +111,7 @@ const Notification = () => {
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
   const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
     useHoverText();
-  console.log(pushMsg);
+
   const handleResponse = async (
     responseType: string,
     userID: string,
