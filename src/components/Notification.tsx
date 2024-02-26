@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
-import type { FriendsType } from "@/types";
+import { type AlbumsType, type FriendsType } from "@/types";
 import NotiIcon from "../../public/images/svg/noti.svg";
 import { Trapezoid, TrapeButton } from "./Trapezoid";
 import useHoverText from "@/hooks/useHoverText";
@@ -16,6 +16,7 @@ interface PushNotiPropsType {
   handleResponseAlbumInvite: (r: string, a: string) => void;
   setIsAppear?: any;
   handleFilterPushMsg: (u: string) => void;
+  handleFilterAlbumInvite: (a: string) => void;
   type?: string;
 }
 
@@ -25,6 +26,7 @@ const PushNoti = ({
   handleResponseAlbumInvite,
   setIsAppear,
   handleFilterPushMsg,
+  handleFilterAlbumInvite,
   type,
 }: PushNotiPropsType) => {
   return (
@@ -40,7 +42,7 @@ const PushNoti = ({
                 height: "8px",
                 clipPath: "polygon(0 0, 87.5% 0%, 100% 100%, 0% 100%)",
                 position: "relative",
-                bgColor: "#7aacf7",
+                bgColor: info.type === "friend" ? "#ff9898" : "#7aacf7",
               }}
             />
           )}
@@ -80,7 +82,7 @@ const PushNoti = ({
             <button
               onClick={() => {
                 handleResponseAlbumInvite("accept", info.albumID);
-                // handleFilterPushMsg(info.socialID);
+                handleFilterAlbumInvite(info.albumID);
                 setIsAppear(false);
               }}
               className="underline mr-[15px] text-[14px]"
@@ -90,7 +92,7 @@ const PushNoti = ({
             <button
               onClick={() => {
                 handleResponseAlbumInvite("reject", info.albumID);
-                // handleFilterPushMsg(info.socialID);
+                handleFilterAlbumInvite(info.albumID);
                 setIsAppear(false);
               }}
               className="underline text-[14px]"
@@ -109,6 +111,9 @@ const Notification = () => {
   const { isOpen, setIsOpen } = useMouseDownOutside(notificationRef);
   const { pushMsg, isAppear, setIsAppear } = usePushNotification();
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
+  const [receivedAlbumInvite, setReceivedAlbumInvite] = useState<AlbumsType[]>(
+    []
+  );
   const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
     useHoverText();
 
@@ -159,17 +164,28 @@ const Notification = () => {
     });
     setReceivedReq(filteredReceivedReq);
   };
-
+  const handleFilterAlbumInvite = (albumID: string) => {
+    const filteredReceivedAlbumInvite = receivedAlbumInvite.filter((item) => {
+      return item.albumID !== albumID;
+    });
+    setReceivedAlbumInvite(filteredReceivedAlbumInvite);
+  };
   useEffect(() => {
     const getReceivedReq = async () => {
       const res = await fetch(`/api/profile`);
       const data = await res.json();
       setReceivedReq(data.receivedFriendRequest);
+      setReceivedAlbumInvite(data.receivedAlbumInvitations);
     };
     getReceivedReq();
 
-    if (pushMsg) {
+    if (pushMsg && pushMsg?.type === "friend") {
       setReceivedReq((prev: any) => {
+        return [...prev, pushMsg];
+      });
+    }
+    if (pushMsg && pushMsg?.type === "album") {
+      setReceivedAlbumInvite((prev: any) => {
         return [...prev, pushMsg];
       });
     }
@@ -185,35 +201,59 @@ const Notification = () => {
       >
         <Image src={NotiIcon} alt="알림" />
         {isHoverIcon && <HoverText>알림</HoverText>}
-        {receivedReq.length === 0 || (
+        {(receivedReq.length === 0 && receivedAlbumInvite.length === 0) || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
-            {receivedReq.length}
+            {receivedReq.length + receivedAlbumInvite.length}
           </p>
         )}
       </div>
       {isOpen && (
         <div
           className="absolute top-[42px] left-[-336px] w-[360px] h-[600px] border-[1px] border-white 
-          bg-main_black px-[30px] pt-[23px]"
+          bg-main_black px-[30px] pt-[23px] z-999"
         >
           <div className="flex gap-[6px] mb-[32px]">
             <Image src={NotiIcon} alt="알림" />
             <p className="text-[20px] font-semibold">알림 목록</p>
           </div>
           <div className="h-[430px] mb-[28px] flex flex-col gap-[20px] overflow-scroll">
-            {!!receivedReq.length ? (
+            {!!!receivedReq.length && !!!receivedAlbumInvite.length ? (
+              <p>새로운 알림이 없습니다.</p>
+            ) : (
               receivedReq.map((item, index) => (
                 <PushNoti
                   key={index}
-                  info={item}
+                  info={{ ...item, type: "friend" }}
                   handleResponse={handleResponse}
                   handleResponseAlbumInvite={handleResponseAlbumInvite}
                   setIsAppear={setIsAppear}
                   handleFilterPushMsg={handleFilterPushMsg}
+                  handleFilterAlbumInvite={handleFilterAlbumInvite}
                 />
               ))
+            )}
+            {!!!receivedReq.length && !!!receivedAlbumInvite.length ? (
+              <p
+                className={`${
+                  !!!receivedReq.length &&
+                  !!!receivedAlbumInvite.length &&
+                  "opacity-0"
+                }`}
+              >
+                새로운 알림이 없습니다.
+              </p>
             ) : (
-              <p>새로운 알림이 없습니다.</p>
+              receivedAlbumInvite.map((item, index) => (
+                <PushNoti
+                  key={index}
+                  info={{ ...item, type: "album" }}
+                  handleResponse={handleResponse}
+                  handleResponseAlbumInvite={handleResponseAlbumInvite}
+                  setIsAppear={setIsAppear}
+                  handleFilterPushMsg={handleFilterPushMsg}
+                  handleFilterAlbumInvite={handleFilterAlbumInvite}
+                />
+              ))
             )}
           </div>
           <TrapeButton
@@ -242,6 +282,7 @@ const Notification = () => {
           handleResponseAlbumInvite={handleResponseAlbumInvite}
           setIsAppear={setIsAppear}
           handleFilterPushMsg={handleFilterPushMsg}
+          handleFilterAlbumInvite={handleFilterAlbumInvite}
         />
       </div>
     </section>
