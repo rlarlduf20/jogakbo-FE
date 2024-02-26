@@ -50,7 +50,8 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
               height={14}
             />
             <input
-              placeholder="구성원 검색"
+              placeholder="검색 기능 준비중!!"
+              disabled
               className="w-[140px] pl-[20px] pb-[5px] bg-main_black 
             outline-none border-b-[1px] border-white box-border text-[12px]"
             />
