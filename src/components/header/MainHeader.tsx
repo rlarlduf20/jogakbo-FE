@@ -6,7 +6,7 @@ import Notification from "../Notification";
 
 const MainHeader = () => {
   return (
-    <header className="w-full flex justify-center">
+    <header className="relative w-full flex justify-center z-30">
       <nav className="flex h-[80px] w-inner items-center">
         <Image src={HomeLogoIcon} alt="홈 로고 아이콘" />
         <LogoText />

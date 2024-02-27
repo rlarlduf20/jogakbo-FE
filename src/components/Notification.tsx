@@ -237,7 +237,7 @@ const Notification = () => {
                 className={`${
                   !!!receivedReq.length &&
                   !!!receivedAlbumInvite.length &&
-                  "opacity-0"
+                  "hidden"
                 }`}
               >
                 새로운 알림이 없습니다.
