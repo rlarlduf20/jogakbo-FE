@@ -37,27 +37,31 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       const data = await res.json();
 
       setMateList(() => {
-        if (sentAlbumInvitations.length === 0) {
-          return data.friends;
-        }
-        let mateList: any = [];
-        let isInvited;
+        let impossibleInviteList: any = [];
         for (const i of data.friends) {
-          isInvited = false;
+          if (i.socialID === albumOwner.socialID) impossibleInviteList.push(i);
           for (const j of sentAlbumInvitations) {
             if (i.socialID === j.socialID) {
-              isInvited = true;
+              impossibleInviteList.push(i);
             }
           }
-          if (!isInvited) {
-            mateList.push(i);
+          for (const j of albumEditors) {
+            if (i.socialID === j.socialID) {
+              impossibleInviteList.push(i);
+            }
           }
         }
+        let impossibleSocialIDs = new Set(
+          impossibleInviteList.map((obj: any) => obj.socialID)
+        );
+        let mateList = data.friends.filter(
+          (obj: any) => !impossibleSocialIDs.has(obj.socialID)
+        );
         return mateList;
       });
     };
     getMateList();
-  }, [sentAlbumInvitations, inviteBtnClickCheck]);
+  }, [sentAlbumInvitations, albumEditors, albumOwner, inviteBtnClickCheck]);
 
   const handleInvite = async (socialID: string) => {
     const res = await fetch("/api/albumInvite", {
