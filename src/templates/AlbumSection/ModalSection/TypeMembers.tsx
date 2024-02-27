@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Trapezoid } from "@/components/Trapezoid";
 import SearchIcon from "../../../../public/images/svg/search.svg";
-import { mockMembersList } from "@/assets/mockData";
 import { FriendsType } from "@/types";
 
 interface TypeMembersPropsType {
@@ -11,14 +10,51 @@ interface TypeMembersPropsType {
 
 const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   const [mateList, setMateList] = useState<FriendsType[]>([]);
+  const [albumOwner, setAlbumOwner] = useState<any>({});
+  const [albumEditors, setAlbumEditors] = useState<any>([]);
+  const [sentAlbumInvitations, setSentAlbumInvitations] = useState<any>([]);
+
+  useEffect(() => {
+    const getMemberList = async () => {
+      const res = await fetch("/api/albumInfo", {
+        method: "POST",
+        body: JSON.stringify({ albumID }),
+      });
+      const data = await res.json();
+      setAlbumOwner(data.albumOwnerInfo);
+      setAlbumEditors(data.albumEditorsInfo);
+      setSentAlbumInvitations(data.sentAlbumInvitationsInfo);
+    };
+
+    getMemberList();
+  }, [albumID]);
   useEffect(() => {
     const getMateList = async () => {
       const res = await fetch("/api/profile");
       const data = await res.json();
-      setMateList(data.friends);
+
+      setMateList(() => {
+        if (sentAlbumInvitations.length === 0) {
+          return data.friends;
+        }
+        let mateList: any = [];
+        let isInvited;
+        for (const i of data.friends) {
+          isInvited = false;
+          for (const j of sentAlbumInvitations) {
+            if (i.socialID === j.socialID) {
+              isInvited = true;
+            }
+          }
+          if (!isInvited) {
+            mateList.push(i);
+          }
+        }
+        return mateList;
+      });
     };
     getMateList();
-  }, []);
+  }, [sentAlbumInvitations]);
 
   const handleInvite = async (socialID: string) => {
     const res = await fetch("/api/albumInvite", {
@@ -32,6 +68,20 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       alert("요청에 실패했습니다. 다시 시도해주세요.");
       return;
     }
+    setMateList(
+      mateList.filter((value) => {
+        return value.socialID !== socialID;
+      })
+    );
+    setSentAlbumInvitations(() => {
+      const newData = sentAlbumInvitations.concat(
+        mateList.filter((value) => {
+          return value.socialID === socialID;
+        })
+      );
+      console.log("new", newData);
+      return newData;
+    });
 
     alert("초대 메시지가 발송됐습니다.");
   };
@@ -58,8 +108,38 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
           </div>
         </div>
         <div className="flex flex-wrap gap-x-[37px] gap-y-[20px] h-[250px] overflow-scroll">
-          {mockMembersList.map((item, index) => (
-            <div key={index} className={`${item.isStandBy && "opacity-30"}`}>
+          <div>
+            <Trapezoid
+              styles={{
+                width: "70px",
+                height: "70px",
+                clipPath: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
+                position: "relative",
+                bgColor: "white",
+              }}
+            >
+              <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
+                주인장
+              </p>
+            </Trapezoid>
+            <p className="text-[14px] pt-[10px]">{albumOwner.nickname}</p>
+          </div>
+          {albumEditors?.map((item: any, index: number) => (
+            <div key={index}>
+              <Trapezoid
+                styles={{
+                  width: "70px",
+                  height: "70px",
+                  clipPath: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
+                  position: "relative",
+                  bgColor: "white",
+                }}
+              />
+              <p className="text-[14px] pt-[10px]">{item.nickname}</p>
+            </div>
+          ))}
+          {sentAlbumInvitations?.map((item: any, index: number) => (
+            <div key={index} className="opacity-30">
               <Trapezoid
                 styles={{
                   width: "70px",
@@ -69,18 +149,11 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                   bgColor: "white",
                 }}
               >
-                {item.owner && (
-                  <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
-                    주인장
-                  </p>
-                )}
-                {item.isStandBy && (
-                  <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
-                    초대됨
-                  </p>
-                )}
+                <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
+                  대기중
+                </p>
               </Trapezoid>
-              <p className="text-[14px] pt-[10px]">{item.name}</p>
+              <p className="text-[14px] pt-[10px]">{item.nickname}</p>
             </div>
           ))}
         </div>
