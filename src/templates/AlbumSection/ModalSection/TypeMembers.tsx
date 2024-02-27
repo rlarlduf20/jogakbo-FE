@@ -112,6 +112,14 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 bgColor: "white",
               }}
             >
+              {albumOwner.profileImageURL && (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_S3_URL}${albumOwner.socialID}/${albumOwner.profileImageURL}`}
+                  alt="thumbnail"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                />
+              )}
               <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
                 주인장
               </p>
@@ -128,7 +136,16 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                   position: "relative",
                   bgColor: "white",
                 }}
-              />
+              >
+                {item.profileImageURL && (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                    alt="thumbnail"
+                    fill
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                )}
+              </Trapezoid>
               <p className="text-[14px] pt-[10px]">{item.nickname}</p>
             </div>
           ))}
@@ -143,6 +160,14 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                   bgColor: "white",
                 }}
               >
+                {item.profileImageURL && (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                    alt="thumbnail"
+                    fill
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                )}
                 <p className="text-main_black text-[10px] pt-[2px] pl-[4px]">
                   대기중
                 </p>
