@@ -13,6 +13,8 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   const [albumOwner, setAlbumOwner] = useState<any>({});
   const [albumEditors, setAlbumEditors] = useState<any>([]);
   const [sentAlbumInvitations, setSentAlbumInvitations] = useState<any>([]);
+  const [inviteBtnClickCheck, setInviteBtnClickCheck] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const getMemberList = async () => {
@@ -27,7 +29,8 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
     };
 
     getMemberList();
-  }, [albumID]);
+  }, [albumID, inviteBtnClickCheck]);
+
   useEffect(() => {
     const getMateList = async () => {
       const res = await fetch("/api/profile");
@@ -54,7 +57,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       });
     };
     getMateList();
-  }, [sentAlbumInvitations]);
+  }, [sentAlbumInvitations, inviteBtnClickCheck]);
 
   const handleInvite = async (socialID: string) => {
     const res = await fetch("/api/albumInvite", {
@@ -68,20 +71,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       alert("요청에 실패했습니다. 다시 시도해주세요.");
       return;
     }
-    setMateList(
-      mateList.filter((value) => {
-        return value.socialID !== socialID;
-      })
-    );
-    setSentAlbumInvitations(() => {
-      const newData = sentAlbumInvitations.concat(
-        mateList.filter((value) => {
-          return value.socialID === socialID;
-        })
-      );
-      console.log("new", newData);
-      return newData;
-    });
+    setInviteBtnClickCheck((prev) => !prev);
 
     alert("초대 메시지가 발송됐습니다.");
   };
