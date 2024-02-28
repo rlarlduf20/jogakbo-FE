@@ -15,6 +15,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   const [sentAlbumInvitations, setSentAlbumInvitations] = useState<any>([]);
   const [inviteBtnClickCheck, setInviteBtnClickCheck] =
     useState<boolean>(false);
+  const [isAlbumOwner, setIsAlbumOwner] = useState<boolean>(true);
 
   useEffect(() => {
     const getMemberList = async () => {
@@ -39,7 +40,10 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       setMateList(() => {
         let impossibleInviteList: any = [];
         for (const i of data.friends) {
-          if (i.socialID === albumOwner.socialID) impossibleInviteList.push(i);
+          if (i.socialID === albumOwner.socialID) {
+            impossibleInviteList.push(i);
+            setIsAlbumOwner(false);
+          }
           for (const j of sentAlbumInvitations) {
             if (i.socialID === j.socialID) {
               impossibleInviteList.push(i);
@@ -180,35 +184,39 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       <div className="grow">
         <p className="text-[18px] mb-[28px]">구성원 초대</p>
         <div className="h-[250px] overflow-scroll">
-          {mateList.map((item, index) => (
-            <div key={index} className="flex items-center mb-[20px]">
-              <Trapezoid
-                styles={{
-                  width: "40px",
-                  height: "40px",
-                  clipPath: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
-                  position: "relative",
-                  bgColor: "white",
-                }}
-              >
-                {item.profileImageURL && (
-                  <Image
-                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
-                    alt="thumbnail"
-                    fill
-                    style={{ objectFit: "cover", objectPosition: "center" }}
-                  />
-                )}
-              </Trapezoid>
-              <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
-              <p
-                className="underline text-[14px] cursor-pointer"
-                onClick={() => handleInvite(item.socialID)}
-              >
-                초대
-              </p>
-            </div>
-          ))}
+          {!isAlbumOwner ? (
+            <p className="text-[14px]">초대 권한이 없습니다.</p>
+          ) : (
+            mateList.map((item, index) => (
+              <div key={index} className="flex items-center mb-[20px]">
+                <Trapezoid
+                  styles={{
+                    width: "40px",
+                    height: "40px",
+                    clipPath: "polygon(0 0, 100% 0, 100% 90%, 0 100%)",
+                    position: "relative",
+                    bgColor: "white",
+                  }}
+                >
+                  {item.profileImageURL && (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                      alt="thumbnail"
+                      fill
+                      style={{ objectFit: "cover", objectPosition: "center" }}
+                    />
+                  )}
+                </Trapezoid>
+                <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
+                <p
+                  className="underline text-[14px] cursor-pointer"
+                  onClick={() => handleInvite(item.socialID)}
+                >
+                  초대
+                </p>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>
