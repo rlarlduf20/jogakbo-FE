@@ -33,7 +33,16 @@ const usePushNotification = () => {
         setIsAppear(false);
       }, 5000);
 
-      setPushMsg(data);
+      setPushMsg({ ...data, type: "friend" });
+    });
+    eventSource?.addEventListener("albumInvitation", (e: any) => {
+      setIsAppear(true);
+      const data = JSON.parse(e.data);
+      timer = setTimeout(() => {
+        setIsAppear(false);
+      }, 5000);
+
+      setPushMsg({ ...data, type: "album" });
     });
     return () => {
       eventSource?.close();
