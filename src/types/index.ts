@@ -24,6 +24,7 @@ export interface FriendsType {
   nickname: string;
   socialID: string;
   profileImageURL: string | null;
+  type?: string;
 }
 
 export interface AlbumsType {
