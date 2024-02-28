@@ -20,8 +20,12 @@ const RouteButtons = ({ albumID }: RouteButtonsPropsType) => {
       method: "DELETE",
       body: JSON.stringify({ albumID }),
     });
+    if (res.status === 403) {
+      alert("삭제 권한이 없습니다.");
+      return;
+    }
     if (!res.ok) {
-      alert("다시 시도해주세요.");
+      alert("삭제에 실패했습니다. 다시 시도해주세요.");
       return;
     }
     alert("앨범이 삭제되었습니다.");
