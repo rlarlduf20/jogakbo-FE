@@ -159,13 +159,13 @@ const Notification = () => {
     if (responseType === "accept") alert("앨범에 초대되었습니다.");
   };
   const handleFilterPushMsg = (userID: string) => {
-    const filteredReceivedReq = receivedReq.filter((item) => {
+    const filteredReceivedReq = receivedReq?.filter((item) => {
       return item.socialID !== userID;
     });
     setReceivedReq(filteredReceivedReq);
   };
   const handleFilterAlbumInvite = (albumID: string) => {
-    const filteredReceivedAlbumInvite = receivedAlbumInvite.filter((item) => {
+    const filteredReceivedAlbumInvite = receivedAlbumInvite?.filter((item) => {
       return item.albumID !== albumID;
     });
     setReceivedAlbumInvite(filteredReceivedAlbumInvite);
@@ -201,9 +201,9 @@ const Notification = () => {
       >
         <Image src={NotiIcon} alt="알림" />
         {isHoverIcon && <HoverText>알림</HoverText>}
-        {(receivedReq.length === 0 && receivedAlbumInvite.length === 0) || (
+        {(receivedReq?.length === 0 && receivedAlbumInvite?.length === 0) || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
-            {receivedReq.length + receivedAlbumInvite.length}
+            {receivedReq?.length + receivedAlbumInvite?.length}
           </p>
         )}
       </div>
@@ -217,7 +217,7 @@ const Notification = () => {
             <p className="text-[20px] font-semibold">알림 목록</p>
           </div>
           <div className="h-[430px] mb-[28px] flex flex-col gap-[20px] overflow-scroll">
-            {!!!receivedReq.length && !!!receivedAlbumInvite.length ? (
+            {!!!receivedReq?.length && !!!receivedAlbumInvite?.length ? (
               <p>새로운 알림이 없습니다.</p>
             ) : (
               receivedReq.map((item, index) => (
@@ -232,18 +232,18 @@ const Notification = () => {
                 />
               ))
             )}
-            {!!!receivedReq.length && !!!receivedAlbumInvite.length ? (
+            {!!!receivedReq?.length && !!!receivedAlbumInvite?.length ? (
               <p
                 className={`${
-                  !!!receivedReq.length &&
-                  !!!receivedAlbumInvite.length &&
+                  !!!receivedReq?.length &&
+                  !!!receivedAlbumInvite?.length &&
                   "hidden"
                 }`}
               >
                 새로운 알림이 없습니다.
               </p>
             ) : (
-              receivedAlbumInvite.map((item, index) => (
+              receivedAlbumInvite?.map((item, index) => (
                 <PushNoti
                   key={index}
                   info={{ ...item, type: "album" }}
