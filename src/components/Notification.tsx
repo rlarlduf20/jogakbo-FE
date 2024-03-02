@@ -58,8 +58,8 @@ const PushNoti = ({
           <>
             <button
               onClick={() => {
-                handleResponse("accept", info.socialID, info.nickname);
-                handleFilterPushMsg(info.socialID);
+                handleResponse("accept", info.userUUID, info.nickname);
+                handleFilterPushMsg(info.userUUID);
                 setIsAppear(false);
               }}
               className="underline mr-[15px] text-[14px]"
@@ -68,8 +68,8 @@ const PushNoti = ({
             </button>
             <button
               onClick={() => {
-                handleResponse("reject", info.socialID, info.nickname);
-                handleFilterPushMsg(info.socialID);
+                handleResponse("reject", info.userUUID, info.nickname);
+                handleFilterPushMsg(info.userUUID);
                 setIsAppear(false);
               }}
               className="underline text-[14px]"
@@ -159,13 +159,13 @@ const Notification = () => {
     if (responseType === "accept") alert("앨범에 초대되었습니다.");
   };
   const handleFilterPushMsg = (userID: string) => {
-    const filteredReceivedReq = receivedReq?.filter((item) => {
-      return item.socialID !== userID;
+    const filteredReceivedReq = receivedReq.filter((item) => {
+      return item.userUUID !== userID;
     });
     setReceivedReq(filteredReceivedReq);
   };
   const handleFilterAlbumInvite = (albumID: string) => {
-    const filteredReceivedAlbumInvite = receivedAlbumInvite?.filter((item) => {
+    const filteredReceivedAlbumInvite = receivedAlbumInvite.filter((item) => {
       return item.albumID !== albumID;
     });
     setReceivedAlbumInvite(filteredReceivedAlbumInvite);
@@ -203,7 +203,7 @@ const Notification = () => {
         {isHoverIcon && <HoverText>알림</HoverText>}
         {(receivedReq?.length === 0 && receivedAlbumInvite?.length === 0) || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
-            {receivedReq?.length + receivedAlbumInvite?.length}
+            {receivedReq.length + receivedAlbumInvite.length}
           </p>
         )}
       </div>

@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const { albumID, responseType } = await request.json();
   console.log(albumID, responseType);
   const res = await fetch(
-    `${process.env.SERVER_URL}/album/invitation-reply/${albumID}?reply=${responseType}`,
+    `${process.env.SERVER_URL}/album/${albumID}/invitation-reply?reply=${responseType}`,
     {
       method: "POST",
       headers: {

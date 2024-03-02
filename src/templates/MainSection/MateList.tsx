@@ -52,7 +52,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
             >
               <p
                 className="text-[14px] mb-[4px] cursor-pointer"
-                onClick={() => handleDeleteMate(item.nickname, item.socialID)}
+                onClick={() => handleDeleteMate(item.nickname, item.userUUID)}
               >
                 친구 삭제
               </p>
@@ -70,7 +70,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
           >
             {item.profileImageURL && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${item.userUUID}/${item.profileImageURL}`}
                 alt="thumbnail"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center" }}

@@ -1,5 +1,5 @@
 export interface ImageType {
-  imageUUID: string;
+  albumImageUUID: string;
   location: {
     x: number;
     y: number;
@@ -22,13 +22,13 @@ export interface UserType {
 
 export interface FriendsType {
   nickname: string;
-  socialID: string;
+  userUUID: string;
   profileImageURL: string | null;
   type?: string;
 }
 
 export interface AlbumsType {
-  albumID: string;
+  albumUUID: string;
   albumName: string;
   thumbnailImage: string;
   images: ImageType[];
@@ -38,7 +38,7 @@ export interface AlbumsType {
 export interface SearchUsersType {
   friend: {
     nickname: string;
-    socialID: string;
+    userUUID: string;
     profileImageURL: string | null;
   };
   friendStatus: string;
