@@ -81,8 +81,8 @@ const PushNoti = ({
           <>
             <button
               onClick={() => {
-                handleResponseAlbumInvite("accept", info.albumID);
-                handleFilterAlbumInvite(info.albumID);
+                handleResponseAlbumInvite("accept", info.albumUUID);
+                handleFilterAlbumInvite(info.albumUUID);
                 setIsAppear(false);
               }}
               className="underline mr-[15px] text-[14px]"
@@ -91,8 +91,8 @@ const PushNoti = ({
             </button>
             <button
               onClick={() => {
-                handleResponseAlbumInvite("reject", info.albumID);
-                handleFilterAlbumInvite(info.albumID);
+                handleResponseAlbumInvite("reject", info.albumUUID);
+                handleFilterAlbumInvite(info.albumUUID);
                 setIsAppear(false);
               }}
               className="underline text-[14px]"
@@ -166,7 +166,7 @@ const Notification = () => {
   };
   const handleFilterAlbumInvite = (albumID: string) => {
     const filteredReceivedAlbumInvite = receivedAlbumInvite.filter((item) => {
-      return item.albumID !== albumID;
+      return item.albumUUID !== albumID;
     });
     setReceivedAlbumInvite(filteredReceivedAlbumInvite);
   };
