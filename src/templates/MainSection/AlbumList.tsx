@@ -27,12 +27,12 @@ const EachAlbumInfo = ({
   column: number;
   albumInfo: any;
 }) => {
-  const { thumbnailImage, albumName, albumID } = albumInfo;
+  const { thumbnailImage, albumName, albumUUID } = albumInfo;
   return (
     <>
       {thumbnailImage && (
         <Image
-          src={`${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${thumbnailImage}`}
+          src={`${process.env.NEXT_PUBLIC_S3_URL}${albumUUID}/${thumbnailImage}`}
           alt="thumbnail"
           fill
           style={{ objectFit: "cover", objectPosition: "center" }}
@@ -61,7 +61,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
             key={index}
             className={`${column === 0 ? "mr-[-10px]" : "mr-[10px]"} relative`}
           >
-            <Link href={`/albumDetail/${item.albumID}`}>
+            <Link href={`/albumDetail/${item.albumUUID}`}>
               <Trapezoid
                 styles={{
                   width: "80px",

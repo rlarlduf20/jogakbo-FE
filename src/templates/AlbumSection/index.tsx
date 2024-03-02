@@ -105,7 +105,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
         for (let i = 0; i < files.length; i++) {
           let obj = {
-            page: page,
+            pageNum: page,
             size: dropImgInfo[i].size,
             location: dropImgInfo[i].location,
             rotation: 0,
@@ -195,20 +195,20 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
               bodyData={albumBodyData[page]}
               imageInfo={item}
               index={index}
-              key={item.imageUUID}
+              key={item.albumImageUUID}
               selectedImageId={selectedImageId}
               albumID={params.id}
               pageNum={page}
-              isSelected={item.imageUUID === selectedImageId}
+              isSelected={item.albumImageUUID === selectedImageId}
               onSelect={() => {
-                setSelectedImageId(item.imageUUID);
+                setSelectedImageId(item.albumImageUUID);
               }}
               onChangeAttrs={(newAttrs: ImageType) => {
                 let arr = [];
                 let obj = {
-                  imageUUID: newAttrs.imageUUID,
-                  imageInfo: {
-                    page,
+                  albumImageUUID: newAttrs.albumImageUUID,
+                  albumImageEditInfo: {
+                    pageNum: page,
                     location: {
                       x: newAttrs.location.x,
                       y: newAttrs.location.y,

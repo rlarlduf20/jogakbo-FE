@@ -86,7 +86,7 @@ const SearchBox = () => {
                 >
                   {item.friend.profileImageURL && (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.friend.socialID}/${item.friend.profileImageURL}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.friend.userUUID}/${item.friend.profileImageURL}`}
                       alt="thumbnail"
                       fill
                       style={{ objectFit: "cover", objectPosition: "center" }}
@@ -101,7 +101,7 @@ const SearchBox = () => {
                     {item.friend.nickname}
                   </p>
                   <p className="text-[14px] text-[#888]">
-                    #{item.friend.socialID.slice(0, 6)}
+                    #{item.friend.userUUID.slice(0, 6)}
                   </p>
                 </div>
                 <button
@@ -109,7 +109,7 @@ const SearchBox = () => {
                     item.friendStatus === "WAITING" ||
                     item.friendStatus === "FRIEND"
                   }
-                  onClick={() => handleInvite(item.friend.socialID)}
+                  onClick={() => handleInvite(item.friend.userUUID)}
                 >
                   {isDisabledInvite(item, "friend") ? (
                     <p className="text-[#888] text-[14px]">친구</p>

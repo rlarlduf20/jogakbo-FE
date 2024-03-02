@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const { responseType, userID } = await request.json();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/user/friend-reply?socialID=${userID}&reply=${responseType}`,
+    `${process.env.SERVER_URL}/user/friend-reply/${userID}?reply=${responseType}`,
     {
       method: "POST",
       headers: {

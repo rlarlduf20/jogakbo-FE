@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const { userID } = await request.json();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/user/friend?socialID=${userID}`,
+    `${process.env.SERVER_URL}/user/friend-request/${userID}`,
     {
       method: "POST",
       headers: {
@@ -23,15 +23,12 @@ export async function DELETE(request: Request) {
   const { jogakTokens } = await getServerSession(authOptions);
   const { userID } = await request.json();
 
-  const res = await fetch(
-    `${process.env.SERVER_URL}/user/friend?socialID=${userID}`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${jogakTokens.accessToken}`,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.SERVER_URL}/user/friend/${userID}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${jogakTokens.accessToken}`,
+    },
+  });
 
   return res;
 }

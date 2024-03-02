@@ -38,7 +38,7 @@ const ImagesByPage = ({
   onChangeAttrs,
 }: ImageByPagePropsType) => {
   const [image] = useImage(
-    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.imageUUID}`
+    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.albumImageUUID}`
   );
   const imageRef = useRef<any>(null);
   const trRef = useRef<Konva.Transformer>(null);
@@ -61,7 +61,7 @@ const ImagesByPage = ({
         // setSelectedImage(null);
         const res = await fetch(`/api/image/${albumID}`, {
           method: "DELETE",
-          body: JSON.stringify({ pageNum, imageUUID: selectedImageId }),
+          body: JSON.stringify({ imageUUID: selectedImageId }),
         });
         if (!res.ok) {
           alert("다시 시도해주세요.");

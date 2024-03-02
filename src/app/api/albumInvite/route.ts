@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const { albumID, socialID } = await request.json();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/album/invitation/${albumID}/${socialID}`,
+    `${process.env.SERVER_URL}/album/${albumID}/invitation/${socialID}`,
     {
       method: "POST",
       headers: {

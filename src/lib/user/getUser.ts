@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 
 export const getUser = async () => {
   const { jogakTokens } = await getServerSession(authOptions);
-  const res = await fetch(`${process.env.SERVER_URL}/user/profile`, {
+  const res = await fetch(`${process.env.SERVER_URL}/user`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jogakTokens.accessToken}`,

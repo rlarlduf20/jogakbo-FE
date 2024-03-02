@@ -7,9 +7,9 @@ export const generateToken = (userData: any) => {
   const { socialId, name, provider } = userData;
   const token = jwt.sign(
     {
-      socialId,
-      name,
-      provider,
+      UserUUID: socialId,
+      Nickname: name,
+      Provider: provider,
     },
     secret,
     {

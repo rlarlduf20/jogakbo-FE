@@ -6,15 +6,12 @@ export async function POST(request: Request) {
   const { jogakTokens } = await getServerSession(authOptions);
   const { albumID } = await request.json();
 
-  const res = await fetch(
-    `${process.env.SERVER_URL}/album?albumID=${albumID}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jogakTokens.accessToken}`,
-      },
-    }
-  );
+  const res = await fetch(`${process.env.SERVER_URL}/album/${albumID}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jogakTokens.accessToken}`,
+    },
+  });
 
   return res;
 }
@@ -27,7 +24,7 @@ export async function PUT(request: Request) {
   const formData = await request.formData();
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/album/profile/${albumID}?newAlbumName=${newTitle}`,
+    `${process.env.SERVER_URL}/album/${albumID}?newAlbumName=${newTitle}`,
     {
       method: "PUT",
       body: formData,

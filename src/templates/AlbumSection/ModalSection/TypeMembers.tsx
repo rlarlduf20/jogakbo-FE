@@ -40,26 +40,26 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       setMateList(() => {
         let impossibleInviteList: any = [];
         for (const i of data.friends) {
-          if (i.socialID === albumOwner.socialID) {
+          if (i.userUUID === albumOwner.userUUID) {
             impossibleInviteList.push(i);
             setIsAlbumOwner(false);
           }
           for (const j of sentAlbumInvitations) {
-            if (i.socialID === j.socialID) {
+            if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
           }
           for (const j of albumEditors) {
-            if (i.socialID === j.socialID) {
+            if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
           }
         }
         let impossibleSocialIDs = new Set(
-          impossibleInviteList.map((obj: any) => obj.socialID)
+          impossibleInviteList.map((obj: any) => obj.userUUID)
         );
         let mateList = data.friends.filter(
-          (obj: any) => !impossibleSocialIDs.has(obj.socialID)
+          (obj: any) => !impossibleSocialIDs.has(obj.userUUID)
         );
         return mateList;
       });
@@ -118,7 +118,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
             >
               {albumOwner.profileImageURL && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_URL}${albumOwner.socialID}/${albumOwner.profileImageURL}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_URL}${albumOwner.userUUID}/${albumOwner.profileImageURL}`}
                   alt="thumbnail"
                   fill
                   style={{ objectFit: "cover", objectPosition: "center" }}
@@ -143,7 +143,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
               >
                 {item.profileImageURL && (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.userUUID}/${item.profileImageURL}`}
                     alt="thumbnail"
                     fill
                     style={{ objectFit: "cover", objectPosition: "center" }}
@@ -166,7 +166,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
               >
                 {item.profileImageURL && (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                    src={`${process.env.NEXT_PUBLIC_S3_URL}${item.userUUID}/${item.profileImageURL}`}
                     alt="thumbnail"
                     fill
                     style={{ objectFit: "cover", objectPosition: "center" }}
@@ -200,7 +200,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 >
                   {item.profileImageURL && (
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.socialID}/${item.profileImageURL}`}
+                      src={`${process.env.NEXT_PUBLIC_S3_URL}${item.userUUID}/${item.profileImageURL}`}
                       alt="thumbnail"
                       fill
                       style={{ objectFit: "cover", objectPosition: "center" }}
@@ -210,7 +210,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
                 <p
                   className="underline text-[14px] cursor-pointer"
-                  onClick={() => handleInvite(item.socialID)}
+                  onClick={() => handleInvite(item.userUUID)}
                 >
                   초대
                 </p>

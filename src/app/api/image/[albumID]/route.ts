@@ -9,7 +9,7 @@ export async function POST(
   const formData = await request.formData();
   const albumID = params.albumID;
 
-  const res = await fetch(`${process.env.SERVER_URL}/album/img/${albumID}`, {
+  const res = await fetch(`${process.env.SERVER_URL}/album/${albumID}/image`, {
     method: "POST",
     body: formData,
     headers: {
@@ -25,11 +25,11 @@ export async function DELETE(
   { params }: { params: { albumID: string } }
 ) {
   const { jogakTokens } = await getServerSession(authOptions);
-  const { pageNum, imageUUID } = await request.json();
+  const { imageUUID } = await request.json();
   const albumID = params.albumID;
 
   const res = await fetch(
-    `${process.env.SERVER_URL}/album/img/${albumID}/${pageNum}?imageUUID=${imageUUID}`,
+    `${process.env.SERVER_URL}/album/${albumID}/image/${imageUUID}`,
     {
       method: "DELETE",
       headers: {

@@ -13,7 +13,7 @@ export async function PUT(request: Request) {
   const session = await getServerSession(authOptions);
   const formData = await request.formData();
   console.log(formData);
-  const res = await fetch(`${process.env.SERVER_URL}/user/profile`, {
+  const res = await fetch(`${process.env.SERVER_URL}/user`, {
     method: "PUT",
     body: formData,
     headers: {
