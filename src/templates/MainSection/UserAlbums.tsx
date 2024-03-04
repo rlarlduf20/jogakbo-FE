@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumList from "./AlbumList";
@@ -9,12 +9,15 @@ import PlusIcon from "../../../public/images/svg/plus.svg";
 import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
 import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
 import OwnerSortActiveIcon from "../../../public/images/svg/sort-rectangle-active.svg";
+import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 
 interface UserAlbumsProps {
   user: UserType;
 }
 const UserAlbums = ({ user }: UserAlbumsProps) => {
   const [isOwnerJogakbo, setIsOwnerJogakbo] = useState<boolean>(false);
+  const sortBoxRef = useRef<HTMLDivElement>(null);
+  const { isOpen, setIsOpen } = useMouseDownOutside(sortBoxRef);
 
   let entireAlbumList = isOwnerJogakbo
     ? user.albums
@@ -30,9 +33,33 @@ const UserAlbums = ({ user }: UserAlbumsProps) => {
   return (
     <div className="w-full min-h-[800px] pb-[80px]">
       <div className="flex mb-[30px] gap-[52px]">
-        <div className="flex gap-[5px]">
-          <Image src={SortIcon} alt="정렬 아이콘" />
-          <p>정렬</p>
+        <div className="relative" ref={sortBoxRef}>
+          <div
+            className="flex gap-[5px] cursor-pointer"
+            onClick={() => {
+              setIsOpen((prev) => !prev);
+            }}
+          >
+            <Image
+              src={SortIcon}
+              alt="정렬 아이콘"
+              className={`${
+                isOpen && "rotate-180 transition-all duration-300"
+              } transition-all duration-300`}
+            />
+            <button>정렬</button>
+          </div>
+          {isOpen && (
+            <div
+              className="absolute top-[25px] w-[90px] h-[78px] 
+              border-[1px] border-white z-30 bg-main_black
+              py-[5px] pl-[12px] flex flex-col gap-[1px]"
+            >
+              <p className={`text-[14px]`}>시간순</p>
+              <p className={`text-[14px]`}>가나다 순</p>
+              <p className={`text-[14px]`}>업데이트 순</p>
+            </div>
+          )}
         </div>
         <div className="grow">
           <div
