@@ -15,10 +15,15 @@ interface UserAlbumsProps {
 }
 const UserAlbums = ({ user }: UserAlbumsProps) => {
   const [isOwnerJogakbo, setIsOwnerJogakbo] = useState<boolean>(false);
+
   let entireAlbumList = isOwnerJogakbo
     ? user.albums
     : user.albums.concat(user.collaboAlbums);
-
+  entireAlbumList.sort((a, b) => {
+    return (
+      new Date(b.createdDate).valueOf() - new Date(a.createdDate).valueOf()
+    );
+  });
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);
   };

@@ -34,6 +34,7 @@ export interface AlbumsType {
   thumbnailImage: string;
   images: ImageType[];
   albumEditors: any;
+  createdDate: any;
 }
 
 export interface SearchUsersType {
