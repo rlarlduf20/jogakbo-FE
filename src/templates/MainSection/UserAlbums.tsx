@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumList from "./AlbumList";
@@ -8,6 +8,7 @@ import type { UserType } from "@/types";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
 import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
+import OwnerSortActiveIcon from "../../../public/images/svg/sort-rectangle-active.svg";
 
 interface UserAlbumsProps {
   user: UserType;
@@ -33,7 +34,11 @@ const UserAlbums = ({ user }: UserAlbumsProps) => {
             className="flex gap-[5px] w-[172px] cursor-pointer"
             onClick={handleOwnerBtnClick}
           >
-            <Image src={OwnerSortIcon} alt="정렬 아이콘" />
+            {isOwnerJogakbo ? (
+              <Image src={OwnerSortActiveIcon} alt="정렬 아이콘" />
+            ) : (
+              <Image src={OwnerSortIcon} alt="정렬 아이콘" />
+            )}
             <button>내가 만든 조각보만 보기</button>
           </div>
         </div>
