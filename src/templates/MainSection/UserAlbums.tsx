@@ -1,15 +1,26 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumList from "./AlbumList";
-import type { AlbumsType } from "@/types";
+import type { UserType } from "@/types";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
 import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
 
 interface UserAlbumsProps {
-  albums: AlbumsType[];
+  user: UserType;
 }
-const UserAlbums = ({ albums }: UserAlbumsProps) => {
+const UserAlbums = ({ user }: UserAlbumsProps) => {
+  const [isOwnerJogakbo, setIsOwnerJogakbo] = useState<boolean>(false);
+  let entireAlbumList = isOwnerJogakbo
+    ? user.albums
+    : user.albums.concat(user.collaboAlbums);
+
+  const handleOwnerBtnClick = () => {
+    setIsOwnerJogakbo((prev) => !prev);
+  };
   return (
     <div className="w-full min-h-[800px] pb-[80px]">
       <div className="flex mb-[30px] gap-[52px]">
@@ -17,9 +28,14 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
           <Image src={SortIcon} alt="정렬 아이콘" />
           <p>정렬</p>
         </div>
-        <div className="flex gap-[5px] grow">
-          <Image src={OwnerSortIcon} alt="정렬 아이콘" />
-          <p>내가 만든 조각보만 보기</p>
+        <div className="grow">
+          <div
+            className="flex gap-[5px] w-[172px] cursor-pointer"
+            onClick={handleOwnerBtnClick}
+          >
+            <Image src={OwnerSortIcon} alt="정렬 아이콘" />
+            <button>내가 만든 조각보만 보기</button>
+          </div>
         </div>
         <Link
           href="/addAlbum"
@@ -31,7 +47,7 @@ const UserAlbums = ({ albums }: UserAlbumsProps) => {
         </Link>
       </div>
       <div className="flex flex-wrap gap-y-[10px]">
-        <AlbumList albums={albums} />
+        <AlbumList albums={entireAlbumList} />
       </div>
     </div>
   );
