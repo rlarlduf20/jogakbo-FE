@@ -34,7 +34,8 @@ export interface AlbumsType {
   thumbnailImage: string;
   images: ImageType[];
   albumEditors: any;
-  createdDate: any;
+  createdDate: string;
+  lastModifiedDate: string;
 }
 
 export interface SearchUsersType {

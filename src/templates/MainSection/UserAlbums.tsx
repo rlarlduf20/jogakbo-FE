@@ -16,20 +16,40 @@ interface UserAlbumsProps {
 }
 const UserAlbums = ({ user }: UserAlbumsProps) => {
   const [isOwnerJogakbo, setIsOwnerJogakbo] = useState<boolean>(false);
+  const [sortType, setSortType] = useState<string>("created");
   const sortBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(sortBoxRef);
-
   let entireAlbumList = isOwnerJogakbo
     ? user.albums
     : user.albums.concat(user.collaboAlbums);
-  entireAlbumList.sort((a, b) => {
-    return (
-      new Date(b.createdDate).valueOf() - new Date(a.createdDate).valueOf()
-    );
-  });
+  sortType === "created"
+    ? entireAlbumList.sort((a, b) => {
+        return (
+          new Date(b.createdDate).valueOf() - new Date(a.createdDate).valueOf()
+        );
+      })
+    : sortType === "naming"
+    ? entireAlbumList.sort((a, b) => {
+        return a.albumName < b.albumName
+          ? -1
+          : a.albumName > b.albumName
+          ? 1
+          : 0;
+      })
+    : entireAlbumList.sort((a, b) => {
+        return (
+          new Date(b.lastModifiedDate).valueOf() -
+          new Date(a.lastModifiedDate).valueOf()
+        );
+      });
+  console.log(entireAlbumList);
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);
   };
+  const handleClick = (value: string) => {
+    setSortType(value);
+  };
+
   return (
     <div className="w-full min-h-[800px] pb-[80px]">
       <div className="flex mb-[30px] gap-[52px]">
@@ -55,9 +75,30 @@ const UserAlbums = ({ user }: UserAlbumsProps) => {
               border-[1px] border-white z-30 bg-main_black
               py-[5px] pl-[12px] flex flex-col gap-[1px]"
             >
-              <p className={`text-[14px]`}>시간순</p>
-              <p className={`text-[14px]`}>가나다 순</p>
-              <p className={`text-[14px]`}>업데이트 순</p>
+              <p
+                className={`${
+                  sortType === "created" && "underline"
+                } text-[14px] cursor-pointer`}
+                onClick={() => handleClick("created")}
+              >
+                시간순
+              </p>
+              <p
+                className={`${
+                  sortType === "naming" && "underline"
+                } text-[14px] cursor-pointer`}
+                onClick={() => handleClick("naming")}
+              >
+                가나다 순
+              </p>
+              <p
+                className={`${
+                  sortType === "updated" && "underline"
+                } text-[14px] cursor-pointer`}
+                onClick={() => handleClick("updated")}
+              >
+                업데이트 순
+              </p>
             </div>
           )}
         </div>
