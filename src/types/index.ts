@@ -16,6 +16,7 @@ export interface UserType {
   profileImageUrl: string | null;
   friends: FriendsType[];
   albums: AlbumsType[];
+  collaboAlbums: AlbumsType[];
   sentFriendRequest: FriendsType[];
   receivedFriendRequest: FriendsType[];
 }
