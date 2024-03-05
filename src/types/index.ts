@@ -16,6 +16,7 @@ export interface UserType {
   profileImageUrl: string | null;
   friends: FriendsType[];
   albums: AlbumsType[];
+  collaboAlbums: AlbumsType[];
   sentFriendRequest: FriendsType[];
   receivedFriendRequest: FriendsType[];
 }
@@ -33,6 +34,8 @@ export interface AlbumsType {
   thumbnailImage: string;
   images: ImageType[];
   albumEditors: any;
+  createdDate: string;
+  lastModifiedDate: string;
 }
 
 export interface SearchUsersType {
