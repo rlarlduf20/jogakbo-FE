@@ -42,7 +42,7 @@ const UserAlbums = ({ user }: UserAlbumsProps) => {
           new Date(a.lastModifiedDate).valueOf()
         );
       });
-  console.log(entireAlbumList);
+
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);
   };
