@@ -51,7 +51,7 @@ const UserProfile = async ({ user }: UserProfileProps) => {
           <div className="flex items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각보</p>
-            <p>{user.albums.length}</p>
+            <p>{user.albums.length + user.collaboAlbums.length}</p>
           </div>
         </div>
         <Link href="/my/profile" className="text-[14px]">
