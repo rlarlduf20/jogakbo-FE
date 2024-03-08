@@ -17,7 +17,6 @@ const SHAPE_BY_INDEX = [
     "polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%)",
   ],
 ];
-
 const THUMBNAIL_COLOR = ["#ff9898", "#59b86e", "#ffe381", "#7aacf7"];
 
 const EachAlbumInfo = ({
@@ -25,14 +24,14 @@ const EachAlbumInfo = ({
   albumInfo,
 }: {
   column: number;
-  albumInfo: any;
+  albumInfo: AlbumsType;
 }) => {
-  const { thumbnailImage, albumName, albumUUID } = albumInfo;
+  const { thumbnailImageURL, albumName, albumUUID } = albumInfo;
   return (
     <>
-      {thumbnailImage && (
+      {thumbnailImageURL && (
         <Image
-          src={`${process.env.NEXT_PUBLIC_S3_URL}${albumUUID}/${thumbnailImage}`}
+          src={`${process.env.NEXT_PUBLIC_S3_URL}${albumUUID}/${thumbnailImageURL}`}
           alt="thumbnail"
           fill
           style={{ objectFit: "cover", objectPosition: "center" }}
@@ -68,7 +67,7 @@ const AlbumList = ({ albums }: AlbumListProps) => {
                   height: "200px",
                   clipPath: SHAPE_BY_INDEX[row][column],
                   position: "relative",
-                  bgColor: item.thumbnailImage
+                  bgColor: item.thumbnailImageURL
                     ? "white"
                     : THUMBNAIL_COLOR[index % 4],
                 }}
