@@ -21,6 +21,22 @@ export interface UserType {
   friendRequesters: FriendsType[];
   albumInviters: AlbumsType[];
 }
+export interface UserInfoType {
+  userUUID: string;
+  nickname: string;
+  profileImageURL: string | null;
+  friends: FriendsType[];
+}
+
+export interface UserAlbumListType {
+  albums: AlbumsType[];
+  collaboAlbums: AlbumsType[];
+}
+
+export interface UserNotificationType {
+  friendRequesters: FriendsType[];
+  albumInviters: AlbumsType[];
+}
 
 export interface FriendsType {
   nickname: string;

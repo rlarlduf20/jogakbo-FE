@@ -3,12 +3,12 @@ import UserProfile from "@/templates/MainSection/UserProfile";
 import { getUser } from "@/lib/user/getUser";
 
 const MainSection = async () => {
-  const user = await getUser();
+  const { userInfo, userAlbumList } = await getUser();
 
   return (
     <section className="flex pt-[40px] gap-[229px]">
-      <UserProfile user={user} />
-      <UserAlbums user={user} />
+      <UserProfile info={userInfo} albumList={userAlbumList} />
+      <UserAlbums albumList={userAlbumList} />
     </section>
   );
 };
