@@ -48,7 +48,6 @@ const EditBox = ({ nickname, profileImageUrl, socialId }: EditBoxPropsType) => {
       return;
     }
     alert("다시 시도해주세요.");
-    console.log(res);
   };
 
   return (

@@ -11,16 +11,6 @@ export interface ImageType {
   rotation: number;
 }
 
-export interface UserType {
-  userUUID: string;
-  nickname: string;
-  profileImageURL: string | null;
-  friends: FriendsType[];
-  albums: AlbumsType[];
-  collaboAlbums: AlbumsType[];
-  friendRequesters: FriendsType[];
-  albumInviters: AlbumsType[];
-}
 export interface UserInfoType {
   userUUID: string;
   nickname: string;
@@ -52,6 +42,13 @@ export interface AlbumsType {
   images: ImageType[];
   createdDate: string;
   lastModifiedDate: string;
+}
+
+export interface AlbumDetailInfoType {
+  albumName: string;
+  thumbnailImageURL: string;
+  createdDate: string;
+  isPublic: boolean;
 }
 
 export interface SearchUsersType {
