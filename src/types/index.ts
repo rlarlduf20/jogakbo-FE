@@ -12,13 +12,14 @@ export interface ImageType {
 }
 
 export interface UserType {
+  userUUID: string;
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageURL: string | null;
   friends: FriendsType[];
   albums: AlbumsType[];
   collaboAlbums: AlbumsType[];
-  sentFriendRequest: FriendsType[];
-  receivedFriendRequest: FriendsType[];
+  friendRequesters: FriendsType[];
+  albumInviters: AlbumsType[];
 }
 
 export interface FriendsType {
@@ -31,9 +32,8 @@ export interface FriendsType {
 export interface AlbumsType {
   albumUUID: string;
   albumName: string;
-  thumbnailImage: string;
+  thumbnailImageURL: string;
   images: ImageType[];
-  albumEditors: any;
   createdDate: string;
   lastModifiedDate: string;
 }
