@@ -42,7 +42,7 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
       {mateList?.map((item, index) => (
         <div
           key={index}
-          className="relative flex items-center mb-[20px] cursor:context-menu"
+          className="relative flex items-center mb-[24px] cursor:context-menu"
           onContextMenu={(e) => handleRightClick(e, index)}
         >
           {isOpen && openIdx === index && (

@@ -8,13 +8,13 @@ import { getUser } from "@/lib/user/getUser";
 
 const ProfileSection = async () => {
   const { info } = await getServerSession(authOptions);
-  const { nickname, profileImageUrl } = await getUser();
+  const { userInfo } = await getUser();
   return (
     <section className="pt-[20px] pb-[100px] w-full flex flex-col items-center gap-[80px]">
       <EditBox
-        nickname={nickname}
-        profileImageUrl={profileImageUrl}
-        socialId={info.socialId}
+        nickname={userInfo.nickname}
+        profileImageUrl={userInfo.profileImageURL}
+        socialId={userInfo.userUUID}
       />
       <div className="w-[200px] flex flex-col gap-[20px]">
         <div className="flex items-center">

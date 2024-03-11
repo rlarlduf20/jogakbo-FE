@@ -50,7 +50,7 @@ const PushNoti = ({
         <p className="mb-[6px] break-keep">
           {info?.type === "friend"
             ? `${info?.nickname}님이 친구 요청을 보냈습니다.`
-            : `${info?.albumName} 앨범에서 초대를 요청했습니다.`}
+            : `${info?.albumOwnerName}님이 ${info?.albumName} 조각보에 초대 했습니다.`}
         </p>
       </div>
       <div className={`${type === "push" ? "ml-[38px]" : "ml-[30px]"}`}>
@@ -149,7 +149,10 @@ const Notification = () => {
         responseType,
       }),
     });
-
+    if (res.status === 404) {
+      alert("이미 삭제된 앨범입니다.");
+      return;
+    }
     if (!res.ok) {
       alert("잠시 후 다시 시도해주세요.");
       return;
@@ -170,12 +173,13 @@ const Notification = () => {
     });
     setReceivedAlbumInvite(filteredReceivedAlbumInvite);
   };
+
   useEffect(() => {
     const getReceivedReq = async () => {
-      const res = await fetch(`/api/profile`);
+      const res = await fetch(`/api/profile/notification`);
       const data = await res.json();
-      setReceivedReq(data.receivedFriendRequest);
-      setReceivedAlbumInvite(data.receivedAlbumInvitations);
+      setReceivedReq(data.friendRequesters);
+      setReceivedAlbumInvite(data.albumInviters);
     };
     getReceivedReq();
 
@@ -203,7 +207,7 @@ const Notification = () => {
         {isHoverIcon && <HoverText>알림</HoverText>}
         {(receivedReq?.length === 0 && receivedAlbumInvite?.length === 0) || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
-            {receivedReq.length + receivedAlbumInvite.length}
+            {receivedReq?.length + receivedAlbumInvite?.length}
           </p>
         )}
       </div>
