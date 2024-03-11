@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumList from "./AlbumList";
-import type { UserType } from "@/types";
+import type { UserAlbumListType } from "@/types";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
 import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
@@ -12,16 +12,17 @@ import OwnerSortActiveIcon from "../../../public/images/svg/sort-rectangle-activ
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 
 interface UserAlbumsProps {
-  user: UserType;
+  albumList: UserAlbumListType;
 }
-const UserAlbums = ({ user }: UserAlbumsProps) => {
+const UserAlbums = ({ albumList }: UserAlbumsProps) => {
   const [isOwnerJogakbo, setIsOwnerJogakbo] = useState<boolean>(false);
   const [sortType, setSortType] = useState<string>("created");
   const sortBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(sortBoxRef);
+
   let entireAlbumList = isOwnerJogakbo
-    ? user.albums
-    : user.albums.concat(user.collaboAlbums);
+    ? albumList.albums
+    : albumList.albums.concat(albumList.collaboAlbums);
   sortType === "created"
     ? entireAlbumList.sort((a, b) => {
         return (
@@ -42,7 +43,7 @@ const UserAlbums = ({ user }: UserAlbumsProps) => {
           new Date(a.lastModifiedDate).valueOf()
         );
       });
-  console.log(entireAlbumList);
+
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);
   };

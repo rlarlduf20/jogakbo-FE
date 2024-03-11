@@ -1,18 +1,15 @@
 import Image from "next/image";
 import { Trapezoid } from "@/components/Trapezoid";
-import type { UserType } from "@/types";
+import type { UserAlbumListType, UserInfoType } from "@/types";
 import MateBox from "./MateBox";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface UserProfileProps {
-  user: UserType;
+  info: UserInfoType;
+  albumList: UserAlbumListType;
 }
 
-const UserProfile = async ({ user }: UserProfileProps) => {
-  const { info } = await getServerSession(authOptions);
-
+const UserProfile = async ({ info, albumList }: UserProfileProps) => {
   return (
     <div>
       <div className="w-[180px]">
@@ -26,9 +23,9 @@ const UserProfile = async ({ user }: UserProfileProps) => {
               position: "relative",
             }}
           >
-            {user.profileImageUrl && (
+            {info.profileImageURL && (
               <Image
-                src={`${process.env.NEXT_PUBLIC_S3_URL}${info.socialId}/${user.profileImageUrl}`}
+                src={`${process.env.NEXT_PUBLIC_S3_URL}${info.userUUID}/${info.profileImageURL}`}
                 alt="thumbnail"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center" }}
@@ -36,28 +33,28 @@ const UserProfile = async ({ user }: UserProfileProps) => {
             )}
           </Trapezoid>
         </div>
-        <p className="text-[24px] font-semibold mb-[16px]">{user.nickname}</p>
+        <p className="text-[24px] font-semibold mb-[16px]">{info.nickname}</p>
         <div className="mb-[16px]">
           <div className="flex h-[20px] mb-[18px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">친구</p>
-            <p>{user.friends.length}</p>
+            <p>{info.friends.length}</p>
           </div>
           <div className="flex mb-[18px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각</p>
-            <p>{0}</p>
+            <p>{"-"}</p>
           </div>
           <div className="flex items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각보</p>
-            <p>{user.albums.length + user.collaboAlbums.length}</p>
+            <p>{albumList.albums.length + albumList.collaboAlbums.length}</p>
           </div>
         </div>
         <Link href="/my/profile" className="text-[14px]">
           내 정보 관리
         </Link>
-        <MateBox mateList={user.friends} />
+        <MateBox mateList={info.friends} />
       </div>
     </div>
   );

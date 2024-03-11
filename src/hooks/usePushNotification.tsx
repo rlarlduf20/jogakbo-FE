@@ -41,7 +41,6 @@ const usePushNotification = () => {
       timer = setTimeout(() => {
         setIsAppear(false);
       }, 5000);
-
       setPushMsg({ ...data, type: "album" });
     });
     return () => {

@@ -29,6 +29,7 @@ const RouteButtons = ({ albumID }: RouteButtonsPropsType) => {
       return;
     }
     alert("앨범이 삭제되었습니다.");
+    window.location.replace("/my");
   };
   return (
     <div className="flex gap-[30px] w-full justify-center">

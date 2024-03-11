@@ -11,14 +11,21 @@ export interface ImageType {
   rotation: number;
 }
 
-export interface UserType {
+export interface UserInfoType {
+  userUUID: string;
   nickname: string;
-  profileImageUrl: string | null;
+  profileImageURL: string | null;
   friends: FriendsType[];
+}
+
+export interface UserAlbumListType {
   albums: AlbumsType[];
   collaboAlbums: AlbumsType[];
-  sentFriendRequest: FriendsType[];
-  receivedFriendRequest: FriendsType[];
+}
+
+export interface UserNotificationType {
+  friendRequesters: FriendsType[];
+  albumInviters: AlbumsType[];
 }
 
 export interface FriendsType {
@@ -31,11 +38,17 @@ export interface FriendsType {
 export interface AlbumsType {
   albumUUID: string;
   albumName: string;
-  thumbnailImage: string;
+  thumbnailImageURL: string;
   images: ImageType[];
-  albumEditors: any;
   createdDate: string;
   lastModifiedDate: string;
+}
+
+export interface AlbumDetailInfoType {
+  albumName: string;
+  thumbnailImageURL: string;
+  createdDate: string;
+  isPublic: boolean;
 }
 
 export interface SearchUsersType {

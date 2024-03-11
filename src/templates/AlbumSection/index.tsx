@@ -14,9 +14,7 @@ import PagiNation from "./PagiNation";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
-  const [albumInfo, setAlbumInfo] = useState<any>({});
   const [albumName, setAlbumName] = useState<string>("");
-  const [albumThumbnail, setAlbumThumbnail] = useState<any>();
   const [albumBodyData, setAlbumBodyData] = useState<ImageType[][]>([]);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -35,12 +33,6 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       });
       const data = await res.json();
       setAlbumName(data.albumName);
-      setAlbumThumbnail(data.thumbnailImage);
-      setAlbumInfo({
-        albumName: data.albumName,
-        createdDate: data.createdDate,
-        thumbnailImage: data.thumbnailImage,
-      });
       setAlbumBodyData(data.imagesInfo);
     }
     getInitData();
@@ -172,13 +164,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   return (
     <section className="relative pb-[100px]">
       {isUpLoading && <LoadingGIF />}
-      <AlbumInfo
-        albumID={params.id}
-        title={albumName}
-        thumbnail={albumThumbnail}
-        info={albumInfo}
-        setAlbumInfo={setAlbumInfo}
-      />
+      <AlbumInfo albumID={params.id} title={albumName} />
       <Stage
         width={1200}
         height={800}
