@@ -149,7 +149,10 @@ const Notification = () => {
         responseType,
       }),
     });
-
+    if (res.status === 404) {
+      alert("이미 삭제된 앨범입니다.");
+      return;
+    }
     if (!res.ok) {
       alert("잠시 후 다시 시도해주세요.");
       return;
