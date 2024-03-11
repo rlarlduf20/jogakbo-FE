@@ -10,7 +10,7 @@ export const getUser = async () => {
     },
   });
   const user = await res.json();
-  console.log("user", user);
+
   const userInfo = {
     userUUID: user.userUUID,
     nickname: user.nickname,
@@ -25,5 +25,6 @@ export const getUser = async () => {
     friendRequesters: user.friendRequesters,
     albumInviters: user.albumInviters,
   };
+
   return { userInfo, userAlbumList, userNotification };
 };

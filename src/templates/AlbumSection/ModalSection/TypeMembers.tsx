@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Trapezoid } from "@/components/Trapezoid";
 import SearchIcon from "../../../../public/images/svg/search.svg";
-import { FriendsType } from "@/types";
+import { type FriendsType } from "@/types";
 
 interface TypeMembersPropsType {
   albumID: string;
@@ -10,46 +10,45 @@ interface TypeMembersPropsType {
 
 const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
   const [mateList, setMateList] = useState<FriendsType[]>([]);
-  const [albumOwner, setAlbumOwner] = useState<any>({});
-  const [albumEditors, setAlbumEditors] = useState<any>([]);
-  const [sentAlbumInvitations, setSentAlbumInvitations] = useState<any>([]);
-  const [inviteBtnClickCheck, setInviteBtnClickCheck] =
-    useState<boolean>(false);
+  const [albumOwnerInfo, setAlbumOwnerInfo] = useState<any>({});
+  const [albumEditorsInfo, setAlbumEditorsInfo] = useState<any>([]);
+  const [albumInviteesInfo, setAlbumInviteesInfo] = useState<any>([]);
   const [isAlbumOwner, setIsAlbumOwner] = useState<boolean>(true);
 
   useEffect(() => {
     const getMemberList = async () => {
-      const res = await fetch("/api/albumInfo", {
+      const res = await fetch("/api/albumInfo/members", {
         method: "POST",
         body: JSON.stringify({ albumID }),
       });
       const data = await res.json();
-      setAlbumOwner(data.albumOwnerInfo);
-      setAlbumEditors(data.albumEditorsInfo);
-      setSentAlbumInvitations(data.sentAlbumInvitationsInfo);
+
+      setAlbumOwnerInfo(data.albumOwnerInfo);
+      setAlbumEditorsInfo(data.albumEditorsInfos);
+      setAlbumInviteesInfo(data.albumInviteesInfos);
     };
 
     getMemberList();
-  }, [albumID, inviteBtnClickCheck]);
+  }, [albumID]);
 
   useEffect(() => {
     const getMateList = async () => {
-      const res = await fetch("/api/profile");
+      const res = await fetch("/api/profile/friend");
       const data = await res.json();
 
       setMateList(() => {
         let impossibleInviteList: any = [];
-        for (const i of data.friends) {
-          if (i.userUUID === albumOwner.userUUID) {
+        for (const i of data) {
+          if (i.userUUID === albumOwnerInfo.userUUID) {
             impossibleInviteList.push(i);
             setIsAlbumOwner(false);
           }
-          for (const j of sentAlbumInvitations) {
+          for (const j of albumInviteesInfo) {
             if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
           }
-          for (const j of albumEditors) {
+          for (const j of albumEditorsInfo) {
             if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
@@ -58,29 +57,32 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
         let impossibleSocialIDs = new Set(
           impossibleInviteList.map((obj: any) => obj.userUUID)
         );
-        let mateList = data.friends.filter(
+        let mateList = data.filter(
           (obj: any) => !impossibleSocialIDs.has(obj.userUUID)
         );
         return mateList;
       });
     };
     getMateList();
-  }, [sentAlbumInvitations, albumEditors, albumOwner, inviteBtnClickCheck]);
+  }, [albumOwnerInfo, albumEditorsInfo, albumInviteesInfo]);
 
-  const handleInvite = async (socialID: string) => {
+  const handleInvite = async (mateInfo: FriendsType) => {
     const res = await fetch("/api/albumInvite", {
       method: "POST",
       body: JSON.stringify({
         albumID,
-        socialID,
+        socialID: mateInfo.userUUID,
       }),
     });
     if (!res.ok) {
-      alert("요청에 실패했습니다. 다시 시도해주세요.");
+      alert("초대 권한이 없습니다.");
       return;
     }
-    setInviteBtnClickCheck((prev) => !prev);
 
+    setMateList((prev) =>
+      prev.filter((item) => item.userUUID !== mateInfo.userUUID)
+    );
+    setAlbumInviteesInfo((prev: FriendsType[]) => [...prev, mateInfo]);
     alert("초대 메시지가 발송됐습니다.");
   };
 
@@ -116,9 +118,9 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 bgColor: "white",
               }}
             >
-              {albumOwner.profileImageURL && (
+              {albumOwnerInfo.profileImageURL && (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_S3_URL}${albumOwner.userUUID}/${albumOwner.profileImageURL}`}
+                  src={`${process.env.NEXT_PUBLIC_S3_URL}${albumOwnerInfo.userUUID}/${albumOwnerInfo.profileImageURL}`}
                   alt="thumbnail"
                   fill
                   style={{ objectFit: "cover", objectPosition: "center" }}
@@ -128,9 +130,9 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 주인장
               </p>
             </Trapezoid>
-            <p className="text-[14px] pt-[10px]">{albumOwner.nickname}</p>
+            <p className="text-[14px] pt-[10px]">{albumOwnerInfo.nickname}</p>
           </div>
-          {albumEditors?.map((item: any, index: number) => (
+          {albumEditorsInfo?.map((item: any, index: number) => (
             <div key={index}>
               <Trapezoid
                 styles={{
@@ -153,7 +155,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
               <p className="text-[14px] pt-[10px]">{item.nickname}</p>
             </div>
           ))}
-          {sentAlbumInvitations?.map((item: any, index: number) => (
+          {albumInviteesInfo?.map((item: any, index: number) => (
             <div key={index} className="opacity-30">
               <Trapezoid
                 styles={{
@@ -210,7 +212,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
                 <p
                   className="underline text-[14px] cursor-pointer"
-                  onClick={() => handleInvite(item.userUUID)}
+                  onClick={() => handleInvite(item)}
                 >
                   초대
                 </p>
