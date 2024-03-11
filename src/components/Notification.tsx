@@ -50,7 +50,7 @@ const PushNoti = ({
         <p className="mb-[6px] break-keep">
           {info?.type === "friend"
             ? `${info?.nickname}님이 친구 요청을 보냈습니다.`
-            : `${info?.albumName} 앨범에서 초대를 요청했습니다.`}
+            : `${info?.albumOwnerName}님이 ${info?.albumName} 조각보에 초대 했습니다.`}
         </p>
       </div>
       <div className={`${type === "push" ? "ml-[38px]" : "ml-[30px]"}`}>
