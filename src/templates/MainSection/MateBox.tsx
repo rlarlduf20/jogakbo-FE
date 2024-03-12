@@ -12,7 +12,7 @@ interface MateBoxPropsType {
 
 const MateBox = ({ mateList }: MateBoxPropsType) => {
   return (
-    <div className="mt-[64px]">
+    <div className="mt-[56px]">
       <div className="flex items-center mb-[28px]">
         <p className="text-[18px] mr-[5px]">친구 목록</p>
         <UpdateButton />
