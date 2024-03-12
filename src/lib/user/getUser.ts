@@ -16,7 +16,7 @@ export const getUser = async () => {
     nickname: user.nickname,
     profileImageURL: user.profileImageURL,
     friends: user.friends,
-    role: "beginner",
+    role: user.role,
   };
   const userAlbumList = {
     albums: user.albums,
