@@ -19,7 +19,7 @@ const IntroModal = ({ role }: IntroModalProps) => {
   }
   const handleNotAgainBtnClick = async () => {
     if (isCheckedNotAgainBtn) {
-      const res = await fetch("/api/");
+      const res = await fetch("/api/needLessIntro");
       if (!res.ok) {
         alert("다시 보지 않기가 반영되지 않았습니다.");
       }
