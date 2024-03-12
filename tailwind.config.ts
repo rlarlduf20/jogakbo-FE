@@ -29,6 +29,9 @@ const config: Config = {
         semibold: "600",
         bold: "700",
       },
+      backgroundImage: {
+        guide: "url('/images/guide.png')",
+      },
     },
   },
   plugins: [],

@@ -13,7 +13,7 @@ const UserProfile = async ({ info, albumList }: UserProfileProps) => {
   return (
     <div>
       <div className="w-[180px]">
-        <div className="mb-[20px]">
+        <div className="mb-[18px]">
           <Trapezoid
             styles={{
               width: "180px",
@@ -33,14 +33,14 @@ const UserProfile = async ({ info, albumList }: UserProfileProps) => {
             )}
           </Trapezoid>
         </div>
-        <p className="text-[24px] font-semibold mb-[16px]">{info.nickname}</p>
-        <div className="mb-[16px]">
-          <div className="flex h-[20px] mb-[18px] items-center">
+        <p className="text-[24px] font-semibold mb-[13px]">{info.nickname}</p>
+        <div className="mb-[14px]">
+          <div className="flex h-[20px] mb-[17px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">친구</p>
             <p>{info.friends.length}</p>
           </div>
-          <div className="flex mb-[18px] items-center">
+          <div className="flex mb-[17px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각</p>
             <p>{"-"}</p>
