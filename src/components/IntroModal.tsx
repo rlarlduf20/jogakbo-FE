@@ -28,8 +28,11 @@ const IntroModal = ({ role }: IntroModalProps) => {
   };
 
   return (
-    <section className="absolute z-40 top-[-80px] left-0 w-full h-[500px] bg-main_yellow">
-      <div className="flex gap-[30px] items-center mt-[500px] ml-[800px]">
+    <section
+      className="absolute z-40 top-[-80px] left-0 w-[1200px] h-[800px]
+        bg-guide bg-center bg-cover bg-no-repeat"
+    >
+      <div className="absolute bottom-[50px] right-[65px] flex gap-[30px] items-center">
         <button
           className="flex gap-[5px] items-center"
           onClick={() => {
