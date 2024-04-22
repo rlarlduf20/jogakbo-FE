@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
@@ -8,6 +7,7 @@ import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
 import useHoverText from "@/hooks/useHoverText";
 import HoverText from "@/components/HoverText";
+import AlbumGuide from "./ModalSection/AlbumGuide";
 
 interface InfoPropType {
   albumID: string;
@@ -25,7 +25,7 @@ const AlbumInfo = ({ albumID, title }: InfoPropType) => {
         <div className="grow ml-[11px] text-[20px]">{title}</div>
         <div className="mr-[30px]">
           <ModalSection type="도움말">
-            <TypeInfo albumID={albumID} />
+            <AlbumGuide />
           </ModalSection>
         </div>
         <div className="mr-[30px]">

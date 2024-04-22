@@ -50,10 +50,14 @@ const AlbumModal = ({ children, type }: ModalProps) => {
           className="relative w-[800px] h-[500px] bg-main_black border-[1px] border-white 
         pt-[23px] pl-[30px] pr-[40px]"
         >
-          <header className="flex items-center gap-[6px] pb-[42px]">
-            <Image src={ModalLogoIcon} alt="로고" />
-            <p className="font-semibold text-[20px] mr-[10px]">조각보 {type}</p>
-          </header>
+          {type !== "도움말" && (
+            <header className="flex items-center gap-[6px] pb-[42px]">
+              <Image src={ModalLogoIcon} alt="로고" />
+              <p className="font-semibold text-[20px] mr-[10px]">
+                조각보 {type}
+              </p>
+            </header>
+          )}
           {children}
         </div>
       </Dialog.DialogContent>
