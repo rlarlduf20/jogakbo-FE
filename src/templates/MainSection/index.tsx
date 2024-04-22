@@ -5,7 +5,7 @@ import IntroModal from "@/components/IntroModal";
 
 const MainSection = async () => {
   const { userInfo, userAlbumList } = await getUser();
-  console.log(userInfo);
+
   return (
     <section className="relative flex pt-[40px] gap-[229px]">
       <IntroModal role={userInfo.role} />
