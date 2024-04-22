@@ -24,6 +24,11 @@ const AlbumInfo = ({ albumID, title }: InfoPropType) => {
         <Image src={AlbumLogoIcon} alt="앨범 로고 아이콘" />
         <div className="grow ml-[11px] text-[20px]">{title}</div>
         <div className="mr-[30px]">
+          <ModalSection type="도움말">
+            <TypeInfo albumID={albumID} />
+          </ModalSection>
+        </div>
+        <div className="mr-[30px]">
           <ModalSection type="정보">
             <TypeInfo albumID={albumID} />
           </ModalSection>
