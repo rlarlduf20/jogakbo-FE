@@ -10,6 +10,14 @@
 
 ---
 
+### 조각보 시작하기
+
+![로그인 페이지](/public/images/docs/DOCS_LOGIN.png)
+
+카카오와 네이버 아이디로 간편하게 로그인하세요!
+
+---
+
 ![조각보 스크린](/public/images/docs/DOCS_SCREEN.png)
 ![조각보 명함](/public/images/docs/DOCS_CARD.png)
 ![조각보 앨범](/public/images/docs/DOCS_ALBUM.png)
