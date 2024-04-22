@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import AlbumLogoIcon from "../../../public/images/svg/album-logo.svg";
@@ -8,6 +7,7 @@ import TypeInfo from "./ModalSection/TypeInfo";
 import TypeMembers from "./ModalSection/TypeMembers";
 import useHoverText from "@/hooks/useHoverText";
 import HoverText from "@/components/HoverText";
+import AlbumGuide from "./ModalSection/AlbumGuide";
 
 interface InfoPropType {
   albumID: string;
@@ -23,6 +23,11 @@ const AlbumInfo = ({ albumID, title }: InfoPropType) => {
       <header className="h-[80px] flex items-center">
         <Image src={AlbumLogoIcon} alt="앨범 로고 아이콘" />
         <div className="grow ml-[11px] text-[20px]">{title}</div>
+        <div className="mr-[30px]">
+          <ModalSection type="도움말">
+            <AlbumGuide />
+          </ModalSection>
+        </div>
         <div className="mr-[30px]">
           <ModalSection type="정보">
             <TypeInfo albumID={albumID} />
