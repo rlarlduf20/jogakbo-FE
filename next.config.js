@@ -13,7 +13,7 @@ const nextConfig = {
       { protocol: "https", hostname: "jogakbo.vercel.app" },
       {
         protocol: "https",
-        hostname: "jogakbo-s3.s3.ap-northeast-2.amazonaws.com",
+        hostname: "jogakbo-album-image-storage.s3.ap-northeast-2.amazonaws.com",
       },
     ],
   },
