@@ -1,8 +1,10 @@
-import { getAlbumInfo } from "@/lib/getAlbumDetail";
-import RouteButtons from "./RouteButtons";
 import Image from "next/image";
+
+import RouteButtons from "./RouteButtons";
 import ModalLogoIcon from "../../../public/images/svg/album-modal-logo.svg";
 import MembersLogoIcon from "../../../public/images/svg/members-logo.svg";
+
+import { getAlbumInfo } from "@/lib/getAlbumDetail";
 
 interface AlbumDetailSectionPropsType {
   albumID: string;

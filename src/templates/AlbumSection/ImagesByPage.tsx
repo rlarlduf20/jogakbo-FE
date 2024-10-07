@@ -1,9 +1,10 @@
+import Konva from "konva";
 import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
-import Konva from "konva";
-import type { ImageType } from "@/types";
+
 import { getImageMinMaxValue } from "@/lib/getImgValue";
+import type { ImageType } from "@/types";
 
 interface ImageByPagePropsType {
   imageInfo: ImageType;
@@ -38,7 +39,7 @@ const ImagesByPage = ({
   onChangeAttrs,
 }: ImageByPagePropsType) => {
   const [image] = useImage(
-    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.albumImageUUID}`
+    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.albumImageUUID}`,
   );
   const imageRef = useRef<any>(null);
   const trRef = useRef<Konva.Transformer>(null);

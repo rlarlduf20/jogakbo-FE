@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+
 import LandingAlbumImage from "../../../public/images/landing-album.png";
-import LandingJogakboImage from "../../../public/images/landing-jogakbo.png";
 import LandingDiagramImage from "../../../public/images/landing-diagram.png";
+import LandingJogakboImage from "../../../public/images/landing-jogakbo.png";
+
 import useScrollAppear from "@/hooks/useScrollAppear";
 
 const MotiveSection = () => {

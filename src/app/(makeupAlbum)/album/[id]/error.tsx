@@ -1,6 +1,8 @@
 "use client";
-import Link from "next/link";
+
 import Image from "next/image";
+import Link from "next/link";
+
 import ErrorLogo from "../../../../../public/images/error.png";
 
 const Error = () => {
@@ -12,14 +14,15 @@ const Error = () => {
         <Link href="/my" className="underline text-[14px]">
           홈
         </Link>
-        <p
+        <button
+          type="button"
           className="underline text-[14px] cursor-pointer"
           onClick={() => {
             window.location.reload();
           }}
         >
           새로고침
-        </p>
+        </button>
       </div>
     </section>
   );

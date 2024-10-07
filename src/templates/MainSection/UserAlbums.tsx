@@ -30,19 +30,19 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
         );
       })
     : sortType === "naming"
-    ? entireAlbumList.sort((a, b) => {
-        return a.albumName < b.albumName
-          ? -1
-          : a.albumName > b.albumName
-          ? 1
-          : 0;
-      })
-    : entireAlbumList.sort((a, b) => {
-        return (
-          new Date(b.lastModifiedDate).valueOf() -
-          new Date(a.lastModifiedDate).valueOf()
-        );
-      });
+      ? entireAlbumList.sort((a, b) => {
+          return a.albumName < b.albumName
+            ? -1
+            : a.albumName > b.albumName
+              ? 1
+              : 0;
+        })
+      : entireAlbumList.sort((a, b) => {
+          return (
+            new Date(b.lastModifiedDate).valueOf() -
+            new Date(a.lastModifiedDate).valueOf()
+          );
+        });
 
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);

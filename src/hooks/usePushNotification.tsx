@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+
 import { FriendsType } from "@/types";
 
 const usePushNotification = () => {
@@ -22,7 +23,7 @@ const usePushNotification = () => {
             Accept: "text/event-stream",
           },
           heartbeatTimeout: 86400000,
-        }
+        },
       );
     }
     let timer: any;

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { TrapeButton } from "@/components/Trapezoid";
 
 interface EditBoxPropsType {
@@ -55,7 +56,9 @@ const EditBox = ({ nickname, profileImageUrl, socialId }: EditBoxPropsType) => {
       <div>
         <div
           onMouseOver={() => setIsHoverProfile(true)}
+          onFocus={() => setIsHoverProfile(true)}
           onMouseLeave={() => setIsHoverProfile(false)}
+          onBlur={() => setIsHoverProfile(false)}
           className="relative w-[180px] h-[180px] bg-white 
           [clipPath:polygon(0%_0%,100%_0%,100%_90%,0%_100%)]
           bg-cover bg-center
@@ -98,13 +101,13 @@ const EditBox = ({ nickname, profileImageUrl, socialId }: EditBoxPropsType) => {
         border-b-[1px] border-white placeholder:text-[#888]] text-[18px] 
         outline-none text-center"
         />
-        <label
+        <p
           className={`text-[12px] ${
             disabledEditByNameLength && "text-main_pink"
           }`}
         >
           2-10자로 설정해주세요.
-        </label>
+        </p>
       </div>
       <TrapeButton
         disabled={disabledEditByNameLength || disabledNotChange}

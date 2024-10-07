@@ -1,6 +1,7 @@
 import Image from "next/image";
-import SignInLogo from "../../../public/images/svg/login-logo.svg";
+
 import SignInBox from "./SignInBox";
+import SignInLogo from "../../../public/images/svg/login-logo.svg";
 
 const SignInSection = () => {
   return (

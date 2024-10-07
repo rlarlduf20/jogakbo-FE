@@ -1,9 +1,11 @@
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+
+import EditBox from "./EditBox";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import SignOutButton from "@/components/SignOutButton";
 import { TrapeButton } from "@/components/Trapezoid";
-import Link from "next/link";
-import EditBox from "./EditBox";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getUser } from "@/lib/user/getUser";
 
 const ProfileSection = async () => {
@@ -26,7 +28,9 @@ const ProfileSection = async () => {
           <p>{"#" + info.socialId.slice(0, 6)}</p>
         </div>
         <SignOutButton />
-        <button className="text-[14px] underline mb-[30px]">탈퇴</button>
+        <button type="button" className="text-[14px] underline mb-[30px]">
+          탈퇴
+        </button>
         <Link href="/my" className="mx-auto">
           <TrapeButton type="outline">닫기</TrapeButton>
         </Link>

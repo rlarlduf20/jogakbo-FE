@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import TitleInputBox from "./TitleInputBox";
+import { useState } from "react";
+
 import AddButton from "./AddButton";
-import { TrapeButton } from "@/components/Trapezoid";
+import TitleInputBox from "./TitleInputBox";
+
 import LoadingGIF from "@/components/LoadingGIF";
+import { TrapeButton } from "@/components/Trapezoid";
 
 const SubmitTitleBox = () => {
   const router = useRouter();

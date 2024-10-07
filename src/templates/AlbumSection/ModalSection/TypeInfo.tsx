@@ -29,7 +29,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
           "." +
           createdDate.slice(5, 7) +
           "." +
-          createdDate.slice(8, 10)
+          createdDate.slice(8, 10),
       );
     };
     getAlbumDetailInfo();
@@ -68,7 +68,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
       {
         method: "PUT",
         body: formData,
-      }
+      },
     );
 
     if (res.ok) {

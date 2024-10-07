@@ -55,10 +55,10 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
           }
         }
         let impossibleSocialIDs = new Set(
-          impossibleInviteList.map((obj: any) => obj.userUUID)
+          impossibleInviteList.map((obj: any) => obj.userUUID),
         );
         let mateList = data.filter(
-          (obj: any) => !impossibleSocialIDs.has(obj.userUUID)
+          (obj: any) => !impossibleSocialIDs.has(obj.userUUID),
         );
         return mateList;
       });
@@ -80,7 +80,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
     }
 
     setMateList((prev) =>
-      prev.filter((item) => item.userUUID !== mateInfo.userUUID)
+      prev.filter((item) => item.userUUID !== mateInfo.userUUID),
     );
     setAlbumInviteesInfo((prev: FriendsType[]) => [...prev, mateInfo]);
     alert("초대 메시지가 발송됐습니다.");

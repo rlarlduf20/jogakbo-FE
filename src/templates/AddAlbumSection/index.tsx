@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import SubmitTitleBox from "./SubmitTitleBox";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 

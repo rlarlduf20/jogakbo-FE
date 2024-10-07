@@ -1,7 +1,9 @@
-import { getUser } from "@/lib/user/getUser";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+
 import { authOptions } from "../auth/[...nextauth]/route";
+
+import { getUser } from "@/lib/user/getUser";
 
 export async function GET() {
   const res = await getUser();
@@ -12,7 +14,7 @@ export async function GET() {
 export async function PUT(request: Request) {
   const session = await getServerSession(authOptions);
   const formData = await request.formData();
-  console.log(formData);
+  // console.log(formData);
   const res = await fetch(`${process.env.SERVER_URL}/user`, {
     method: "PUT",
     body: formData,

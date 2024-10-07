@@ -18,7 +18,7 @@ interface TrapeButtonPropsType {
 }
 
 export const Trapezoid = (props: TrapezoidPropsType) => {
-  const { styles } = props;
+  const { styles, children } = props;
   const trapezoidStyles = {
     backgroundColor: styles.bgColor,
     width: styles.width,
@@ -28,7 +28,7 @@ export const Trapezoid = (props: TrapezoidPropsType) => {
     zIndex: styles.zIndex,
   };
 
-  return <div style={{ ...trapezoidStyles }}>{props.children}</div>;
+  return <div style={{ ...trapezoidStyles }}>{children}</div>;
 };
 
 export const TrapeButton = ({
@@ -46,7 +46,9 @@ export const TrapeButton = ({
       }`}
     >
       <div
+        role="presentation"
         onClick={handleClick}
+        onKeyDown={handleClick}
         className={`${type === "outline" ? "bg-main_black" : "bg-white"} ${
           type === "outline" ? "w-[76px] h-[30px]" : "w-[78px] h-[32px]"
         } [clipPath:polygon(0%_0%,100%_25%,100%_100%,0%_100%)]

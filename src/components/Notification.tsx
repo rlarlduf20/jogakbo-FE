@@ -1,14 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+import HoverText from "./HoverText";
+import { Trapezoid, TrapeButton } from "./Trapezoid";
+import NotiIcon from "../../public/images/svg/noti.svg";
+
+import useHoverText from "@/hooks/useHoverText";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import usePushNotification from "@/hooks/usePushNotification";
 import { type AlbumsType, type FriendsType } from "@/types";
-import NotiIcon from "../../public/images/svg/noti.svg";
-import { Trapezoid, TrapeButton } from "./Trapezoid";
-import useHoverText from "@/hooks/useHoverText";
-import HoverText from "./HoverText";
 
 interface PushNotiPropsType {
   info: FriendsType | any;
@@ -57,6 +59,7 @@ const PushNoti = ({
         {info?.type === "friend" ? (
           <>
             <button
+              type="button"
               onClick={() => {
                 handleResponse("accept", info.userUUID, info.nickname);
                 handleFilterPushMsg(info.userUUID);
@@ -67,6 +70,7 @@ const PushNoti = ({
               수락
             </button>
             <button
+              type="button"
               onClick={() => {
                 handleResponse("reject", info.userUUID, info.nickname);
                 handleFilterPushMsg(info.userUUID);
@@ -80,6 +84,7 @@ const PushNoti = ({
         ) : (
           <>
             <button
+              type="button"
               onClick={() => {
                 handleResponseAlbumInvite("accept", info.albumUUID);
                 handleFilterAlbumInvite(info.albumUUID);
@@ -90,6 +95,7 @@ const PushNoti = ({
               수락
             </button>
             <button
+              type="button"
               onClick={() => {
                 handleResponseAlbumInvite("reject", info.albumUUID);
                 handleFilterAlbumInvite(info.albumUUID);
@@ -112,7 +118,7 @@ const Notification = () => {
   const { pushMsg, isAppear, setIsAppear } = usePushNotification();
   const [receivedReq, setReceivedReq] = useState<FriendsType[]>([]);
   const [receivedAlbumInvite, setReceivedAlbumInvite] = useState<AlbumsType[]>(
-    []
+    [],
   );
   const { isHoverIcon, handleIsHoverToFalse, handleIsHoverToTrue } =
     useHoverText();
@@ -120,7 +126,7 @@ const Notification = () => {
   const handleResponse = async (
     responseType: string,
     userID: string,
-    nickname: string
+    nickname: string,
   ) => {
     const res = await fetch("/api/replyMate", {
       method: "POST",
@@ -140,7 +146,7 @@ const Notification = () => {
   };
   const handleResponseAlbumInvite = async (
     responseType: string,
-    albumID: string
+    albumID: string,
   ) => {
     const res = await fetch("/api/albumInvite/reply", {
       method: "POST",
@@ -197,20 +203,23 @@ const Notification = () => {
 
   return (
     <section ref={notificationRef} className="relative">
-      <div
+      <button
+        type="button"
         className="relative cursor-pointer whitespace-nowrap"
         onClick={() => setIsOpen((prev) => !prev)}
         onMouseOver={handleIsHoverToTrue}
+        onFocus={handleIsHoverToTrue}
         onMouseLeave={handleIsHoverToFalse}
+        onBlur={handleIsHoverToFalse}
       >
         <Image src={NotiIcon} alt="알림" />
         {isHoverIcon && <HoverText>알림</HoverText>}
         {(receivedReq?.length === 0 && receivedAlbumInvite?.length === 0) || (
           <p className="absolute top-[50%] left-[50%] ml-[-3.42px] mt-[-8px] font-semibold text-[12px] text-main_black">
-            {receivedReq?.length + receivedAlbumInvite?.length}
+            {receivedReq.length + receivedAlbumInvite.length}
           </p>
         )}
-      </div>
+      </button>
       {isOpen && (
         <div
           className="absolute top-[42px] left-[-336px] w-[360px] h-[600px] border-[1px] border-white 
@@ -221,7 +230,7 @@ const Notification = () => {
             <p className="text-[20px] font-semibold">알림 목록</p>
           </div>
           <div className="h-[430px] mb-[28px] flex flex-col gap-[20px] overflow-scroll">
-            {!!!receivedReq?.length && !!!receivedAlbumInvite?.length ? (
+            {!receivedReq?.length && !receivedAlbumInvite?.length ? (
               <p>새로운 알림이 없습니다.</p>
             ) : (
               receivedReq.map((item, index) => (
@@ -236,11 +245,11 @@ const Notification = () => {
                 />
               ))
             )}
-            {!!!receivedReq?.length && !!!receivedAlbumInvite?.length ? (
+            {!receivedReq?.length && !receivedAlbumInvite?.length ? (
               <p
                 className={`${
-                  !!!receivedReq?.length &&
-                  !!!receivedAlbumInvite?.length &&
+                  !receivedReq?.length &&
+                  !receivedAlbumInvite?.length &&
                   "hidden"
                 }`}
               >

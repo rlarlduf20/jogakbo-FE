@@ -3,8 +3,8 @@ import KakaoProvider from "next-auth/providers/kakao";
 import NaverProvider from "next-auth/providers/naver";
 
 import { decodingJWTforExpiresAt, generateToken } from "@/lib/auth/encryption";
-import { sendUserData } from "@/lib/auth/sign";
 import { refreshToken } from "@/lib/auth/refresh";
+import { sendUserData } from "@/lib/auth/sign";
 
 export const authOptions = {
   providers: [
@@ -23,7 +23,7 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account }: any) {
-      let userData = {
+      const userData = {
         socialId: user.id,
         name: user.name,
         provider: account.provider,
@@ -32,20 +32,21 @@ export const authOptions = {
       const res: any = await sendUserData(identifyToken);
 
       if (!res.ok) {
-        console.error(res);
+        // console.error(res);
         return false;
       }
 
-      let access = res.headers.get("authorization");
-      let refresh = res.headers.get("authorization-refresh");
-      let expiresIn = decodingJWTforExpiresAt(access);
-      let jogakTokens = {
+      const access = res.headers.get("authorization");
+      const refresh = res.headers.get("authorization-refresh");
+      const expiresIn = decodingJWTforExpiresAt(access);
+      const jogakTokens = {
         accessToken: access,
         refreshToken: refresh,
-        expiresIn: expiresIn,
+        expiresIn,
       };
-      user.jogakTokens = jogakTokens;
-      user.info = userData;
+      const tmp = user;
+      tmp.jogakTokens = jogakTokens;
+      tmp.info = userData;
       return true;
     },
     async jwt({ token, user }: any) {
@@ -56,11 +57,12 @@ export const authOptions = {
       if (new Date().getTime() / 1000 < token.jogakTokens.expiresIn) {
         return token;
       }
-      return await refreshToken(token);
+      return refreshToken(token);
     },
     async session({ session, token }: any) {
-      session.jogakTokens = token.jogakTokens;
-      session.info = token.info;
+      const tmp = session;
+      tmp.jogakTokens = token.jogakTokens;
+      tmp.info = token.info;
 
       return session;
     },

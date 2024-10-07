@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+
 import KakaoLoginBtn from "../../../public/images/sign/kakao_login_btn.png";
 import NaverLoginBtn from "../../../public/images/sign/naver_login_btn.png";
-import { signIn } from "next-auth/react";
+
 import LoadingGIF from "@/components/LoadingGIF";
 
 const SignInBox = () => {

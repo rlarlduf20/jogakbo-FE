@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import SearchBox from "./SearchBox";
 import PlusIcon from "../../../public/images/svg/plus.svg";
 

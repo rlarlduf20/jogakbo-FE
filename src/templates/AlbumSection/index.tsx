@@ -78,7 +78,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
       if (files) {
         const isImageFile = Array.from(files).every((file: any) =>
-          file.type.includes("image")
+          file.type.includes("image"),
         );
         if (!isImageFile) {
           alert("이미지 파일만 업로드 가능합니다.");
@@ -90,7 +90,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         setIsUpLoading(true);
         const dropImgInfo = await parsingImagesSize(
           files,
-          stageRef.current?.getPointerPosition()
+          stageRef.current?.getPointerPosition(),
         );
         const formData = new FormData();
         let fileInfo: any = [];
@@ -131,7 +131,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   }, [page, session?.jogakTokens.accessToken, params.id]);
 
   const imageFocus = (
-    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
+    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>,
   ) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {

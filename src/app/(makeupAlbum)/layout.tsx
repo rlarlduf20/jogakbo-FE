@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+
 import AuthSessionProvider from "@/components/SessionProvider";
 import { SUITFont } from "@/lib/fonts";
 

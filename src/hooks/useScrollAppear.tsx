@@ -2,9 +2,9 @@ import { useRef, useEffect } from "react";
 
 const useScrollAppear = (
   direction: string,
-  duration = 1,
   delay: number,
-  threshold = 0.1
+  duration = 1,
+  threshold = 0.1,
 ) => {
   const elRef = useRef<any>(null);
 
@@ -19,7 +19,7 @@ const useScrollAppear = (
       case "right":
         return "translate3d(-50%, 0, 0)";
       default:
-        return;
+        return "";
     }
   };
 
@@ -28,7 +28,7 @@ const useScrollAppear = (
     let observer: any;
 
     const handleScroll = ([entry]: any) => {
-      const { current } = elRef;
+      // const { current } = elRef;
       if (entry.isIntersecting) {
         current.style.transitionProperty = "all";
         current.style.transitionDuration = `${duration}s`;

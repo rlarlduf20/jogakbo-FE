@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import RefreshIcon from "../../public/images/svg/sort-rectangle.svg";
 
 const UpdateButton = () => {

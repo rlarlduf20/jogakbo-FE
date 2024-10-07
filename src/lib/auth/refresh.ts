@@ -1,4 +1,5 @@
 import { JWT } from "next-auth/jwt";
+
 import { decodingJWTforExpiresAt } from "./encryption";
 
 export async function refreshToken(token: JWT): Promise<JWT> {
@@ -10,18 +11,18 @@ export async function refreshToken(token: JWT): Promise<JWT> {
     },
   });
 
-  let access: any = res.headers.get("authorization");
-  let refresh = res.headers.get("authorization-refresh");
-  let expiresIn = decodingJWTforExpiresAt(access);
+  const access: any = res.headers.get("authorization");
+  const refresh = res.headers.get("authorization-refresh");
+  const expiresIn = decodingJWTforExpiresAt(access);
 
-  let jogakTokens: any = {
+  const jogakTokens: any = {
     accessToken: access,
     refreshToken: refresh,
-    expiresIn: expiresIn,
+    expiresIn,
   };
 
   return {
     ...token,
-    jogakTokens: jogakTokens,
+    jogakTokens,
   };
 }

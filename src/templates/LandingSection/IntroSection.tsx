@@ -1,6 +1,7 @@
 import Image from "next/image";
-import LandingTitleGIF from "../../../public/images/jogak-landing-title.gif";
+
 import IntroText from "./IntroText";
+import LandingTitleGIF from "../../../public/images/jogak-landing-title.gif";
 
 const IntroSection = () => {
   return (

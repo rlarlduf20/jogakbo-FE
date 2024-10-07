@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+
 import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function POST(request: Request) {
@@ -13,8 +14,8 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jogakTokens.accessToken}`,
       },
-    }
+    },
   );
-  console.log(res);
+  // console.log(res);
   return res;
 }

@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+import CloseButton from "./CloseButton";
+
+import { Trapezoid } from "@/components/Trapezoid";
 import useDebounce from "@/hooks/useDebounce";
 import type { SearchUsersType } from "@/types";
-import { Trapezoid } from "@/components/Trapezoid";
-import CloseButton from "./CloseButton";
 
 const SearchBox = () => {
   const [searchText, setSearchText] = useState<string>("");
@@ -93,7 +95,7 @@ const SearchBox = () => {
                     />
                   )}
                   {isDisabledInvite(item) && (
-                    <div className="absolute w-full h-full bg-main_black_opacity"></div>
+                    <div className="absolute w-full h-full bg-main_black_opacity" />
                   )}
                 </Trapezoid>
                 <div className="ml-[10px] grow">
@@ -105,6 +107,7 @@ const SearchBox = () => {
                   </p>
                 </div>
                 <button
+                  type="button"
                   disabled={
                     item.friendStatus === "WAITING" ||
                     item.friendStatus === "FRIEND"
