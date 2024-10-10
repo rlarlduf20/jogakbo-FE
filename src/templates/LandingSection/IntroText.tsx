@@ -1,23 +1,26 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import useScrollY from "@/hooks/useScrollY";
-import DoubleQuoteStart from "../../../public/images/svg/double-quote-start.svg";
+import { useRef } from "react";
+
 import DoubleQuoteEnd from "../../../public/images/svg/double-quote-end.svg";
+import DoubleQuoteStart from "../../../public/images/svg/double-quote-start.svg";
+
+import useScrollY from "@/hooks/useScrollY";
 
 const INTRO_SECTION_HEIGHT = 1117;
 
 const IntroText = () => {
   const ref = useRef<any>(null);
   const { scrollYPos } = useScrollY();
+  const rect = ref.current?.getBoundingClientRect();
+  const scrollYPosition = rect ? scrollYPos + rect.top : scrollYPos;
 
   return (
     <div
       ref={ref}
       className={`${
-        scrollYPos + ref?.current?.getBoundingClientRect()?.top >=
-        INTRO_SECTION_HEIGHT
+        scrollYPosition >= INTRO_SECTION_HEIGHT
           ? "absolute left-[50%] translate-x-[-50%]"
           : "fixed top-[340px] left-[50%] translate-x-[-50%]"
       } w-[782px] height-[77px] flex`}

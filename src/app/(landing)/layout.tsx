@@ -1,8 +1,9 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+
+import { LandingHeader } from "@/components/header";
 import AuthSessionProvider from "@/components/SessionProvider";
 import { SUITFont } from "@/lib/fonts";
-import { LandingHeader } from "@/components/header";
 
 export const metadata: Metadata = {
   title: "조각보",

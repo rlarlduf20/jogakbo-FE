@@ -1,5 +1,5 @@
-import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 const withAuthList = [
   "/my",
@@ -32,7 +32,9 @@ const withOutAuth = async (req: NextRequest, token: boolean) => {
 
 export default async function middleware(req: NextRequest) {
   const token = await getToken({ req });
-  const pathname = req.nextUrl.pathname;
+  const {
+    nextUrl: { pathname },
+  } = req;
 
   const isWithAuth = withAuthList.includes(pathname);
   const isWithOutAuth = withOutAuthList.includes(pathname);

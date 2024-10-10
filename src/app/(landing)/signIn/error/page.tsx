@@ -1,5 +1,7 @@
 import Image from "next/image";
+
 import ErrorLogo from "../../../../../public/images/error.png";
+
 import SignButton from "@/components/SignButton";
 
 const SignError = () => {

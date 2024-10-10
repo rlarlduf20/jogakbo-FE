@@ -1,7 +1,9 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { TrapeButton } from "@/components/Trapezoid";
 import Image from "next/image";
+
 import AlbumGuideImage from "../../../../public/images/album-guide.png";
+
+import { TrapeButton } from "@/components/Trapezoid";
 
 const AlbumGuide = () => {
   return (

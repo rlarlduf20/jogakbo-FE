@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+import { useEffect, useState } from "react";
+
 import { Trapezoid, TrapeButton } from "@/components/Trapezoid";
 
 interface TypeInfoPropsType {
@@ -29,7 +30,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
           "." +
           createdDate.slice(5, 7) +
           "." +
-          createdDate.slice(8, 10)
+          createdDate.slice(8, 10),
       );
     };
     getAlbumDetailInfo();
@@ -68,7 +69,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
       {
         method: "PUT",
         body: formData,
-      }
+      },
     );
 
     if (res.ok) {
@@ -85,6 +86,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
       <section className="flex h-[330px]">
         {!isEditStat && (
           <div
+            role="presentation"
             className="absolute top-[26px] left-[165px] text-[14px] underline cursor-pointer"
             onClick={() => setIsEditStat(true)}
           >
@@ -153,7 +155,7 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
                   }`,
                 }
               }
-            ></div>
+            />
           </div>
         </div>
         <div className="flex flex-col gap-[36px]">
@@ -194,11 +196,9 @@ const TypeInfo = ({ albumID }: TypeInfoPropsType) => {
             <TrapeButton handleClick={handleSubmitEdit}>수정</TrapeButton>
           </>
         ) : (
-          <>
-            <Dialog.Close>
-              <TrapeButton type="outline">닫기</TrapeButton>
-            </Dialog.Close>
-          </>
+          <Dialog.Close>
+            <TrapeButton type="outline">닫기</TrapeButton>
+          </Dialog.Close>
         )}
       </footer>
     </>

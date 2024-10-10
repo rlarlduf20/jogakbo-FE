@@ -1,16 +1,18 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
 import { Client } from "@stomp/stompjs";
-import { useSession } from "next-auth/react";
 import Konva from "konva";
+import { useSession } from "next-auth/react";
+import { useRef, useState, useEffect } from "react";
 import { Layer, Stage } from "react-konva";
-import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
-import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
-import type { ImageType } from "@/types";
-import { parsingImagesSize } from "@/lib/getImgValue";
-import LoadingGIF from "@/components/LoadingGIF";
+
 import PagiNation from "./PagiNation";
+
+import LoadingGIF from "@/components/LoadingGIF";
+import { parsingImagesSize } from "@/lib/getImgValue";
+import AlbumInfo from "@/templates/AlbumSection/AlbumInfo";
+import ImagesByPage from "@/templates/AlbumSection/ImagesByPage";
+import type { ImageType } from "@/types";
 
 const AlbumSection = ({ params }: { params: { id: string } }) => {
   const [page, setPage] = useState<number>(0);
@@ -25,7 +27,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    let accessToken = session?.jogakTokens.accessToken;
+    const accessToken = session?.jogakTokens.accessToken;
     async function getInitData() {
       const res = await fetch("/api/albumInfo", {
         method: "POST",
@@ -42,17 +44,17 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         Authorization: `Bearer ${accessToken}`,
       },
       onConnect: () => {
-        console.log("연결 성공");
+        // console.log("연결 성공");
         client.current.subscribe(`/sub/edit/${params.id}`, (body: any) => {
-          const json_body = body.body;
-          console.log("socket data", JSON.parse(json_body));
-          setAlbumBodyData(JSON.parse(json_body));
+          const jsonBody = body.body;
+          // console.log("socket data", JSON.parse(json_body));
+          setAlbumBodyData(JSON.parse(jsonBody));
         });
       },
     });
     client.current.activate();
     return () => {
-      console.log("연결 해제");
+      // console.log("연결 해제");
       client.current.deactivate();
     };
   }, [session, params.id]);
@@ -78,7 +80,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
 
       if (files) {
         const isImageFile = Array.from(files).every((file: any) =>
-          file.type.includes("image")
+          file.type.includes("image"),
         );
         if (!isImageFile) {
           alert("이미지 파일만 업로드 가능합니다.");
@@ -90,13 +92,13 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         setIsUpLoading(true);
         const dropImgInfo = await parsingImagesSize(
           files,
-          stageRef.current?.getPointerPosition()
+          stageRef.current?.getPointerPosition(),
         );
         const formData = new FormData();
-        let fileInfo: any = [];
+        const fileInfo: any = [];
 
         for (let i = 0; i < files.length; i++) {
-          let obj = {
+          const obj = {
             pageNum: page,
             size: dropImgInfo[i].size,
             location: dropImgInfo[i].location,
@@ -131,7 +133,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   }, [page, session?.jogakTokens.accessToken, params.id]);
 
   const imageFocus = (
-    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>
+    e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>,
   ) => {
     const clickedOnEmpty = e.target === e.target.getStage();
     if (clickedOnEmpty) {
@@ -140,7 +142,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
   };
   const publish = (msg: string) => {
     if (!client.current.connected) return;
-    console.log("msg", msg);
+    // console.log("msg", msg);
     client.current.publish({
       destination: `/pub/edit/${params.id}`,
       body: msg,
@@ -154,7 +156,7 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
       });
       if (!res.ok) {
         alert("에러가 발생했습니다. 다시 시도해주세요.");
-        console.error(res);
+        // console.error(res);
         return;
       }
     }
@@ -176,11 +178,11 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
         onTouchStart={(e) => imageFocus(e)}
       >
         <Layer>
-          {albumBodyData[page]?.map((item, index) => (
+          {albumBodyData[page]?.map((item) => (
             <ImagesByPage
-              bodyData={albumBodyData[page]}
+              // bodyData={albumBodyData[page]}
               imageInfo={item}
-              index={index}
+              // index={index}
               key={item.albumImageUUID}
               selectedImageId={selectedImageId}
               albumID={params.id}
@@ -190,8 +192,8 @@ const AlbumSection = ({ params }: { params: { id: string } }) => {
                 setSelectedImageId(item.albumImageUUID);
               }}
               onChangeAttrs={(newAttrs: ImageType) => {
-                let arr = [];
-                let obj = {
+                const arr = [];
+                const obj = {
                   albumImageUUID: newAttrs.albumImageUUID,
                   albumImageEditInfo: {
                     pageNum: page,

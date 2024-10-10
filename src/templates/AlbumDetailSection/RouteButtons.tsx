@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { TrapeButton } from "@/components/Trapezoid";
 
 interface RouteButtonsPropsType {
@@ -40,6 +41,7 @@ const RouteButtons = ({ albumID }: RouteButtonsPropsType) => {
         <TrapeButton>들어가기</TrapeButton>
       </Link>
       <button
+        type="button"
         onClick={handleDelete}
         className="absolute top-[23px] right-[40px] text-main_pink"
       >

@@ -10,8 +10,8 @@ const LogoText = () => {
       {pathname === "/browse"
         ? "둘러보기"
         : pathname === "/my/profile"
-        ? "내 정보"
-        : "내 조각보"}
+          ? "내 정보"
+          : "내 조각보"}
     </p>
   );
 };

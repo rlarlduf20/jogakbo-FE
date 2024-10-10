@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import AuthSessionProvider from "@/components/SessionProvider";
+
 import { MainHeader } from "@/components/header";
-import Footer from "@/components/footer";
+import AuthSessionProvider from "@/components/SessionProvider";
 import { SUITFont } from "@/lib/fonts";
 
 export const metadata: Metadata = {

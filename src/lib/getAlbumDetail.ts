@@ -1,5 +1,6 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const getAlbumInfo = async (albumID: string) => {
   const { jogakTokens } = await getServerSession(authOptions);

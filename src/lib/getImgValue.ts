@@ -3,16 +3,16 @@ const getCorner = (
   pivotY: number,
   diffX: number,
   diffY: number,
-  angle: number
+  angle: number,
 ) => {
   const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+  let tmp = angle;
+  tmp += Math.atan2(diffY, diffX);
 
-  angle += Math.atan2(diffY, diffX);
+  const x = pivotX + distance * Math.cos(tmp);
+  const y = pivotY + distance * Math.sin(tmp);
 
-  const x = pivotX + distance * Math.cos(angle);
-  const y = pivotY + distance * Math.sin(angle);
-
-  return { x: x, y: y };
+  return { x, y };
 };
 export const getImageMinMaxValue = (rotatedImg: any) => {
   const { x, y, width, height } = rotatedImg;
@@ -37,7 +37,7 @@ export const getImageMinMaxValue = (rotatedImg: any) => {
 };
 
 export const parsingImagesSize = (files: any, position: any): any => {
-  const promises = Array.from(files).map((file: any, index: number) => {
+  const promises = Array.from(files).map((file: any) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -48,16 +48,17 @@ export const parsingImagesSize = (files: any, position: any): any => {
 
         image.onload = () => {
           let resultObject = {};
-          let x, y;
-          let tmpWidth = image.width;
-          let tmpHeight = image.height;
+          let x;
+          let y;
+          const tmpWidth = image.width;
+          const tmpHeight = image.height;
           if (image.width > 1200) {
-            image.width = image.width / Math.ceil(tmpWidth / 1200);
-            image.height = image.height / Math.ceil(tmpWidth / 1200);
+            image.width /= Math.ceil(tmpWidth / 1200);
+            image.height /= Math.ceil(tmpWidth / 1200);
           }
           if (image.height > 800) {
-            image.width = image.width / Math.ceil(tmpHeight / 800);
-            image.height = image.height / Math.ceil(tmpHeight / 800);
+            image.width /= Math.ceil(tmpHeight / 800);
+            image.height /= Math.ceil(tmpHeight / 800);
           }
           if (position.x + image.width > 1200) {
             x = 1200 - image.width;

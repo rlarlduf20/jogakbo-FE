@@ -14,7 +14,7 @@ export const generateToken = (userData: any) => {
     secret,
     {
       algorithm: "HS512",
-    }
+    },
   );
 
   return token;

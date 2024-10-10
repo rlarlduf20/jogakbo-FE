@@ -1,12 +1,14 @@
-import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
+import Image from "next/image";
+
 import ModalLogoIcon from "../../../../public/images/svg/album-modal-logo.svg";
 import InfoIcon from "../../../../public/images/svg/info.svg";
 import MembersLogoIcon from "../../../../public/images/svg/members-logo.svg";
-import QuestionMarkIcon from "../../../../public/images/svg/qustion.svg";
 import QuestionMarkActiveIcon from "../../../../public/images/svg/question-a.svg";
-import useHoverText from "@/hooks/useHoverText";
+import QuestionMarkIcon from "../../../../public/images/svg/qustion.svg";
+
 import HoverText from "@/components/HoverText";
+import useHoverText from "@/hooks/useHoverText";
 
 interface ModalProps {
   children: React.ReactNode;

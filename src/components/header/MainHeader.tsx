@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import LogoText from "./LogoText";
 import NavLink from "./NavLink";
 import HomeLogoIcon from "../../../public/images/svg/home-logo.svg";

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import PlusIcon from "../../../public/images/svg/plus.svg";
 import MateList from "./MateList";
-import { FriendsType } from "@/types";
+import PlusIcon from "../../../public/images/svg/plus.svg";
+
 import UpdateButton from "@/components/UpdateButton";
+import { FriendsType } from "@/types";
 
 interface MateBoxPropsType {
   mateList: FriendsType[];

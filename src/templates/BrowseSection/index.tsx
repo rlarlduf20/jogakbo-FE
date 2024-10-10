@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import ExclamationMarkIcon from "../../../public/images/svg/exclamation-mark.svg";
 
 const mockFriends = [];

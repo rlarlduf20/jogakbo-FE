@@ -1,15 +1,16 @@
+import Konva from "konva";
 import { useEffect, useRef, useState } from "react";
 import { Image, Transformer } from "react-konva";
 import useImage from "use-image";
-import Konva from "konva";
-import type { ImageType } from "@/types";
+
 import { getImageMinMaxValue } from "@/lib/getImgValue";
+import type { ImageType } from "@/types";
 
 interface ImageByPagePropsType {
   imageInfo: ImageType;
-  bodyData: ImageType[];
+  // bodyData: ImageType[];
   // reLocArr: (data: ImageType[]) => void;
-  index: number;
+  // index: number;
   selectedImageId: string | null;
   albumID: string;
   pageNum: number;
@@ -26,11 +27,11 @@ interface TransformedBoxType {
 }
 
 const ImagesByPage = ({
-  bodyData,
+  // bodyData,
   imageInfo,
   isSelected,
   selectedImageId,
-  index,
+  // index,
   // reLocArr,
   albumID,
   pageNum,
@@ -38,7 +39,7 @@ const ImagesByPage = ({
   onChangeAttrs,
 }: ImageByPagePropsType) => {
   const [image] = useImage(
-    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.albumImageUUID}`
+    `${process.env.NEXT_PUBLIC_S3_URL}${albumID}/${imageInfo.albumImageUUID}`,
   );
   const imageRef = useRef<any>(null);
   const trRef = useRef<Konva.Transformer>(null);
@@ -65,7 +66,6 @@ const ImagesByPage = ({
         });
         if (!res.ok) {
           alert("다시 시도해주세요.");
-          return;
         }
       }
     };
@@ -97,22 +97,22 @@ const ImagesByPage = ({
         // }}
         onDragMove={(e) => {
           const node = imageRef.current;
-          const image = getImageMinMaxValue({
+          const imageVal = getImageMinMaxValue({
             ...e.target.attrs,
             rotation: transformedBox?.rotation,
           });
           if (transformedBox) {
-            if (image.y < 0) {
-              e.target.y(e.target.y() - image.y);
+            if (imageVal.y < 0) {
+              e.target.y(e.target.y() - imageVal.y);
             }
-            if (image.x < 0) {
-              e.target.x(e.target.x() - image.x);
+            if (imageVal.x < 0) {
+              e.target.x(e.target.x() - imageVal.x);
             }
-            if (image.y + image.height > 800) {
-              e.target.y(e.target.y() - (image.y + image.height - 800));
+            if (imageVal.y + imageVal.height > 800) {
+              e.target.y(e.target.y() - (imageVal.y + imageVal.height - 800));
             }
-            if (image.x + image.width > 1200) {
-              e.target.x(e.target.x() - (image.x + image.width - 1200));
+            if (imageVal.x + imageVal.width > 1200) {
+              e.target.x(e.target.x() - (imageVal.x + imageVal.width - 1200));
             }
           } else {
             e.target.y(Math.max(e.target.y(), 0));
@@ -149,7 +149,7 @@ const ImagesByPage = ({
         // 서버에 바뀐 정보를 포함한 전체 이미지 전송
         // console.log(bodyData);
         // }}
-        onTransform={(e) => {
+        onTransform={() => {
           const node = imageRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();

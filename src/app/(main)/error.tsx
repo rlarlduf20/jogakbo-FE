@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+
 import ErrorLogo from "../../../public/images/error.png";
+
 import SignOutButton from "@/components/SignOutButton";
 
 const Error = () => {

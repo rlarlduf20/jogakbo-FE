@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import NotAgainIcon from "../../public/images/svg/sort-rectangle.svg";
-import NotAgainActiveIcon from "../../public/images/svg/sort-rectangle-active.svg";
+import { useState } from "react";
+
 import { TrapeButton } from "./Trapezoid";
+import NotAgainActiveIcon from "../../public/images/svg/sort-rectangle-active.svg";
+import NotAgainIcon from "../../public/images/svg/sort-rectangle.svg";
 
 interface IntroModalProps {
   role: string;
@@ -34,6 +35,7 @@ const IntroModal = ({ role }: IntroModalProps) => {
     >
       <div className="absolute bottom-[50px] right-[65px] flex gap-[30px] items-center">
         <button
+          type="button"
           className="flex gap-[5px] items-center"
           onClick={() => {
             setIsCheckedNotAgainBtn((prev) => !prev);

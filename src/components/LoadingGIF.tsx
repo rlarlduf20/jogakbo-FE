@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import LoadingGIFIcon from "../../public/images/jogak_loading.gif";
 
 const LoadingGIF = ({ children }: { children?: React.ReactNode }) => {

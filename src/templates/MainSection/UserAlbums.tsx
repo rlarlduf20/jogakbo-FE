@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useRef } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useRef } from "react";
+
 import AlbumList from "./AlbumList";
-import type { UserAlbumListType } from "@/types";
 import PlusIcon from "../../../public/images/svg/plus.svg";
-import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
-import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
 import OwnerSortActiveIcon from "../../../public/images/svg/sort-rectangle-active.svg";
+import OwnerSortIcon from "../../../public/images/svg/sort-rectangle.svg";
+import SortIcon from "../../../public/images/svg/sort-trapezoid.svg";
+
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
+import type { UserAlbumListType } from "@/types";
 
 interface UserAlbumsProps {
   albumList: UserAlbumListType;
@@ -20,29 +22,34 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
   const sortBoxRef = useRef<HTMLDivElement>(null);
   const { isOpen, setIsOpen } = useMouseDownOutside(sortBoxRef);
 
-  let entireAlbumList = isOwnerJogakbo
+  const entireAlbumList = isOwnerJogakbo
     ? albumList.albums
     : albumList.albums.concat(albumList.collaboAlbums);
-  sortType === "created"
-    ? entireAlbumList.sort((a, b) => {
+
+  const sortAlbums = () => {
+    if (sortType === "created") {
+      return entireAlbumList.sort((a, b) => {
         return (
           new Date(b.createdDate).valueOf() - new Date(a.createdDate).valueOf()
         );
-      })
-    : sortType === "naming"
-    ? entireAlbumList.sort((a, b) => {
-        return a.albumName < b.albumName
-          ? -1
-          : a.albumName > b.albumName
-          ? 1
-          : 0;
-      })
-    : entireAlbumList.sort((a, b) => {
+      });
+    }
+    if (sortType === "naming") {
+      return entireAlbumList.sort((a, b) => {
+        return a.albumName.localeCompare(b.albumName);
+      });
+    }
+    if (sortType === "updated") {
+      return entireAlbumList.sort((a, b) => {
         return (
           new Date(b.lastModifiedDate).valueOf() -
           new Date(a.lastModifiedDate).valueOf()
         );
       });
+    }
+  };
+
+  const sortedAlbumList = sortAlbums();
 
   const handleOwnerBtnClick = () => {
     setIsOwnerJogakbo((prev) => !prev);
@@ -56,8 +63,12 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
       <div className="flex mb-[30px] gap-[52px]">
         <div className="relative" ref={sortBoxRef}>
           <div
+            role="presentation"
             className="flex gap-[5px] cursor-pointer"
             onClick={() => {
+              setIsOpen((prev) => !prev);
+            }}
+            onKeyDown={() => {
               setIsOpen((prev) => !prev);
             }}
           >
@@ -68,7 +79,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
                 isOpen && "rotate-180 transition-all duration-300"
               } transition-all duration-300`}
             />
-            <button>정렬</button>
+            <button type="button">정렬</button>
           </div>
           {isOpen && (
             <div
@@ -77,6 +88,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
               py-[5px] pl-[12px] flex flex-col gap-[1px]"
             >
               <p
+                role="presentation"
                 className={`${
                   sortType === "created" && "underline"
                 } text-[14px] cursor-pointer`}
@@ -85,6 +97,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
                 시간순
               </p>
               <p
+                role="presentation"
                 className={`${
                   sortType === "naming" && "underline"
                 } text-[14px] cursor-pointer`}
@@ -93,6 +106,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
                 가나다 순
               </p>
               <p
+                role="presentation"
                 className={`${
                   sortType === "updated" && "underline"
                 } text-[14px] cursor-pointer`}
@@ -105,6 +119,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
         </div>
         <div className="grow">
           <div
+            role="presentation"
             className="flex gap-[5px] w-[172px] cursor-pointer"
             onClick={handleOwnerBtnClick}
           >
@@ -113,7 +128,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
             ) : (
               <Image src={OwnerSortIcon} alt="정렬 아이콘" />
             )}
-            <button>내가 만든 조각보만 보기</button>
+            <button type="button">내가 만든 조각보만 보기</button>
           </div>
         </div>
         <Link
@@ -126,7 +141,7 @@ const UserAlbums = ({ albumList }: UserAlbumsProps) => {
         </Link>
       </div>
       <div className="flex flex-wrap gap-y-[10px]">
-        <AlbumList albums={entireAlbumList} />
+        <AlbumList albums={sortedAlbumList ?? []} />
       </div>
     </div>
   );
