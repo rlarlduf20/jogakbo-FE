@@ -1,10 +1,11 @@
-import { useState } from "react";
 import Image from "next/image";
-import PrevIcon from "../../../public/images/svg/prev.svg";
-import PrevDisabledIcon from "../../../public/images/svg/prev_disabled.svg";
+import { useState } from "react";
+
 import NextIcon from "../../../public/images/svg/next.svg";
 import NextDisabledIcon from "../../../public/images/svg/next_disabled.svg";
 import PlusIcon from "../../../public/images/svg/plus.svg";
+import PrevIcon from "../../../public/images/svg/prev.svg";
+import PrevDisabledIcon from "../../../public/images/svg/prev_disabled.svg";
 
 interface PagiNationPropsType {
   page: number;
@@ -23,6 +24,7 @@ const PagiNation = ({
   return (
     <div className="relative w-[180px] mt-[17px] mx-auto">
       <button
+        type="button"
         disabled={page <= 0}
         onClick={movePrevPage}
         className="absolute left-0"
@@ -35,8 +37,11 @@ const PagiNation = ({
         <span className="absolute right-0">{albumSize}</span>
       </p>
       <button
+        type="button"
         onMouseOver={() => setIsHoverPlusBtn(true)}
+        onFocus={() => setIsHoverPlusBtn(true)}
         onMouseLeave={() => setIsHoverPlusBtn(false)}
+        onBlur={() => setIsHoverPlusBtn(false)}
         onClick={() => moveNextPage(page + 1 === albumSize)}
         className="absolute right-0"
       >

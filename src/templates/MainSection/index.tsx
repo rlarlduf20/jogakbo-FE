@@ -1,7 +1,7 @@
+import IntroModal from "@/components/IntroModal";
+import { getUser } from "@/lib/user/getUser";
 import UserAlbums from "@/templates/MainSection/UserAlbums";
 import UserProfile from "@/templates/MainSection/UserProfile";
-import { getUser } from "@/lib/user/getUser";
-import IntroModal from "@/components/IntroModal";
 
 const MainSection = async () => {
   const { userInfo, userAlbumList } = await getUser();

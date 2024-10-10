@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState, useRef } from "react";
+
 import { Trapezoid } from "@/components/Trapezoid";
 import useMouseDownOutside from "@/hooks/useMouseDownOutside";
 import { FriendsType } from "@/types";
@@ -51,8 +52,10 @@ const MateList = ({ mateList }: MateBoxPropsType) => {
               className="absolute z-30 top-[35px] left-[50px] w-[80px] h-[56px] bg-main_black border-white border-[1px] px-[12px] py-[5px]"
             >
               <p
+                role="presentation"
                 className="text-[14px] mb-[4px] cursor-pointer"
                 onClick={() => handleDeleteMate(item.nickname, item.userUUID)}
+                onKeyDown={() => handleDeleteMate(item.nickname, item.userUUID)}
               >
                 친구 삭제
               </p>

@@ -3,8 +3,8 @@ import { useRef, useEffect } from "react";
 const useScrollAppear = (
   direction: string,
   delay: number,
-  duration = 1,
   threshold = 0.1,
+  duration = 1,
 ) => {
   const elRef = useRef<any>(null);
 
@@ -28,7 +28,7 @@ const useScrollAppear = (
     let observer: any;
 
     const handleScroll = ([entry]: any) => {
-      // const { current } = elRef;
+      const { current } = elRef;
       if (entry.isIntersecting) {
         current.style.transitionProperty = "all";
         current.style.transitionDuration = `${duration}s`;

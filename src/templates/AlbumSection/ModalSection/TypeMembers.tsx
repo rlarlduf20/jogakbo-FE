@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Trapezoid } from "@/components/Trapezoid";
+import { useState, useEffect } from "react";
+
 import SearchIcon from "../../../../public/images/svg/search.svg";
+
+import { Trapezoid } from "@/components/Trapezoid";
 import { type FriendsType } from "@/types";
 
 interface TypeMembersPropsType {
@@ -37,27 +39,29 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
       const data = await res.json();
 
       setMateList(() => {
-        let impossibleInviteList: any = [];
-        for (const i of data) {
+        const impossibleInviteList: any = [];
+        data.forEach((i: any) => {
           if (i.userUUID === albumOwnerInfo.userUUID) {
             impossibleInviteList.push(i);
             setIsAlbumOwner(false);
           }
-          for (const j of albumInviteesInfo) {
+
+          albumInviteesInfo.forEach((j: any) => {
             if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
-          }
-          for (const j of albumEditorsInfo) {
+          });
+
+          albumEditorsInfo.forEach((j: any) => {
             if (i.userUUID === j.userUUID) {
               impossibleInviteList.push(i);
             }
-          }
-        }
-        let impossibleSocialIDs = new Set(
+          });
+        });
+        const impossibleSocialIDs = new Set(
           impossibleInviteList.map((obj: any) => obj.userUUID),
         );
-        let mateList = data.filter(
+        const mateList = data.filter(
           (obj: any) => !impossibleSocialIDs.has(obj.userUUID),
         );
         return mateList;
@@ -211,6 +215,7 @@ const TypeMembers = ({ albumID }: TypeMembersPropsType) => {
                 </Trapezoid>
                 <p className="ml-[10px] grow text-[14px]">{item.nickname}</p>
                 <p
+                  role="presentation"
                   className="underline text-[14px] cursor-pointer"
                   onClick={() => handleInvite(item)}
                 >

@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+
+import MateBox from "./MateBox";
+
 import { Trapezoid } from "@/components/Trapezoid";
 import type { UserAlbumListType, UserInfoType } from "@/types";
-import MateBox from "./MateBox";
-import Link from "next/link";
 
 interface UserProfileProps {
   info: UserInfoType;
@@ -43,7 +45,7 @@ const UserProfile = async ({ info, albumList }: UserProfileProps) => {
           <div className="flex mb-[17px] items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
             <p className="grow">조각</p>
-            <p>{"-"}</p>
+            <p>-</p>
           </div>
           <div className="flex items-center">
             <div className="[clipPath:polygon(0%_0%,70%_0%,100%_100%,0%_100%)] bg-white w-[10px] h-[20px] mr-[8px]" />
